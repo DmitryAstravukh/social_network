@@ -1,3 +1,5 @@
+@import './styles/variables.scss';
+
 @font-face {
   font-family: "NunitoSans";
   src: url("./assets/fonts/NunitoSans-Regular.ttf") format("ttf");
@@ -15,4 +17,12 @@
 body{
   font-family: "NunitoSans", sans-serif;
   font-weight: 400;
+  font-size: $baseTextSize;
+  margin: 0;
+  padding: 0;
+}
+
+.container{
+  max-width: 1366px;
+  margin: 0 auto;
 }

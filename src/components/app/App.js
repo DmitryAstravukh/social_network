@@ -9,10 +9,7 @@ import LoginPage from '../../pages/login/login-page';
 function App() {
   return (
     <div className="App">
-      asdasdasdas
       <LoginPage />
-      {/* <img src={logo} alt='aa' /> */}
-      {/* <FontAwesomeIcon icon={faSpinner} /> */}
     </div>
   );
 }

@@ -69,7 +69,7 @@
 
 
 /*------------------------- Content -------------------------*/
-.login-page__content{
+.login-page__content-signin, .login-page__content-signup{
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -96,7 +96,7 @@
     margin: 0;
   }
 
-  &__email, &__pass{
+  &__email-signin, &__pass-signin, &__email-signup, &__pass-signup{
     position: relative;
 
     input{
@@ -110,7 +110,7 @@
     }
   }
 
-  &__pass{
+  &__pass-signin, &__pass-signup{
     input{
       border-radius: 0 0 12px 12px;
     }
@@ -128,7 +128,9 @@
 .additional-functions{
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 25px;
+  padding: 0 25px;
 
   .remember-login{
     label{
@@ -161,7 +163,7 @@
 
 
 
-.login-btn{
+.login-btn-signin, .login-btn-signup{
   display: block;
   margin: 0 auto;
   padding: $baseSize*1.5 $baseSize*7;
@@ -177,8 +179,29 @@
   transition: 0.8s;
 }
 
-.login-btn:hover {
+.login-btn-signin:hover, .login-btn-signup:hover {
   color: $baseBtnTextColor;
   cursor: pointer;
   background-position: right center;
+}
+
+@media screen and (max-width: 600px) {
+  .login-page__header{
+    padding: 0 10px;
+  }
+
+  .login-form{
+    width: 300px;
+  }
+
+  .login-page__content-signin, .login-page__content-signup{
+    p{
+      padding: 0 10px;
+      text-align: center;
+    }
+  }
+
+  .additional-functions{
+    padding: 0;
+  }
 }

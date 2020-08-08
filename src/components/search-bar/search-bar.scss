@@ -1,0 +1,21 @@
+@import './../../index.scss';
+
+.search-bar{
+  display: flex;
+  align-items: center;
+  width: 400px;
+
+  .fa-search{
+    color: $baseTextColor;
+    margin-right: 10px;
+    font-size: 16px;
+  }
+
+  input{
+    width: 100%;
+    border: none;
+    padding: 20px 0;
+    color: $baseTextColor;
+    font-size: 16px;
+  }
+}

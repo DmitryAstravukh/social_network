@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './login-page.scss';
+import './login.scss';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus, faKey, faUser, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
@@ -64,7 +64,7 @@ const SignupContent = () => {
   )
 }
 
-export default class LoginPage extends Component{
+export default class Login extends Component{
   render(){
     return (
       <div className='login-page'>

@@ -8,7 +8,10 @@ const SearchBar = () => {
   return (
     <div className='search-bar'>
       <FontAwesomeIcon icon={faSearch} />
-      <input type='search' placeholder='Найти пост'/>
+        <form action='' >
+            <input type='search' placeholder='Найти пост'/>
+        </form>
+
     </div>
   )
 }

@@ -5,8 +5,9 @@
   align-items: center;
   width: 400px;
 
+
   .fa-search{
-    color: $baseTextColor;
+    color: $baseBtnTextColor;
     margin-right: 10px;
     font-size: 16px;
   }
@@ -15,7 +16,8 @@
     width: 100%;
     border: none;
     padding: 20px 0;
-    color: $baseTextColor;
+    color: $baseBtnTextColor;
     font-size: 16px;
+    background-color: inherit;
   }
 }

@@ -1,0 +1,41 @@
+@import './../../index.scss';
+
+.navbar-container{
+    flex-basis: 230px;
+}
+
+.navbar-list{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    background: $baseNavbarBackground;
+    background: linear-gradient(180deg, $baseNavbarBackground 0,
+                                      $baseNavbarBackground 80%,
+                                      $baseBackground 100%);
+
+    &__item{
+        display: flex;
+        flex-direction: column;
+        flex-basis: 50%;
+        margin: 30px 0;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+
+        svg, a{
+            color:  $baseTextColor;
+            font-size: $baseTextSize + 2;
+            transition: color .2s ease;
+        }
+
+        a{
+            text-decoration: none;
+            font-size: $baseTextSize;
+            margin-top: 7px;
+        }
+    }
+    &__item:hover a, &__item:hover svg{
+        color: $baseActiveColor;
+    }
+}

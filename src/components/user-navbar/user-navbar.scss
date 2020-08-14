@@ -26,13 +26,13 @@
   &__name{
     a{
       text-decoration: none;
-      color: $baseTextColor;
+      color: $baseBtnTextColor;
       margin-left: 10px;
       transition: color .2s ease;
     }
 
     a:hover{
-      color: $baseActiveColor;
+      color: $baseTextColor;
     }
     
   }

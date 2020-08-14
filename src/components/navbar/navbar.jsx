@@ -1,51 +1,38 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import './navbar.scss';
 
-import avatar from './../../assets/image/avatar.jpg';
-import logo from './../../assets/image/logo.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faEnvelope, faNewspaper, faMusic, faVideo } from '@fortawesome/free-solid-svg-icons';
 
 
 export default class Navbar extends Component {
-  render() {
-    return (
-      <div className='navbar'>
-        <div className='dark-block'>
-          <div className='navbar__logo'>
-            <img src={logo} alt='logo'/>
-          </div>
-          <div className='navbar__user-card'>
-            <div className='user-card__avatar'>
-              <img src={avatar} alt='avatar'/>
-            </div>
-            <h3>Дмитрий</h3>
-            <div className='user-card__info'>
-              <div className='friends'>
-                <span>7</span>
-                <span>Друзей</span>
-              </div>
-              <div className='groups'>
-                <span>3</span>
-                <span>Группы</span>
-              </div>
-            </div>
-          </div>
-        </div>
-          
-        <div className='light-block'>
-          <div className='navbar__menu'>
-            <nav>
-              <ul>
-                <li>Профиль</li>
-                <li>Сообщения</li>
-                <li>Новости</li>
-                <li>Музыка</li>
-                <li>Видео</li>
-              </ul>
+    render() {
+        return (
+            <nav className='navbar-container'>
+                <ul className='navbar-list'>
+                    <li className='navbar-list__item'>
+                      <FontAwesomeIcon icon={faUser} />
+                      <a href='/'>Профиль</a>
+                    </li>
+                    <li className='navbar-list__item'>
+                      <FontAwesomeIcon icon={faEnvelope} />
+                      <a href='/'>Сообщения</a>
+                    </li>
+                    <li className='navbar-list__item'>
+                      <FontAwesomeIcon icon={faNewspaper} />
+                      <a href='/'>Новости</a>
+                    </li>
+                    <li className='navbar-list__item'>
+                      <FontAwesomeIcon icon={faMusic} />
+                      <a href='/'>Музыка</a>
+                    </li>
+                    <li className='navbar-list__item'>
+                      <FontAwesomeIcon icon={faVideo} />
+                      <a href='/'>Видео</a>
+                    </li>
+                </ul>
             </nav>
-          </div>
-        </div>
-          
-      </div>
-    )
-  }
+
+        )
+    }
 }

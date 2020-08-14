@@ -7,7 +7,7 @@ import Profile from '../../pages/profile';
 function App() {
   return (
     <div className="app">
-      <Login />
+      {/*<Login />*/}
       <Profile />
     </div>
   );

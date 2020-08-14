@@ -4,7 +4,7 @@ import './login.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus, faKey, faUser, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 
-import logo from './../../assets/image/white-logo.svg';
+import logo from '../../assets/image/logo.svg';
 
 const SigninContent = () => {
   return(

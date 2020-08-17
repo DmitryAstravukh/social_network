@@ -9,6 +9,12 @@
     padding: 0 20px;
     background-color: $baseNamesColor;
     box-sizing: border-box;
+    box-shadow: 0px 4px 4px 0px rgba(41, 41, 45, 0.89);
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1;
 
     &__logo {
       width: 150px;

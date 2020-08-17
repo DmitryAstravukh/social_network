@@ -1,0 +1,77 @@
+@import './../../index.scss';
+
+.add-post{
+    width: 600px;
+    margin: 0 auto;
+
+    &__form{
+        border-radius: 10px;
+        padding: 10px;
+        box-sizing: border-box;
+        border: 1px solid $secondaryTextColor;
+    }
+
+    &__text{
+        display: block;
+        width: 99%;
+        max-width: 99%;
+        min-width: 99%;
+        height: 100px;
+        min-height: 100px;
+        max-height: 200px;
+        margin: 0 auto;
+        overflow-y: auto;
+        padding: 5px;
+        border: none;
+        border-bottom: 1px solid $secondaryTextColor;
+        color: $baseTextColor;
+        font-size: $baseTextSize + 2;
+    }
+
+    &__btn-group{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: $baseSize;
+    }
+
+    .controls-btn{
+        display: flex;
+        align-items: center;
+    }
+
+    &__cancel-btn{
+        border: none;
+        background-color: transparent;
+        color: $baseBackgroundGradient_dark;
+        font-size: $baseTextSize - 2;
+        padding: 5px 10px;
+        cursor: pointer;
+        transition: color .2s ease;
+    }
+
+    &__cancel-btn:hover{
+        color: $baseActiveColor;
+    }
+
+    &__add-btn{
+        display: block;
+        padding: $baseSize/1.5 $baseSize*2.5;
+        color: $baseBtnTextColor;
+        border: none;
+        border-radius: 50px;
+        font-size: $baseTextSize;
+        background-color: $baseElementGradient_dark;
+        background-image: linear-gradient(90deg, $baseElementGradient_dark 0,
+                $baseElementGradient_light 50%,
+                $baseElementGradient_dark 100%);
+        background-size: 200% auto;
+        transition: 0.8s;
+    }
+
+    &__add-btn:hover{
+        color: $baseBtnTextColor;
+        cursor: pointer;
+        background-position: right center;
+    }
+}

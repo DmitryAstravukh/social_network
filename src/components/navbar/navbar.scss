@@ -1,7 +1,13 @@
 @import './../../index.scss';
 
 .navbar-container{
-    flex-basis: 230px;
+    width: 130px;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    z-index: 0;
 }
 
 .navbar-list{
@@ -17,8 +23,8 @@
     &__item{
         display: flex;
         flex-direction: column;
-        flex-basis: 50%;
-        margin: 30px 0;
+        flex-basis: 100%;
+        margin: 10px 0;
         justify-content: center;
         align-items: center;
         cursor: pointer;
@@ -29,13 +35,28 @@
             transition: color .2s ease;
         }
 
+        svg{
+            margin-bottom: 5px;
+        }
+
         a{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 95%;
             text-decoration: none;
             font-size: $baseTextSize;
-            margin-top: 7px;
+            padding: 10px 0;
         }
     }
     &__item:hover a, &__item:hover svg{
         color: $baseActiveColor;
     }
+    a.active, a.active svg{
+        color: $baseBtnTextColor;
+        background-color: $baseBackgroundGradient_light;
+        border-radius: 5px;
+        transition: color, background-color .2s ease;
+    }
+
 }

@@ -3,6 +3,7 @@ import './navbar.scss';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faEnvelope, faNewspaper, faMusic, faVideo } from '@fortawesome/free-solid-svg-icons';
+import {NavLink} from 'react-router-dom';
 
 
 export default class Navbar extends Component {
@@ -11,24 +12,34 @@ export default class Navbar extends Component {
             <nav className='navbar-container'>
                 <ul className='navbar-list'>
                     <li className='navbar-list__item'>
-                      <FontAwesomeIcon icon={faUser} />
-                      <a href='/'>Профиль</a>
+                      <NavLink to='/profile'>
+                          <FontAwesomeIcon icon={faUser} />
+                          Профиль
+                      </NavLink>
                     </li>
                     <li className='navbar-list__item'>
-                      <FontAwesomeIcon icon={faEnvelope} />
-                      <a href='/'>Сообщения</a>
+                      <NavLink to='/messages'>
+                          <FontAwesomeIcon icon={faEnvelope} />
+                          Сообщения
+                      </NavLink>
                     </li>
                     <li className='navbar-list__item'>
-                      <FontAwesomeIcon icon={faNewspaper} />
-                      <a href='/'>Новости</a>
+                      <NavLink to='/news'>
+                          <FontAwesomeIcon icon={faNewspaper} />
+                          Новости
+                      </NavLink>
                     </li>
                     <li className='navbar-list__item'>
-                      <FontAwesomeIcon icon={faMusic} />
-                      <a href='/'>Музыка</a>
+                      <NavLink to='/music'>
+                          <FontAwesomeIcon icon={faMusic} />
+                          Музыка
+                      </NavLink>
                     </li>
                     <li className='navbar-list__item'>
-                      <FontAwesomeIcon icon={faVideo} />
-                      <a href='/'>Видео</a>
+                      <NavLink to='/videos'>
+                          <FontAwesomeIcon icon={faVideo} />
+                          Видео
+                      </NavLink>
                     </li>
                 </ul>
             </nav>

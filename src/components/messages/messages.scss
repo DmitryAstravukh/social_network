@@ -1,0 +1,93 @@
+@import './../../index.scss';
+
+.messages-container{
+    display: flex;
+    width: 800px;
+    margin-top: 10px;
+}
+
+.message-preview-list{
+    width: 280px;
+    border-right: 1px solid $secondaryTextColor;
+    height: calc(100vh - 80px);
+    overflow-y: auto;
+}
+
+
+.message-preview{
+    display: flex;
+    height: 80px;
+    position: relative;
+    box-sizing: border-box;
+    padding: 10px 5px;
+    text-decoration: none;
+    border-bottom: 1px solid $secondaryTextColor;
+    transition: background-color .2s ease;
+
+    &__avatar{
+        width: 50px;
+        height: 50px;
+
+        img{
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 5px;
+        }
+
+        .msg-cnt{
+            position: absolute;
+            top: 5px;
+            left: 44px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: $baseActiveColor;
+            width: 17px;
+            height: 17px;
+            border-radius: 50%;
+            padding: 0 1px 1px 0;
+
+            span{
+                color: $baseBtnTextColor;
+                font-weight: bold;
+            }
+        }
+    }
+
+    &__data{
+        margin-left: 15px;
+
+        .owner{
+            display: flex;
+            justify-content: space-between;
+            width: 190px;
+
+            .name{
+                text-decoration: none;
+                color: $baseNamesColor;
+                font-weight: bold;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .time{
+                color: $baseTextColor;
+                font-size: $baseTextSize - 2;
+            }
+        }
+        .message{
+            width: 190px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-top: 15px;
+            color: $baseBackgroundGradient_dark;
+        }
+    }
+}
+
+.message-preview:hover, .message-preview.active{
+    background-color: #f5f5f7;
+}

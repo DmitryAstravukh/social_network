@@ -1,19 +1,25 @@
 import React from 'react';
 import './search-bar.scss';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faSearch} from '@fortawesome/free-solid-svg-icons';
 
-const SearchBar = () => {
-  return (
-    <div className='search-bar'>
-      <FontAwesomeIcon icon={faSearch} />
-        <form action='' >
-            <input type='search' placeholder='Найти пост'/>
-        </form>
+const SearchBar = ({width, textColor, textSize}) => {
+    const inputStyle = {
+        color: textColor,
+        fontSize: textSize
+    }
+    return (
+        <div className='search-bar' style={{width: width}}>
+            <FontAwesomeIcon icon={faSearch} color={textColor}/>
+            <form action=''>
+                <input type='search'
+                       placeholder='Найти пост'
+                       style={inputStyle}/>
+            </form>
 
-    </div>
-  )
+        </div>
+    )
 }
 
 export default SearchBar;

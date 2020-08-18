@@ -18,7 +18,7 @@ export default class Header extends Component {
                     </a>
 
                 </div>
-                <SearchBar/>
+                <SearchBar width='400px' textColor='#ffffff' textSize='16px'/>
                 <UserNavbar/>
             </header>
         )

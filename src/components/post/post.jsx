@@ -3,7 +3,7 @@ import './post.scss';
 
 import avatar from './../../assets/image/avatar.jpg';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faHeart, faShare, faUser, faChevronDown, faEye} from '@fortawesome/free-solid-svg-icons';
+import {faHeart, faShare, faChevronDown, faEye} from '@fortawesome/free-solid-svg-icons';
 
 export default class Post extends Component {
     render() {

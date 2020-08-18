@@ -14,7 +14,7 @@ const SearchBar = ({width, textColor, textSize}) => {
             <FontAwesomeIcon icon={faSearch} color={textColor}/>
             <form action=''>
                 <input type='search'
-                       placeholder='Найти пост'
+                       placeholder='Найти'
                        style={inputStyle}/>
             </form>
 

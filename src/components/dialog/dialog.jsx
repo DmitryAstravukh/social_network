@@ -3,7 +3,7 @@ import './dialog.scss';
 
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faEnvelope, faTimes} from '@fortawesome/free-solid-svg-icons';
+import {faEnvelope, faTimes, faPaperPlane, faPaperclip} from '@fortawesome/free-solid-svg-icons';
 import avatar from './../../assets/image/avatar.jpg';
 import SearchBar from '../search-bar';
 import {NavLink} from 'react-router-dom';
@@ -61,15 +61,43 @@ class DialogHeader extends Component {
     }
 }
 
+class DialogFooter extends Component {
+    render() {
+        return (
+            <div className='dialog-footer'>
+                <form action=''>
+                    <div className='attach-files'>
+                        <input type='file' id='dialog-attach-files__input'/>
+                        <label className='beauty-file-input' for='dialog-attach-files__input'>
+                            <FontAwesomeIcon icon={faPaperclip}/>
+                        </label>
+                    </div>
+                    <div className='new-message-input'>
+                        <textarea placeholder='Введите текст'></textarea>
+                    </div>
+                    <div className='send-new-message'>
+                        <button>
+                            <FontAwesomeIcon icon={faPaperPlane}/>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        )
+    }
+}
+
 export default class Dialog extends Component {
     render() {
         return (
             <div className='dialog'>
                 <DialogHeader />
-                <DialogItem />
-                <DialogItem />
-                <DialogItem />
-                <DialogItem />
+                <div className='dialog-item-list'>
+                    <DialogItem />
+                    <DialogItem />
+                    <DialogItem />
+                    <DialogItem />
+                </div>
+                <DialogFooter />
             </div>
         )
     }

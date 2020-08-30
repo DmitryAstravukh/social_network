@@ -3,7 +3,7 @@ import './dialog.scss';
 
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faEnvelope, faTimes, faPaperPlane, faPaperclip} from '@fortawesome/free-solid-svg-icons';
+import {faTimes, faPaperPlane, faPaperclip} from '@fortawesome/free-solid-svg-icons';
 import avatar from './../../assets/image/avatar.jpg';
 import SearchBar from '../search-bar';
 import {NavLink} from 'react-router-dom';
@@ -68,7 +68,7 @@ class DialogFooter extends Component {
                 <form action=''>
                     <div className='attach-files'>
                         <input type='file' id='dialog-attach-files__input'/>
-                        <label className='beauty-file-input' for='dialog-attach-files__input'>
+                        <label className='beauty-file-input' htmlFor='dialog-attach-files__input'>
                             <FontAwesomeIcon icon={faPaperclip}/>
                         </label>
                     </div>

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './navbar.scss';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faEnvelope, faNewspaper, faMusic, faVideo } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faEnvelope, faNewspaper, faMusic, faVideo, faUserFriends } from '@fortawesome/free-solid-svg-icons';
 import {NavLink} from 'react-router-dom';
 
 
@@ -16,6 +16,12 @@ export default class Navbar extends Component {
                           <FontAwesomeIcon icon={faUser} />
                           Профиль
                       </NavLink>
+                    </li>
+                    <li className='navbar-list__item'>
+                        <NavLink to='/friends'>
+                            <FontAwesomeIcon icon={faUserFriends} />
+                            Друзья
+                        </NavLink>
                     </li>
                     <li className='navbar-list__item'>
                       <NavLink to='/messages'>

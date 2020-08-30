@@ -2,7 +2,7 @@ import React, {Component, Fragment} from 'react';
 import './messages.scss';
 
 import avatar from './../../assets/image/avatar.jpg';
-import {NavLink} from 'react-router-dom';
+import {NavLink, Link} from 'react-router-dom';
 import Dialog from '../dialog';
 
 class MessagePreview extends Component {
@@ -20,9 +20,9 @@ class MessagePreview extends Component {
                     </div>
                     <div className='message-preview__data'>
                         <div className='owner'>
-                            <NavLink to='/person/1' className='name'>
+                            <span className='name'>
                                 Иванов Иван
-                            </NavLink>
+                            </span>
                             <div className='time'>
                                 15.30
                             </div>
@@ -44,7 +44,7 @@ class MessagePreviewList extends Component {
             <div className='message-preview-list'>
                 {
                     m.map((i) =>{
-                        return <MessagePreview id={i} />
+                        return <MessagePreview id={i} key={i}/>
                     })
                 }
 

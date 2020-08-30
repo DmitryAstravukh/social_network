@@ -175,7 +175,7 @@
                                            $baseElementGradient_light 50%, 
                                            $baseElementGradient_dark 100%);
   background-size: 200% auto;
-  transition: 0.8s;
+  transition: color, background-position 0.8s ease;
 }
 
 .login-btn-signin:hover, .login-btn-signup:hover {

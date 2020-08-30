@@ -1,6 +1,6 @@
 import {ADD_NEW_POST, EDIT_NEW_POST_TEXT, GET_ALL_POSTS} from '../actions_types/news';
-
-const inicialState = {
+import avatar from './../assets/image/avatar.jpg';
+const initialState = {
     newPost: {
         text: '',
     },
@@ -19,7 +19,7 @@ const inicialState = {
             id: 2,
             ownerId: 24,
             ownerName: 'Ivanov Ivan1',
-            ownerAvatar: '',
+            ownerAvatar: avatar,
             releaseDate: '21.08.2020',
             text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus animi aspernatur, beatae dolor ipsam officiis quia sit tenetur voluptas. Aliquid amet aperiam aspernatur commodi distinctio doloribus, harum ipsam possimus reprehenderit!',
             likes: 9,
@@ -76,7 +76,7 @@ const getAllPosts = (state) => {
     return state.posts;
 }
 
-const newsReducer = (state = inicialState, action) => {
+const newsReducer = (state = initialState, action) => {
     switch (action.type) {
         case EDIT_NEW_POST_TEXT :
             return editNewPostText(state, action.text);

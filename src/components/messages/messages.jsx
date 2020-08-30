@@ -47,7 +47,6 @@ class MessagePreviewList extends Component {
                         return <MessagePreview id={i} key={i}/>
                     })
                 }
-
             </div>
         )
     }

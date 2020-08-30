@@ -1,0 +1,101 @@
+@import './../../index.scss';
+
+.user-list{
+    width: 600px;
+    margin: 0 auto;
+    border-left: 1px solid $secondaryTextColor;
+    border-right: 1px solid $secondaryTextColor;
+    box-sizing: border-box;
+
+    &__header{
+        padding: 0 20px;
+        border-bottom: 1px solid $secondaryTextColor;
+        background-color: $baseBackground;
+
+        .people-counter{
+            padding: 10px 0;
+            border-bottom: 1px solid $secondaryTextColor;
+            font-weight: bold;
+            color: $baseNamesColor;
+            text-align: center;
+
+            span{
+                color: $baseTextColor;
+            }
+
+        }
+    }
+
+    &__body{
+        height: calc(100vh - 168px);
+        overflow-y: auto;
+        padding: 0 20px;
+        scrollbar-width: thin;
+
+        .user-preview{
+            display: flex;
+            align-items: center;
+            height: 80px;
+            justify-content: space-between;
+            border-bottom: 1px solid $secondaryTextColor;
+
+            &__data{
+                display: flex;
+
+                .avatar{
+                    width: 60px;
+                    height: 60px;
+
+                    img{
+                        width: 100%;
+                        height: 100%;
+                        object-fit: contain;
+                        border-radius: 5px;
+                    }
+                }
+
+                .person-data{
+                    margin-left: 10px;
+
+                    span{
+                        display: block;
+                    }
+
+                    &__name{
+                        color: $baseNamesColor;
+                        font-weight: bold;
+                    }
+
+                    &__location{
+                        color: $baseTextColor;
+                        margin-top: 5px;
+                    }
+                }
+            }
+
+            &__controls{
+                button{
+                    display: block;
+                    margin: 0 auto;
+                    padding: $baseSize $baseSize*2;
+                    color: $baseBtnTextColor;
+                    border: none;
+                    border-radius: 50px;
+                    font-size: $baseTextSize - 1;
+                    background-color: $baseElementGradient_dark;
+                    background-image: linear-gradient(90deg, $baseElementGradient_dark 0,
+                            $baseElementGradient_light 50%,
+                            $baseElementGradient_dark 100%);
+                    background-size: 200% auto;
+                    transition: color, background-position 0.8s ease;
+                }
+
+                button:hover{
+                    color: $baseBtnTextColor;
+                    cursor: pointer;
+                    background-position: right center;
+                }
+            }
+        }
+    }
+}

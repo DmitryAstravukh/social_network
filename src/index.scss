@@ -42,5 +42,7 @@ body{
 
 .content-container{
   width: 700px;
-  margin: 20px 0;
+  margin: 10px 0 0 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
 }

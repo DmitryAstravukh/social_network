@@ -4,4 +4,6 @@
     display: flex;
     margin-top: 60px;
     margin-left: 160px;
+    height: calc(100vh - 60px);
+    overflow: hidden;
 }

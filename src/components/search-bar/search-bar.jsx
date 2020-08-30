@@ -12,7 +12,7 @@ const SearchBar = ({width, textColor, textSize}) => {
     return (
         <div className='search-bar' style={{width: width}}>
             <FontAwesomeIcon icon={faSearch} color={textColor}/>
-            <form action=''>
+            <form action='' style={{width: width}}>
                 <input type='search'
                        placeholder='Найти'
                        style={inputStyle}/>

@@ -16,7 +16,7 @@ class AddPostContainer extends Component {
     }
 }
 
-const mapStateToProps = ({newsReducer: { newPost:{ text } }}) => {
+const mapStateToProps = ({ newsReducer: { newPost:{ text } } }) => {
     return { text }
 }
 

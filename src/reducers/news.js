@@ -1,5 +1,6 @@
 import {ADD_NEW_POST, EDIT_NEW_POST_TEXT, GET_ALL_POSTS} from '../actions_types/news';
 import avatar from './../assets/image/avatar.jpg';
+
 const initialState = {
     newPost: {
         text: '',

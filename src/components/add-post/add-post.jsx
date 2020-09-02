@@ -1,6 +1,5 @@
-import React, {Component} from 'react';
+import React from 'react';
 import './add-post.scss';
-import {addNewPost} from '../../actions/news';
 
 const AddPost = ({text, editNewPostText, addNewPost}) => {
 

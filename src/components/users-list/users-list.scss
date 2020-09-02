@@ -62,11 +62,12 @@
                     }
 
                     &__name{
+                        text-decoration: none;
                         color: $baseNamesColor;
                         font-weight: bold;
                     }
 
-                    &__location{
+                    &__status{
                         color: $baseTextColor;
                         margin-top: 5px;
                     }

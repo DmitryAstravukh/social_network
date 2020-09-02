@@ -1,22 +1,37 @@
 import React, { Component } from 'react';
 import './users-list.scss';
 import SearchBar from '../search-bar';
-import defaultAvatar from '../../assets/image/avatar.jpg';
+import defaultAvatar from '../../assets/image/default-avatar.png';
+import { Link } from 'react-router-dom';
 
-const UserPreview = () => {
+const UserPreview = (props) => {
+    const {
+        id,
+        name,
+        followed,
+        photos: {
+            small,
+            large
+        },
+        status
+    } = props;
+
+    const avatar = small !== null ? small : defaultAvatar;
+    const btnText = followed ? 'Удалить из друзей' : 'Добавить в друзья';
+
     return (
         <div className='user-preview'>
             <div className='user-preview__data'>
                 <div className='avatar'>
-                    <img src={defaultAvatar} alt='avatar'/>
+                    <img src={avatar} alt='avatar'/>
                 </div>
                 <div className='person-data'>
-                    <span className='person-data__name'>Иванов Иван</span>
-                    <span className='person-data__location'>США, Лос-Анджелес</span>
+                    <Link to={`/user/${id}`} className='person-data__name'>{name}</Link>
+                    <span className='person-data__status'>{status}</span>
                 </div>
             </div>
             <div className='user-preview__controls'>
-                <button>Добавить в друзья</button>
+                <button>{btnText}</button>
             </div>
         </div>
     )
@@ -24,30 +39,23 @@ const UserPreview = () => {
 
 export default class UsersList extends Component {
     render() {
+        console.log(this.props);
+        const { users, totalCount } = this.props;
         return (
             <div className='content-container'>
                 <div className='user-list'>
                     <div className='user-list__header'>
                         <div className='people-counter'>
-                            Всего пользователей - <span>100</span>
+                            Всего пользователей - <span>{totalCount}</span>
                         </div>
                         <SearchBar width='100%' textColor='#626c72' textSize='14px' />
                     </div>
                     <div className='user-list__body'>
-                        <UserPreview />
-                        <UserPreview />
-                        <UserPreview />
-                        <UserPreview />
-                        <UserPreview />
-                        <UserPreview />
-                        <UserPreview />
-                        <UserPreview />
-                        <UserPreview />
-                        <UserPreview />
-                        <UserPreview />
-                        <UserPreview />
-                        <UserPreview />
-                        <UserPreview />
+                        {
+                            users.map(user => {
+                                return <UserPreview key={user.id} {...user}/>
+                            })
+                        }
                     </div>
                 </div>
             </div>

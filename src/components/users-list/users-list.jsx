@@ -39,16 +39,26 @@ const UserPreview = (props) => {
 
 export default class UsersList extends Component {
     render() {
-        console.log(this.props);
-        const { users, totalCount } = this.props;
+        const { users, totalCount, changePageSize, changePageNumber } = this.props;
         return (
             <div className='content-container'>
                 <div className='user-list'>
                     <div className='user-list__header'>
                         <div className='people-counter'>
-                            Всего пользователей - <span>{totalCount}</span>
+                            <div className='people-counter__all-count'>
+                                Всего пользователей - <span>{totalCount}</span>
+                            </div>
+                            <div className='people-counter__count'>
+                                Показывать по:
+                                <select onChange={(e) => changePageSize(+e.target.value)}>
+                                    <option value='10'>10</option>
+                                    <option value='20'>20</option>
+                                    <option value='50'>50</option>
+                                    <option value='100'>100</option>
+                                </select>
+                            </div>
                         </div>
-                        <SearchBar width='100%' textColor='#626c72' textSize='14px' />
+                        <SearchBar width='100%' height='40px' textColor='#626c72' textSize='14px' />
                     </div>
                     <div className='user-list__body'>
                         {
@@ -56,6 +66,9 @@ export default class UsersList extends Component {
                                 return <UserPreview key={user.id} {...user}/>
                             })
                         }
+                    </div>
+                    <div className='user-list__show-more'>
+                        <button onClick={changePageNumber}>Показать еще</button>
                     </div>
                 </div>
             </div>

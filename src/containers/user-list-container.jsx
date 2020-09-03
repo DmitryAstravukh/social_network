@@ -2,28 +2,43 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 
-import { setUsers } from './../actions/users';
+import { setUsers, changePageSize, changePageNumber } from './../actions/users';
 import api from '../api/api';
 import UsersList from '../components/users-list';
 
 class UserListContainer extends Component {
 
-    componentDidMount() {
+    getUsers = () => {
         api.get('/users', {
             params: {
                 page: this.props.currentPage,
                 count: this.props.pageSize
             }
         })
-            .then(response => {
+        .then(response => {
             this.props.setUsers(response.data);
         })
     }
 
+    componentDidMount() {
+        this.getUsers();
+    }
+
+    componentDidUpdate(prevProps){
+        if( (this.props.pageSize !== prevProps.pageSize) ||
+            (this.props.currentPage !== prevProps.currentPage) )
+        {
+            this.getUsers();
+        }
+    }
+
     render() {
-        const { users, totalCount } = this.props;
+        const { users, totalCount, changePageSize, changePageNumber } = this.props;
         return (
-            <UsersList users={users} totalCount={totalCount}/>
+            <UsersList users={users}
+                       totalCount={totalCount}
+                       changePageSize={changePageSize}
+                       changePageNumber={changePageNumber}/>
         )
     }
 }
@@ -32,7 +47,7 @@ const mapStateToProps = ({ usersReducer: { users, currentPage, pageSize, totalCo
     return { users, currentPage, pageSize, totalCount }
 }
 
-const mapDispatchToProps = { setUsers }
+const mapDispatchToProps = { setUsers, changePageSize, changePageNumber }
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserListContainer);

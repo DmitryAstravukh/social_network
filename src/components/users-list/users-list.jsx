@@ -39,7 +39,7 @@ const UserPreview = (props) => {
 
 export default class UsersList extends Component {
     render() {
-        const { users, totalCount, changePageSize, changePageNumber } = this.props;
+        const { users, totalCount, pageSize, pageSizeSteps, changePageSize, changePageNumber } = this.props;
         return (
             <div className='content-container'>
                 <div className='user-list'>
@@ -50,11 +50,12 @@ export default class UsersList extends Component {
                             </div>
                             <div className='people-counter__count'>
                                 Показывать по:
-                                <select onChange={(e) => changePageSize(+e.target.value)}>
-                                    <option value='10'>10</option>
-                                    <option value='20'>20</option>
-                                    <option value='50'>50</option>
-                                    <option value='100'>100</option>
+                                <select value={pageSize} onChange={(e) => changePageSize(+e.target.value)}>
+                                    {
+                                        pageSizeSteps.map(step => {
+                                            return <option key={step} value={step}>{step}</option>
+                                        })
+                                    }
                                 </select>
                             </div>
                         </div>

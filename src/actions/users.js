@@ -1,4 +1,10 @@
-import { GET_USERS, SET_USERS, CHANGE_PAGE_SIZE, CHANGE_PAGE_NUMBER} from './../actions_types/users';
+import {
+    GET_USERS,
+    SET_USERS,
+    CHANGE_PAGE_SIZE,
+    CHANGE_PAGE_NUMBER,
+    TOGGLE_LOADING
+} from './../actions_types/users';
 
 export const getUsers = () => {
     return {
@@ -23,5 +29,12 @@ export const changePageSize = (pageSize) => {
 export const changePageNumber = () => {
     return {
         type: CHANGE_PAGE_NUMBER
+    }
+}
+
+export const toggleLoading = (isLoading) => {
+    return {
+        type: TOGGLE_LOADING,
+        isLoading
     }
 }

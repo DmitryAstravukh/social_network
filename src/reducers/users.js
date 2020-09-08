@@ -1,11 +1,19 @@
-import { GET_USERS, SET_USERS, CHANGE_PAGE_SIZE, CHANGE_PAGE_NUMBER } from './../actions_types/users';
+import {
+    GET_USERS,
+    SET_USERS,
+    CHANGE_PAGE_SIZE,
+    CHANGE_PAGE_NUMBER,
+    TOGGLE_LOADING
+} from './../actions_types/users';
 import api from '../api/api';
 
 const inicialState = {
     users: [],
     currentPage: 1, //api default
     pageSize: 10, //api default
-    totalCount: 0
+    pageSizeSteps: [10, 20, 50, 100],
+    totalCount: 0,
+    isLoading: true
 }
 
 const setUsers = (state, users) => {
@@ -34,6 +42,13 @@ const changePageNumber = (state) => {
     }
 }
 
+const toggleLoading = (state, isLoading) => {
+    return {
+        ...state,
+        isLoading
+    }
+}
+
 const usersReducer = (state = inicialState, action) => {
     switch (action.type) {
         case SET_USERS:
@@ -44,6 +59,9 @@ const usersReducer = (state = inicialState, action) => {
 
         case CHANGE_PAGE_NUMBER:
             return changePageNumber(state);
+
+        case TOGGLE_LOADING:
+            return toggleLoading(state, action.isLoading);
 
         default:
             return state;

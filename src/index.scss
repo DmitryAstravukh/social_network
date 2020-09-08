@@ -43,6 +43,7 @@ body{
 .content-container{
   width: 700px;
   margin: 10px 0 0 0;
+  box-sizing: border-box;
   overflow-y: auto;
   scrollbar-width: thin;
 }

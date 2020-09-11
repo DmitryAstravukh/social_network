@@ -23,10 +23,12 @@ const UserPreview = (props) => {
         <div className='user-preview'>
             <div className='user-preview__data'>
                 <div className='avatar'>
-                    <img src={avatar} alt='avatar'/>
+                    <Link to={`/profile/${id}`}>
+                        <img src={avatar} alt='avatar'/>
+                    </Link>
                 </div>
                 <div className='person-data'>
-                    <Link to={`/user/${id}`} className='person-data__name'>{name}</Link>
+                    <Link to={`/profile/${id}`} className='person-data__name'>{name}</Link>
                     <span className='person-data__status'>{status}</span>
                 </div>
             </div>

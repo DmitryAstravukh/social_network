@@ -12,7 +12,6 @@ class UserProfileContainer extends Component {
         const userId = this.props.match.params.userId;
         api.get(`/profile/${userId}`)
             .then(response => {
-                debugger;
                 this.props.setUserProfileData(response.data);
             })
     }

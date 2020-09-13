@@ -27,7 +27,6 @@ const inicialState = {
 };
 
 const setUserProfileData = (state, userData) => {
-    debugger;
     return {
         ...state,
         userData: {

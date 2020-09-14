@@ -8,8 +8,16 @@ import { setUserProfileData } from './../actions/profile';
 
 class UserProfileContainer extends Component {
 
+    //TODO падает в ошибку когда не успевает сделать запрос на auth/me
     getUserData = () => {
-        const userId = this.props.match.params.userId;
+        let userId;
+        if(this.props.match.params.userId){
+            userId = this.props.match.params.userId;
+        }
+        else if(this.props.isAuth) {
+            userId = this.props.id;
+        }
+
         api.get(`/profile/${userId}`)
             .then(response => {
                 this.props.setUserProfileData(response.data);
@@ -28,8 +36,8 @@ class UserProfileContainer extends Component {
     }
 }
 
-const mapStateToProps = ({ profileReducer: { userData } }) => {
-    return { userData }
+const mapStateToProps = ({ profileReducer: { userData }, authReducer: { isAuth, id } }) => {
+    return { userData, isAuth, id }
 }
 
 const mapDispatchToProps = { setUserProfileData };

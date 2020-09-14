@@ -2,13 +2,11 @@ import React, {Component} from 'react';
 import './header.scss';
 
 import SearchBar from './../search-bar';
-import UserNavbar from './../user-navbar';
 
 import logo from '../../assets/image/logo.svg';
+import UserNavbarContainer from '../../containers/user-navbar-container';
 
 export default class Header extends Component {
-
-
     render() {
         return (
             <header className='user-header'>
@@ -19,7 +17,7 @@ export default class Header extends Component {
 
                 </div>
                 <SearchBar width='400px' textColor='#ffffff' textSize='16px'/>
-                <UserNavbar/>
+                <UserNavbarContainer />
             </header>
         )
     }

@@ -13,6 +13,7 @@ export  default class Content extends Component {
                 <Route path='/news' component={News}></Route>
                 <Route path='/messages' component={Messages}></Route>
                 <Route path='/users' component={UsersListContainer}></Route>
+                <Route path='/profile' component={UserProfileContainer}></Route>
                 <Route path='/profile/:userId' component={UserProfileContainer}></Route>
             </Fragment>
 

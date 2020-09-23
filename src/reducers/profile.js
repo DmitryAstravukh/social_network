@@ -23,7 +23,8 @@ const inicialState = {
             small: ''
         },
         userId: ''
-    }
+    },
+    isLoadedUserData: false
 };
 
 const setUserProfileData = (state, userData) => {
@@ -31,8 +32,8 @@ const setUserProfileData = (state, userData) => {
         ...state,
         userData: {
             ...userData
-        }
-
+        },
+        isLoadedUserData: true
     }
 }
 

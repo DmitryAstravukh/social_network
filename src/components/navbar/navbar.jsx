@@ -8,11 +8,12 @@ import { NavLink } from 'react-router-dom';
 
 export default class Navbar extends Component {
     render() {
+        const { id } = this.props;
         return (
             <nav className='navbar-container'>
                 <ul className='navbar-list'>
                     <li className='navbar-list__item'>
-                      <NavLink to='/profile'>
+                      <NavLink to={`/profile/${id}`}>
                           <FontAwesomeIcon icon={faUser} />
                           Профиль
                       </NavLink>

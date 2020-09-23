@@ -5,18 +5,13 @@ import { withRouter } from 'react-router-dom';
 import api from '../api/api';
 
 import { setUserProfileData } from './../actions/profile';
+import Spiner from '../components/spiner';
 
 class UserProfileContainer extends Component {
 
     //TODO падает в ошибку когда не успевает сделать запрос на auth/me
     getUserData = () => {
-        let userId;
-        if(this.props.match.params.userId){
-            userId = this.props.match.params.userId;
-        }
-        else if(this.props.isAuth) {
-            userId = this.props.id;
-        }
+        let userId = this.props.match.params.userId;
 
         api.get(`/profile/${userId}`)
             .then(response => {
@@ -30,14 +25,17 @@ class UserProfileContainer extends Component {
 
 
     render() {
-        return (
-            <UserProfile userData={this.props.userData}/>
-        )
+        const { userData, isLoadedUserData } = this.props;
+
+        if(!isLoadedUserData) return <Spiner />
+
+        return <UserProfile userData={userData}/>
+
     }
 }
 
-const mapStateToProps = ({ profileReducer: { userData }, authReducer: { isAuth, id } }) => {
-    return { userData, isAuth, id }
+const mapStateToProps = ({ profileReducer: { userData, isLoadedUserData }}) => {
+    return { userData, isLoadedUserData }
 }
 
 const mapDispatchToProps = { setUserProfileData };

@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom';
 
 export default class UserNavbar extends Component {
     render() {
-        const {login, id} = this.props;
+        const { login, id } = this.props;
         return (
             <div className='user-navbar'>
                 <div className='user-navbar__avatar'>

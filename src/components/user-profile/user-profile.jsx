@@ -5,7 +5,7 @@ import defaultAvatar from './../../assets/image/default-avatar.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { faFacebookSquare, faGithubSquare, faInstagramSquare, faTwitterSquare, faVk, faYoutubeSquare } from '@fortawesome/free-brands-svg-icons';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default class UserProfile extends Component {
 
@@ -44,47 +44,47 @@ export default class UserProfile extends Component {
                             <span className='block-title'>Контакты</span>
 
                             <div className='contact'>
-                                <Link to={userData.contacts.facebook ? userData.contacts.facebook : '#'}>
+                                <a href={userData.contacts.facebook ? userData.contacts.facebook : '#'} target='_blank'>
                                     <FontAwesomeIcon icon={faFacebookSquare} />
                                     {userData.contacts.facebook ? userData.contacts.facebook : 'Не задано'}
-                                </Link>
+                                </a>
                             </div>
 
                             <div className='contact'>
-                                <Link to={userData.contacts.github ? userData.contacts.github : '#'}>
+                                <a href={userData.contacts.github ? userData.contacts.github : '#'} target='_blank'>
                                     <FontAwesomeIcon icon={faGithubSquare} />
                                     {userData.contacts.github ? userData.contacts.github : 'Не задано'}
-                                </Link>
+                                </a>
                             </div>
                             <div className='contact'>
-                                <Link to={userData.contacts.instagram ? userData.contacts.instagram : '#'}>
+                                <a href={userData.contacts.instagram ? userData.contacts.instagram : '#'} target='_blank'>
                                     <FontAwesomeIcon icon={faInstagramSquare} />
                                     {userData.contacts.instagram ? userData.contacts.instagram : 'Не задано'}
-                                </Link>
+                                </a>
                             </div>
                             <div className='contact'>
-                                <Link to={userData.contacts.twitter ? userData.contacts.twitter : '#'}>
+                                <a href={userData.contacts.twitter ? userData.contacts.twitter : '#'} target='_blank'>
                                     <FontAwesomeIcon icon={faTwitterSquare} />
                                     {userData.contacts.twitter ? userData.contacts.twitter : 'Не задано'}
-                                </Link>
+                                </a>
                             </div>
                             <div className='contact'>
-                                <Link to={userData.contacts.vk ? userData.contacts.vk : '#'}>
+                                <a href={userData.contacts.vk ? userData.contacts.vk : '#'} target='_blank'>
                                     <FontAwesomeIcon icon={faVk} />
                                     {userData.contacts.vk ? userData.contacts.vk : 'Не задано'}
-                                </Link>
+                                </a>
                             </div>
                             <div className='contact'>
-                                <Link to={userData.contacts.website ? userData.contacts.website : '#'}>
+                                <a href={userData.contacts.website ? userData.contacts.website : '#'} target='_blank'>
                                     <FontAwesomeIcon icon={faGlobe} />
                                     {userData.contacts.website ? userData.contacts.website : 'Не задано'}
-                                </Link>
+                                </a>
                             </div>
                             <div className='contact'>
-                                <Link to={userData.contacts.youtube ? userData.contacts.youtube : '#'}>
+                                <a href={userData.contacts.youtube ? userData.contacts.youtube : '#'} target='_blank'>
                                     <FontAwesomeIcon icon={faYoutubeSquare} />
                                     {userData.contacts.youtube ? userData.contacts.youtube : 'Не задано'}
-                                </Link>
+                                </a>
                             </div>
                         </div>
 

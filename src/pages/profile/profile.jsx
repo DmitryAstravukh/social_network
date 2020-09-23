@@ -5,12 +5,12 @@ import Header from './../../components/header';
 import Navbar from '../../components/navbar';
 import Content from '../../components/content';
 
-const Profile = () => {
+const Profile = ({ login, id }) => {
   return (
     <div className='container'>
-      <Header />
+      <Header login={login} id={id}/>
       <div className='content'>
-          <Navbar />
+          <Navbar id={id}/>
           <Content />
       </div>
 

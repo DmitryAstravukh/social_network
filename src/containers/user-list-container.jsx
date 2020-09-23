@@ -11,6 +11,7 @@ class UserListContainer extends Component {
 
     getUsers = () => {
         api.get('/users', {
+            withCredentials: true,
             params: {
                 page: this.props.currentPage,
                 count: this.props.pageSize

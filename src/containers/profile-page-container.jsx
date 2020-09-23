@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import UserNavbar from '../components/user-navbar';
 import api from '../api/api';
 
 import { setAuthUserData } from './../actions/auth';
+import Profile from '../pages/profile';
+import Spiner from '../components/spiner';
 
-class UserNavbarContainer extends Component {
+class ProfilePageContainer extends Component {
 
     getAuthUserData = () => {
         api.get(`/auth/me`, {
@@ -20,19 +21,23 @@ class UserNavbarContainer extends Component {
         this.getAuthUserData();
     }
 
-
     render() {
-        const {login, id} = this.props;
+        const { login, id, isAuth } = this.props;
+
+        if(!isAuth){
+            return <Spiner />
+        }
+
         return (
-            <UserNavbar login={login} id={id}/>
+            <Profile login={login} id={id}/>
         )
     }
 }
 
-const mapStateToProps = ({ authReducer: { email, id, login } }) => {
-    return { email, id, login }
+const mapStateToProps = ({ authReducer: { email, id, login, isAuth } }) => {
+    return { email, id, login, isAuth }
 }
 
 const mapDispatchToProps = { setAuthUserData };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserNavbarContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(ProfilePageContainer);

@@ -1,12 +1,8 @@
 import React, {Component} from 'react';
 import './header.scss';
-
 import SearchBar from './../search-bar';
-
 import logo from '../../assets/image/logo.svg';
-import UserNavbarContainer from '../../containers/user-navbar-container';
 import UserNavbar from '../user-navbar';
-import Profile from '../../pages/profile';
 
 export default class Header extends Component {
     render() {

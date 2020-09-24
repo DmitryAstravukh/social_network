@@ -2,25 +2,20 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import UserProfile from '../components/user-profile';
 import { withRouter } from 'react-router-dom';
-import api from '../api/api';
 
 import { setUserProfileData } from './../actions/profile';
 import Spiner from '../components/spiner';
+import Api from '../api/api';
 
 class UserProfileContainer extends Component {
 
-    //TODO падает в ошибку когда не успевает сделать запрос на auth/me
-    getUserData = () => {
-        let userId = this.props.match.params.userId;
-
-        api.get(`/profile/${userId}`)
-            .then(response => {
-                this.props.setUserProfileData(response.data);
-            })
-    }
+    api = new Api();
 
     componentDidMount() {
-        this.getUserData();
+        let userId = this.props.match.params.userId;
+
+        this.api.getUserData(userId)
+            .then(data => this.props.setUserProfileData(data));
     }
 
 

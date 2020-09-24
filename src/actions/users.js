@@ -3,7 +3,8 @@ import {
     SET_USERS,
     CHANGE_PAGE_SIZE,
     CHANGE_PAGE_NUMBER,
-    TOGGLE_LOADING
+    TOGGLE_LOADING,
+    TOGGLE_FOLLOW
 } from './../actions_types/users';
 
 export const getUsers = () => {
@@ -38,3 +39,11 @@ export const toggleLoading = (isLoading) => {
         isLoading
     }
 }
+
+export const toggleFollow = (userId) => {
+    return {
+        type: TOGGLE_FOLLOW,
+        userId
+    }
+}
+

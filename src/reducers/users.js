@@ -3,9 +3,9 @@ import {
     SET_USERS,
     CHANGE_PAGE_SIZE,
     CHANGE_PAGE_NUMBER,
-    TOGGLE_LOADING
+    TOGGLE_LOADING,
+    TOGGLE_FOLLOW
 } from './../actions_types/users';
-import api from '../api/api';
 
 const inicialState = {
     users: [],
@@ -49,6 +49,21 @@ const toggleLoading = (state, isLoading) => {
     }
 }
 
+const toggleFollow = (state, userId) => {
+    return {
+        ...state,
+        users: state.users.map(user => {
+            if(user.id === userId) {
+                return {
+                    ...user,
+                    followed: !user.followed
+                }
+            }
+            return user
+        })
+    }
+}
+
 const usersReducer = (state = inicialState, action) => {
     switch (action.type) {
         case SET_USERS:
@@ -62,6 +77,9 @@ const usersReducer = (state = inicialState, action) => {
 
         case TOGGLE_LOADING:
             return toggleLoading(state, action.isLoading);
+
+        case TOGGLE_FOLLOW:
+            return toggleFollow(state, action.userId);
 
         default:
             return state;

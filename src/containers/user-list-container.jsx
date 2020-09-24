@@ -2,29 +2,32 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 
-import { setUsers, changePageSize, changePageNumber, toggleLoading } from './../actions/users';
-import api from '../api/api';
+import { setUsers, changePageSize, changePageNumber, toggleLoading, toggleFollow } from './../actions/users';
 import UsersList from '../components/users-list';
 import Spiner from '../components/spiner';
+import Api from '../api/api';
 
 class UserListContainer extends Component {
 
-    getUsers = () => {
-        api.get('/users', {
-            withCredentials: true,
-            params: {
-                page: this.props.currentPage,
-                count: this.props.pageSize
-            }
-        })
-        .then(response => {
-            this.props.toggleLoading(false);
-            this.props.setUsers(response.data);
-        })
+    api = new Api();
+
+    _getUsers = () => {
+        this.api.getUsers(this.props.currentPage, this.props.pageSize)
+            .then(data => {
+                this.props.toggleLoading(false);
+                this.props.setUsers(data);
+            })
+    }
+
+    _toggleFollow = (userId, followed) => {
+        this.api.toggleFollow(userId, followed)
+            .then(({ resultCode, messages }) => resultCode === 0 ? this.props.toggleFollow(userId)
+                                                                 : alert(messages[0])
+            )
     }
 
     componentDidMount() {
-        this.getUsers();
+        this._getUsers();
     }
 
     componentDidUpdate(prevProps){
@@ -32,7 +35,7 @@ class UserListContainer extends Component {
             (this.props.currentPage !== prevProps.currentPage) )
         {
             this.props.toggleLoading(true);
-            this.getUsers();
+            this._getUsers();
         }
     }
 
@@ -63,7 +66,8 @@ class UserListContainer extends Component {
                        pageSize={pageSize}
                        pageSizeSteps={pageSizeSteps}
                        changePageSize={changePageSize}
-                       changePageNumber={changePageNumber}/>
+                       changePageNumber={changePageNumber}
+                       toggleFollow={this._toggleFollow}/>
 
         )
     }
@@ -73,7 +77,7 @@ const mapStateToProps = ({ usersReducer: { users, currentPage, pageSize, pageSiz
     return { users, currentPage, pageSize, pageSizeSteps, totalCount, isLoading }
 }
 
-const mapDispatchToProps = { setUsers, changePageSize, changePageNumber, toggleLoading }
+const mapDispatchToProps = { setUsers, changePageSize, changePageNumber, toggleLoading, toggleFollow }
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserListContainer);

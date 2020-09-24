@@ -1,24 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import api from '../api/api';
 
 import { setAuthUserData } from './../actions/auth';
 import Profile from '../pages/profile';
 import Spiner from '../components/spiner';
+import Api from '../api/api';
 
 class ProfilePageContainer extends Component {
 
-    getAuthUserData = () => {
-        api.get(`/auth/me`, {
-            withCredentials: true
-        })
-        .then(response => {
-            this.props.setAuthUserData(response.data.data);
-        })
-    }
+    api = new Api();
 
     componentDidMount() {
-        this.getAuthUserData();
+        this.api.getAuthUserData()
+            .then(({ data }) => {
+                this.props.setAuthUserData(data);
+            })
     }
 
     render() {

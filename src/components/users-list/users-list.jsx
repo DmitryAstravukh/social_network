@@ -33,7 +33,7 @@ const UserPreview = (props) => {
                 </div>
             </div>
             <div className='user-preview__controls'>
-                <button>{btnText}</button>
+                <button onClick={() => props.toggleFollow(id, followed)}>{btnText}</button>
             </div>
         </div>
     )
@@ -41,7 +41,8 @@ const UserPreview = (props) => {
 
 export default class UsersList extends Component {
     render() {
-        const { users, totalCount, pageSize, pageSizeSteps, changePageSize, changePageNumber } = this.props;
+        const { users, totalCount, pageSize, pageSizeSteps, changePageSize, changePageNumber, toggleFollow } = this.props;
+        // debugger;
         return (
             <div className='content-container'>
                 <div className='user-list'>
@@ -66,7 +67,7 @@ export default class UsersList extends Component {
                     <div className='user-list__body'>
                         {
                             users.map(user => {
-                                return <UserPreview key={user.id} {...user}/>
+                                return <UserPreview key={user.id} toggleFollow={toggleFollow} {...user}/>
                             })
                         }
                     </div>

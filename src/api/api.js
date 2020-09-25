@@ -38,7 +38,7 @@ export default class Api {
             headers: {
                 'API-KEY': 'd1f3422a-8bc6-4dfd-9d5b-b5f6f9569574'
             }
-        }).then(response => response.data);
+        }).then(response => response.data, error => error);
     }
 
     #unfollowUser = (userId) => {
@@ -46,7 +46,7 @@ export default class Api {
             headers: {
                 'API-KEY': 'd1f3422a-8bc6-4dfd-9d5b-b5f6f9569574'
             }
-        }).then(response => response.data);
+        }).then(response => response.data, error => error);
     }
 
     toggleFollow = (userId, followed) => {

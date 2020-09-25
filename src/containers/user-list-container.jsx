@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 
-import { setUsers, changePageSize, changePageNumber, toggleLoading, toggleFollow } from './../actions/users';
+import { setUsers, changePageSize, changePageNumber, toggleLoading, toggleFollow, toggleFollowInProgress } from './../actions/users';
 import UsersList from '../components/users-list';
 import Spiner from '../components/spiner';
 import Api from '../api/api';
@@ -20,10 +20,18 @@ class UserListContainer extends Component {
     }
 
     _toggleFollow = (userId, followed) => {
+        this.props.toggleFollowInProgress(userId, true);
         this.api.toggleFollow(userId, followed)
-            .then(({ resultCode, messages }) => resultCode === 0 ? this.props.toggleFollow(userId)
-                                                                 : alert(messages[0])
-            )
+            .then(data => {
+                this.props.toggleFollowInProgress(userId, false);
+                if(data.response.status === 429){//превышено число разрешенных запросов
+                    alert('Сервер временно недоступен, попробуйте позже');
+                    return false;
+                }
+                if(data.resultCode === 0){
+                    return this.props.toggleFollow(userId)
+                }
+            })
     }
 
     componentDidMount() {
@@ -40,25 +48,8 @@ class UserListContainer extends Component {
     }
 
     render() {
-        const { users, totalCount, pageSize, pageSizeSteps, changePageSize, changePageNumber, isLoading } = this.props;
-
-        const style = {
-            height: '100vh',
-            position: 'absolute',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-        }
-
-        //TODO исправить поведение спинера, он должен крутиться поверх всего
-        // не заставляя перерисовываться компоненту полностью(слетает
-        //
-
-        if(isLoading) return(
-                <div className='content-container' style={style}>
-                    <Spiner />
-                </div>
-        );
+        const { users, totalCount, pageSize, pageSizeSteps,
+                changePageSize, changePageNumber, isLoading, followInProgress } = this.props;
 
         return (
             <UsersList users={users}
@@ -67,17 +58,19 @@ class UserListContainer extends Component {
                        pageSizeSteps={pageSizeSteps}
                        changePageSize={changePageSize}
                        changePageNumber={changePageNumber}
-                       toggleFollow={this._toggleFollow}/>
+                       isLoading={isLoading}
+                       toggleFollow={this._toggleFollow}
+                       followInProgress={followInProgress}/>
 
         )
     }
 }
 
-const mapStateToProps = ({ usersReducer: { users, currentPage, pageSize, pageSizeSteps, totalCount, isLoading } }) => {
-    return { users, currentPage, pageSize, pageSizeSteps, totalCount, isLoading }
+const mapStateToProps = ({ usersReducer: { users, currentPage, pageSize, pageSizeSteps, totalCount, isLoading, followInProgress } }) => {
+    return { users, currentPage, pageSize, pageSizeSteps, totalCount, isLoading, followInProgress }
 }
 
-const mapDispatchToProps = { setUsers, changePageSize, changePageNumber, toggleLoading, toggleFollow }
+const mapDispatchToProps = { setUsers, changePageSize, changePageNumber, toggleLoading, toggleFollow, toggleFollowInProgress }
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserListContainer);

@@ -4,7 +4,8 @@ import {
     CHANGE_PAGE_SIZE,
     CHANGE_PAGE_NUMBER,
     TOGGLE_LOADING,
-    TOGGLE_FOLLOW
+    TOGGLE_FOLLOW,
+    TOGGLE_FOLLOW_IN_PROGRESS
 } from './../actions_types/users';
 
 export const getUsers = () => {
@@ -47,3 +48,10 @@ export const toggleFollow = (userId) => {
     }
 }
 
+export const toggleFollowInProgress = (userId, isFetching) => {
+    return {
+        type: TOGGLE_FOLLOW_IN_PROGRESS,
+        userId,
+        isFetching
+    }
+}

@@ -33,7 +33,8 @@ const UserPreview = (props) => {
                 </div>
             </div>
             <div className='user-preview__controls'>
-                <button onClick={() => props.toggleFollow(id, followed)}>{btnText}</button>
+                <button disabled={props.followInProgress.some(idArr => idArr === id)}
+                        onClick={() => props.toggleFollow(id, followed)}>{btnText}</button>
             </div>
         </div>
     )
@@ -41,8 +42,10 @@ const UserPreview = (props) => {
 
 export default class UsersList extends Component {
     render() {
-        const { users, totalCount, pageSize, pageSizeSteps, changePageSize, changePageNumber, toggleFollow } = this.props;
-        // debugger;
+        const { users, totalCount, pageSize, pageSizeSteps,
+                changePageSize, changePageNumber, toggleFollow, followInProgress,
+                isLoading
+        } = this.props;
         return (
             <div className='content-container'>
                 <div className='user-list'>
@@ -67,12 +70,20 @@ export default class UsersList extends Component {
                     <div className='user-list__body'>
                         {
                             users.map(user => {
-                                return <UserPreview key={user.id} toggleFollow={toggleFollow} {...user}/>
+                                return <UserPreview key={user.id}
+                                                    toggleFollow={toggleFollow}
+                                                    followInProgress={followInProgress}
+                                                    {...user}/>
                             })
                         }
                     </div>
                     <div className='user-list__show-more'>
-                        <button onClick={changePageNumber}>Показать еще</button>
+                        <button onClick={changePageNumber}
+                                disabled={isLoading}>
+                            {
+                                isLoading ? 'Загрузка...' : 'Показать еще'
+                            }
+                        </button>
                     </div>
                 </div>
             </div>

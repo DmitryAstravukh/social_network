@@ -122,6 +122,13 @@
                     cursor: pointer;
                     background-position: right center;
                 }
+
+                button:disabled{
+                    color: $baseBtnTextColor;
+                    cursor: auto;
+                    background-image: none;
+                    background-color: $baseTextColor;
+                }
             }
         }
     }
@@ -151,6 +158,13 @@
             color: $baseBtnTextColor;
             cursor: pointer;
             background-position: right center;
+        }
+
+        button:disabled{
+            color: $baseBtnTextColor;
+            cursor: auto;
+            background-image: none;
+            background-color: $baseTextColor;
         }
     }
 }

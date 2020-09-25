@@ -4,7 +4,8 @@ import {
     CHANGE_PAGE_SIZE,
     CHANGE_PAGE_NUMBER,
     TOGGLE_LOADING,
-    TOGGLE_FOLLOW
+    TOGGLE_FOLLOW,
+    TOGGLE_FOLLOW_IN_PROGRESS
 } from './../actions_types/users';
 
 const inicialState = {
@@ -13,7 +14,8 @@ const inicialState = {
     pageSize: 10, //api default
     pageSizeSteps: [10, 20, 50, 100],
     totalCount: 0,
-    isLoading: true
+    isLoading: true,
+    followInProgress:[]
 }
 
 const setUsers = (state, users) => {
@@ -64,6 +66,15 @@ const toggleFollow = (state, userId) => {
     }
 }
 
+const toggleFollowInProgress = (state, userId, isFetching) => {
+    return {
+        ...state,
+        followInProgress: isFetching ? [...state.followInProgress, userId]
+                                     : state.followInProgress.filter(id => id !== userId)
+
+    }
+}
+
 const usersReducer = (state = inicialState, action) => {
     switch (action.type) {
         case SET_USERS:
@@ -80,6 +91,9 @@ const usersReducer = (state = inicialState, action) => {
 
         case TOGGLE_FOLLOW:
             return toggleFollow(state, action.userId);
+
+        case TOGGLE_FOLLOW_IN_PROGRESS:
+            return toggleFollowInProgress(state, action.userId, action.isFetching);
 
         default:
             return state;

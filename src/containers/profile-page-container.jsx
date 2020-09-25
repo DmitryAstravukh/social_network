@@ -1,20 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { setAuthUserData } from './../actions/auth';
+
 import Profile from '../pages/profile';
 import Spiner from '../components/spiner';
-import Api from '../api/api';
+import { getAuthUserData } from '../reducers/auth';
+
 
 class ProfilePageContainer extends Component {
 
-    api = new Api();
-
+    //TODO добавить редирект на логин при пустых данных
     componentDidMount() {
-        this.api.getAuthUserData()
-            .then(({ data }) => {
-                this.props.setAuthUserData(data);
-            })
+        this.props.getAuthUserData();
     }
 
     render() {
@@ -34,6 +31,6 @@ const mapStateToProps = ({ authReducer: { email, id, login, isAuth } }) => {
     return { email, id, login, isAuth }
 }
 
-const mapDispatchToProps = { setAuthUserData };
+const mapDispatchToProps = { getAuthUserData };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfilePageContainer);

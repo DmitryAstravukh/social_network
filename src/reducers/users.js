@@ -7,7 +7,11 @@ import {
     TOGGLE_FOLLOW,
     TOGGLE_FOLLOW_IN_PROGRESS
 } from './../actions_types/users';
+import Api from '../api/api';
+import { setUsers, toggleLoading, toggleFollow, toggleFollowInProgress } from './../actions/users';
 
+
+const api = new Api();
 const inicialState = {
     users: [],
     currentPage: 1, //api default
@@ -18,16 +22,16 @@ const inicialState = {
     followInProgress:[]
 }
 
-const setUsers = (state, users) => {
-    return {
-        ...state,
-        users: [
-            ...state.users,
-            ...users.items
-        ],
-        totalCount: users.totalCount
-    }
-}
+// const setUsers = (state, users) => {
+//     return {
+//         ...state,
+//         users: [
+//             ...state.users,
+//             ...users.items
+//         ],
+//         totalCount: users.totalCount
+//     }
+// }
 
 const changePageSize = (state, pageSize) => {
     return {
@@ -44,41 +48,76 @@ const changePageNumber = (state) => {
     }
 }
 
-const toggleLoading = (state, isLoading) => {
-    return {
-        ...state,
-        isLoading
-    }
-}
+// const toggleLoading = (state, isLoading) => {
+//     return {
+//         ...state,
+//         isLoading
+//     }
+// }
 
-const toggleFollow = (state, userId) => {
-    return {
-        ...state,
-        users: state.users.map(user => {
-            if(user.id === userId) {
-                return {
-                    ...user,
-                    followed: !user.followed
-                }
+// const toggleFollow = (state, userId) => {
+//     return {
+//         ...state,
+//         users: state.users.map(user => {
+//             if(user.id === userId) {
+//                 return {
+//                     ...user,
+//                     followed: !user.followed
+//                 }
+//             }
+//             return user
+//         })
+//     }
+// }
+
+// const toggleFollowInProgress = (state, userId, isFetching) => {
+//     return {
+//         ...state,
+//         followInProgress: isFetching ? [...state.followInProgress, userId]
+//                                      : state.followInProgress.filter(id => id !== userId)
+//
+//     }
+// }
+
+export const toggleFollowing = (userId, followed) => dispatch => {
+    dispatch(toggleFollowInProgress(userId, true));
+
+    api.toggleFollow(userId, followed)
+        .then(data => {
+            dispatch(toggleFollowInProgress(userId, false));
+
+            // if(data.response.status === 429){//превышено число разрешенных запросов
+            //     alert('Сервер временно недоступен, попробуйте позже');
+            //     return false;
+            // }
+            if(data.resultCode === 0){
+                return dispatch(toggleFollow(userId))
             }
-            return user
+        }).catch(error => alert(error))
+}
+
+export const getUsers = (currentPage, pageSize) => dispatch => {
+    dispatch(toggleLoading(true));
+    api.getUsers(currentPage, pageSize)
+        .then(data => {
+            dispatch(toggleLoading(false));
+            dispatch(setUsers(data));
         })
-    }
 }
 
-const toggleFollowInProgress = (state, userId, isFetching) => {
-    return {
-        ...state,
-        followInProgress: isFetching ? [...state.followInProgress, userId]
-                                     : state.followInProgress.filter(id => id !== userId)
 
-    }
-}
 
 const usersReducer = (state = inicialState, action) => {
     switch (action.type) {
         case SET_USERS:
-            return setUsers(state, action.users);
+            return {
+                ...state,
+                users: [
+                    ...state.users,
+                    ...action.users.items
+                ],
+                totalCount: action.users.totalCount
+            }
 
         case CHANGE_PAGE_SIZE:
             return changePageSize(state, action.pageSize);
@@ -87,13 +126,33 @@ const usersReducer = (state = inicialState, action) => {
             return changePageNumber(state);
 
         case TOGGLE_LOADING:
-            return toggleLoading(state, action.isLoading);
+            return {
+                ...state,
+                isLoading: action.isLoading
+            }
 
         case TOGGLE_FOLLOW:
-            return toggleFollow(state, action.userId);
+            return {
+                ...state,
+                users: state.users.map(user => {
+                    if(user.id === action.userId) {
+                        return {
+                            ...user,
+                            followed: !user.followed
+                        }
+                    }
+                    return user
+                })
+            }
+
 
         case TOGGLE_FOLLOW_IN_PROGRESS:
-            return toggleFollowInProgress(state, action.userId, action.isFetching);
+            return {
+                ...state,
+                followInProgress: action.isFetching ? [...state.followInProgress, action.userId]
+                    : state.followInProgress.filter(id => id !== action.userId)
+
+            }
 
         default:
             return state;

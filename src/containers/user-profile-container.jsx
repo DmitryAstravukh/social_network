@@ -3,31 +3,20 @@ import { connect } from 'react-redux';
 import UserProfile from '../components/user-profile';
 import { withRouter } from 'react-router-dom';
 
-import { setUserProfileData } from './../actions/profile';
 import Spiner from '../components/spiner';
-import Api from '../api/api';
+import { getUserData } from '../reducers/profile';
 
 class UserProfileContainer extends Component {
 
-    api = new Api();
-
-    _getUserData = () => {
-        let userId = this.props.match.params.userId;
-
-        this.api.getUserData(userId)
-            .then(data => this.props.setUserProfileData(data));
-    }
-
     componentDidMount() {
-        this._getUserData();
+        this.props.getUserData(this.props.match.params.userId)
     }
 
     componentDidUpdate(prevProps) {
         if(this.props.match.params.userId !== prevProps.match.params.userId){
-            this._getUserData();
+            this.props.getUserData(this.props.match.params.userId)
         }
     }
-
 
     render() {
         const { userData, isLoadedUserData } = this.props;
@@ -43,6 +32,6 @@ const mapStateToProps = ({ profileReducer: { userData, isLoadedUserData }}) => {
     return { userData, isLoadedUserData }
 }
 
-const mapDispatchToProps = { setUserProfileData };
+const mapDispatchToProps = { getUserData };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(UserProfileContainer));

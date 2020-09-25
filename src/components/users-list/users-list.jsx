@@ -34,7 +34,7 @@ const UserPreview = (props) => {
             </div>
             <div className='user-preview__controls'>
                 <button disabled={props.followInProgress.some(idArr => idArr === id)}
-                        onClick={() => props.toggleFollow(id, followed)}>{btnText}</button>
+                        onClick={() => props.toggleFollowing(id, followed)}>{btnText}</button>
             </div>
         </div>
     )
@@ -43,7 +43,7 @@ const UserPreview = (props) => {
 export default class UsersList extends Component {
     render() {
         const { users, totalCount, pageSize, pageSizeSteps,
-                changePageSize, changePageNumber, toggleFollow, followInProgress,
+                changePageSize, changePageNumber, toggleFollowing, followInProgress,
                 isLoading
         } = this.props;
         return (
@@ -71,7 +71,7 @@ export default class UsersList extends Component {
                         {
                             users.map(user => {
                                 return <UserPreview key={user.id}
-                                                    toggleFollow={toggleFollow}
+                                                    toggleFollowing={toggleFollowing}
                                                     followInProgress={followInProgress}
                                                     {...user}/>
                             })

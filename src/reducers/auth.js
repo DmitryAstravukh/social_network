@@ -1,5 +1,9 @@
 import { SET_AUTH_USER_DATA } from './../actions_types/auth';
 
+import { setAuthUserData } from './../actions/auth';
+import Api from '../api/api';
+const api = new Api();
+
 const inicialState = {
     email: null,
     id: null,
@@ -7,24 +11,22 @@ const inicialState = {
     isAuth: false
 }
 
-/*
-* data - object {
-*                   email: string
-                    id: number
-                    login: string
-* }
-* */
-const setAuthUserData = (state, data) => {
-    return {
-        ...data,
-        isAuth: true
-    }
+
+export const getAuthUserData = () => dispatch => {
+    api.getAuthUserData()
+        .then(({ data }) => {
+            console.log(data);
+            dispatch(setAuthUserData(data))
+        } )
 }
 
 const authReducer = (state = inicialState, action) => {
     switch (action.type){
         case SET_AUTH_USER_DATA:
-            return setAuthUserData(state, action.data);
+            return {
+                ...action.data,
+                isAuth: true
+            }
 
         default: return state;
     }

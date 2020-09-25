@@ -10,7 +10,6 @@ import { Link } from 'react-router-dom';
 export default class UserProfile extends Component {
 
     render() {
-        console.log(this.props);
         const { userData } = this.props;
         const avatar = userData.photos.large ? userData.photos.large : defaultAvatar;
         return (

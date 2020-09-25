@@ -11,11 +11,21 @@ class UserProfileContainer extends Component {
 
     api = new Api();
 
-    componentDidMount() {
+    _getUserData = () => {
         let userId = this.props.match.params.userId;
 
         this.api.getUserData(userId)
             .then(data => this.props.setUserProfileData(data));
+    }
+
+    componentDidMount() {
+        this._getUserData();
+    }
+
+    componentDidUpdate(prevProps) {
+        if(this.props.match.params.userId !== prevProps.match.params.userId){
+            this._getUserData();
+        }
     }
 
 

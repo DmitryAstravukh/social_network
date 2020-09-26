@@ -5,7 +5,8 @@ import {
     CHANGE_PAGE_NUMBER,
     TOGGLE_LOADING,
     TOGGLE_FOLLOW,
-    TOGGLE_FOLLOW_IN_PROGRESS
+    TOGGLE_FOLLOW_IN_PROGRESS,
+    CLEAR_USERS_LIST
 } from './../actions_types/users';
 import Api from '../api/api';
 import { setUsers, toggleLoading, toggleFollow, toggleFollowInProgress } from './../actions/users';
@@ -22,17 +23,6 @@ const inicialState = {
     followInProgress:[]
 }
 
-// const setUsers = (state, users) => {
-//     return {
-//         ...state,
-//         users: [
-//             ...state.users,
-//             ...users.items
-//         ],
-//         totalCount: users.totalCount
-//     }
-// }
-
 const changePageSize = (state, pageSize) => {
     return {
         ...state,
@@ -48,36 +38,12 @@ const changePageNumber = (state) => {
     }
 }
 
-// const toggleLoading = (state, isLoading) => {
-//     return {
-//         ...state,
-//         isLoading
-//     }
-// }
-
-// const toggleFollow = (state, userId) => {
-//     return {
-//         ...state,
-//         users: state.users.map(user => {
-//             if(user.id === userId) {
-//                 return {
-//                     ...user,
-//                     followed: !user.followed
-//                 }
-//             }
-//             return user
-//         })
-//     }
-// }
-
-// const toggleFollowInProgress = (state, userId, isFetching) => {
-//     return {
-//         ...state,
-//         followInProgress: isFetching ? [...state.followInProgress, userId]
-//                                      : state.followInProgress.filter(id => id !== userId)
-//
-//     }
-// }
+const clearUsersList = (state) => {
+    return {
+        ...state,
+        users: []
+    }
+}
 
 export const toggleFollowing = (userId, followed) => dispatch => {
     dispatch(toggleFollowInProgress(userId, true));
@@ -86,10 +52,6 @@ export const toggleFollowing = (userId, followed) => dispatch => {
         .then(data => {
             dispatch(toggleFollowInProgress(userId, false));
 
-            // if(data.response.status === 429){//превышено число разрешенных запросов
-            //     alert('Сервер временно недоступен, попробуйте позже');
-            //     return false;
-            // }
             if(data.resultCode === 0){
                 return dispatch(toggleFollow(userId))
             }
@@ -113,7 +75,7 @@ const usersReducer = (state = inicialState, action) => {
             return {
                 ...state,
                 users: [
-                    ...state.users,
+                    // ...state.users,
                     ...action.users.items
                 ],
                 totalCount: action.users.totalCount
@@ -153,6 +115,9 @@ const usersReducer = (state = inicialState, action) => {
                     : state.followInProgress.filter(id => id !== action.userId)
 
             }
+
+        case CLEAR_USERS_LIST:
+            return clearUsersList(state);
 
         default:
             return state;

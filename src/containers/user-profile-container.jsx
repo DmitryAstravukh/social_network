@@ -5,6 +5,8 @@ import { withRouter } from 'react-router-dom';
 
 import Spiner from '../components/spiner';
 import { getUserData } from '../reducers/profile';
+import { WithAuthRedirect } from './../hoc/withAuthRedirect';
+import {compose} from 'redux';
 
 class UserProfileContainer extends Component {
 
@@ -34,4 +36,7 @@ const mapStateToProps = ({ profileReducer: { userData, isLoadedUserData }}) => {
 
 const mapDispatchToProps = { getUserData };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(UserProfileContainer));
+export default compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    WithAuthRedirect
+)(UserProfileContainer);

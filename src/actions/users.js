@@ -5,7 +5,8 @@ import {
     CHANGE_PAGE_NUMBER,
     TOGGLE_LOADING,
     TOGGLE_FOLLOW,
-    TOGGLE_FOLLOW_IN_PROGRESS
+    TOGGLE_FOLLOW_IN_PROGRESS,
+    CLEAR_USERS_LIST
 } from './../actions_types/users';
 
 export const getUsers = () => {
@@ -53,5 +54,11 @@ export const toggleFollowInProgress = (userId, isFetching) => {
         type: TOGGLE_FOLLOW_IN_PROGRESS,
         userId,
         isFetching
+    }
+}
+
+export const clearUsersList = () => {
+    return {
+        type: CLEAR_USERS_LIST
     }
 }

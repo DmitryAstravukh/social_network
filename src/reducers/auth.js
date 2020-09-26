@@ -14,9 +14,10 @@ const inicialState = {
 
 export const getAuthUserData = () => dispatch => {
     api.getAuthUserData()
-        .then(({ data }) => {
-            console.log(data);
-            dispatch(setAuthUserData(data))
+        .then(response => {
+            if(response.resultCode === 0){
+                dispatch(setAuthUserData(response.data))
+            }
         } )
 }
 

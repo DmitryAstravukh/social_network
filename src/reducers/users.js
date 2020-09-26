@@ -75,7 +75,7 @@ const usersReducer = (state = inicialState, action) => {
             return {
                 ...state,
                 users: [
-                    // ...state.users,
+                    ...state.users,
                     ...action.users.items
                 ],
                 totalCount: action.users.totalCount

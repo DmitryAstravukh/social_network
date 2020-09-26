@@ -38,5 +38,5 @@ const mapDispatchToProps = { getUserData };
 
 export default compose(
     connect(mapStateToProps, mapDispatchToProps),
-    WithAuthRedirect
+    // WithAuthRedirect
 )(UserProfileContainer);

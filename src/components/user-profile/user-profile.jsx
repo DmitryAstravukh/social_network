@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { faFacebookSquare, faGithubSquare, faInstagramSquare, faTwitterSquare, faVk, faYoutubeSquare } from '@fortawesome/free-brands-svg-icons';
 import { Link } from 'react-router-dom';
+import UserProfileStatus from '../user-profile-status';
+import {updateUserStatus} from '../../reducers/profile';
 
 export default class UserProfile extends Component {
 
@@ -25,7 +27,8 @@ export default class UserProfile extends Component {
                         <div className='user-data__about'>
                             <div className='full-name'>{ userData.fullName }</div>
                             <div className='about-me'>
-                                { userData.aboutMe ? userData.aboutMe : 'Не задано' }
+                                <UserProfileStatus status={ this.props.status }
+                                                   updateUserStatus={this.props.updateUserStatus}/>
                             </div>
                         </div>
 

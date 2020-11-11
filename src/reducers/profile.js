@@ -31,20 +31,20 @@ const inicialState = {
     status: ''
 };
 
-export const getUserData = userId => dispatch => {
-    api.getUserData(userId)
-        .then(data => dispatch(setUserProfileData(data)));
+export const getUserData = userId => async dispatch => {
+    const data = await api.getUserData(userId);
+    dispatch(setUserProfileData(data))
 }
 
-export const getUserStatus = userId => dispatch => {
-    api.getUserStatus(userId).then(response => dispatch(setUserStatus(response.data)))
+export const getUserStatus = userId => async dispatch => {
+    const r = await api.getUserStatus(userId);
+    dispatch(setUserStatus(r.data))
 }
 
-export const updateUserStatus = status => dispatch => {
-    api.updateUserStatus(status)
-        .then(response => {
-            if(response.resultCode === 0) dispatch(setUserStatus(response.data))
-        })
+export const updateUserStatus = status => async dispatch => {
+    const r = await api.updateUserStatus(status);
+    if(r.resultCode === 0) dispatch(setUserStatus(r.data))
+
 }
 
 

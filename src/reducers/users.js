@@ -45,26 +45,21 @@ const clearUsersList = (state) => {
     }
 }
 
-export const toggleFollowing = (userId, followed) => dispatch => {
+export const toggleFollowing = (userId, followed) => async dispatch => {
     dispatch(toggleFollowInProgress(userId, true));
 
-    api.toggleFollow(userId, followed)
-        .then(data => {
-            dispatch(toggleFollowInProgress(userId, false));
+    const data = await api.toggleFollow(userId, followed);
+    dispatch(toggleFollowInProgress(userId, false));
 
-            if(data.resultCode === 0){
-                return dispatch(toggleFollow(userId))
-            }
-        }).catch(error => alert(error))
+    if(data.resultCode === 0) dispatch(toggleFollow(userId))
 }
 
-export const getUsers = (currentPage, pageSize) => dispatch => {
+export const getUsers = (currentPage, pageSize) => async dispatch => {
     dispatch(toggleLoading(true));
-    api.getUsers(currentPage, pageSize)
-        .then(data => {
-            dispatch(toggleLoading(false));
-            dispatch(setUsers(data));
-        })
+    const data = api.getUsers(currentPage, pageSize);
+
+    dispatch(toggleLoading(false));
+    dispatch(setUsers(data));
 }
 
 

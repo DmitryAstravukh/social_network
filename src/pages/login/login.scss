@@ -28,43 +28,43 @@
 }
 
 /*------------------------- Header -------------------------*/
-.login-page__header{
-  height: 100px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 100px;
-}
+//.login-page__header{
+//  height: 100px;
+//  display: flex;
+//  justify-content: space-between;
+//  align-items: center;
+//  padding: 0 100px;
+//}
+//
+//.login-page__logo{
+//  img{
+//    width: 150px;
+//  }
+//}
 
-.login-page__logo{
-  img{
-    width: 150px;
-  }
-}
-
-.login-page__reg, .login-page__auth{
-  .fa-user-plus, .fa-sign-in-alt{
-    color: $baseBtnTextColor;
-    font-size: 18px;
-    margin-right: 5px;
-    transition: color .2s ease;
-  }
-
-  a{
-    text-decoration: none;
-    color: $baseBtnTextColor; 
-    transition: color .2s ease;
-  }
-
-  a:hover, a:hover .fa-user-plus, a:hover .fa-sign-in-alt{
-    color: $baseTextColor;
-    
-  }
-}
-
-.login-page__reg.hidden, .login-page__auth.hidden{
-  display: none;
-}
+//.login-page__reg, .login-page__auth{
+//  .fa-user-plus, .fa-sign-in-alt{
+//    color: $baseBtnTextColor;
+//    font-size: 18px;
+//    margin-right: 5px;
+//    transition: color .2s ease;
+//  }
+//
+//  a{
+//    text-decoration: none;
+//    color: $baseBtnTextColor;
+//    transition: color .2s ease;
+//  }
+//
+//  a:hover, a:hover .fa-user-plus, a:hover .fa-sign-in-alt{
+//    color: $baseTextColor;
+//
+//  }
+//}
+//
+//.login-page__reg.hidden, .login-page__auth.hidden{
+//  display: none;
+//}
 
 
 /*------------------------- Content -------------------------*/
@@ -73,7 +73,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: calc(100vh - 100px);
+  height: 100vh;
   h1{
     color: $baseBtnTextColor;
     margin: 0;

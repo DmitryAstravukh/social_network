@@ -1,32 +1,32 @@
-import React, {Component} from 'react';
+import React from 'react';
 import './header.scss';
 import SearchBar from './../search-bar';
 import logo from '../../assets/image/logo.svg';
 import UserNavbar from '../user-navbar';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faUserFriends} from '@fortawesome/free-solid-svg-icons';
-import {NavLink} from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
+import { NavLink } from 'react-router-dom';
 
-export default class Header extends Component {
-    render() {
-        const { login, id, isAuth } = this.props;
-
-        return (
-            <header className='user-header'>
-                <div className='user-header__logo'>
-                    <a href='/'>
-                        <img src={logo} alt='logo'/>
-                    </a>
-                </div>
-                <SearchBar width='400px' textColor='#ffffff' textSize='16px'/>
+export const Header = ({ login, id, isAuth }) => {
+    return (
+        <header className='user-header'>
+            <div className='user-header__logo'>
+                <a href='/'>
+                    <img src={logo} alt='logo'/>
+                </a>
+            </div>
+            <SearchBar width='400px' textColor='#ffffff' textSize='16px'/>
+            <div className='user-header__auth '>
                 {
                     isAuth ?
                         <UserNavbar login={login} id={id}/>
                         :
-                        <NavLink to='/login'>Войти</NavLink>
+                        <NavLink className='' to='/login'>
+                            <FontAwesomeIcon icon={faSignInAlt} />
+                            Авторизация
+                        </NavLink>
                 }
-
-            </header>
-        )
-    }
+            </div>
+        </header>
+    )
 }

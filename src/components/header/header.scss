@@ -26,3 +26,23 @@
       }
     }
 }
+
+.user-header__auth{
+    .fa-sign-in-alt{
+        color: $baseBtnTextColor;
+        font-size: 18px;
+        margin-right: 5px;
+        transition: color .2s ease;
+    }
+
+    a{
+        display: flex;
+        text-decoration: none;
+        color: $baseBtnTextColor;
+        transition: color .2s ease;
+    }
+
+    a:hover, a:hover .fa-sign-in-alt{
+        color: $baseTextColor;
+    }
+}

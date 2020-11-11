@@ -86,23 +86,23 @@ export default class Login extends Component{
     return (
       <div className='login-page'>
         <div className='container'>
-          <div className='login-page__header'>
-            <div className="login-page__logo">
-              <img src={logo} title='Social Network logo' alt='Social Network logo'/>
-            </div>
-            <div className='login-page__reg'>  
-              <a href='/'> 
-                <FontAwesomeIcon icon={faUserPlus} />
-                Регистрация
-              </a>
-            </div>
-            <div className='login-page__auth hidden'>  
-              <a href='/'> 
-                <FontAwesomeIcon icon={faSignInAlt} />
-                Авторизация
-              </a>
-            </div>
-          </div>
+          {/*<div className='login-page__header'>*/}
+          {/*  <div className="login-page__logo">*/}
+          {/*    <img src={logo} title='Social Network logo' alt='Social Network logo'/>*/}
+          {/*  </div>*/}
+          {/*  <div className='login-page__reg hidden'>*/}
+          {/*    <a href='/'> */}
+          {/*      <FontAwesomeIcon icon={faUserPlus} />*/}
+          {/*      Регистрация*/}
+          {/*    </a>*/}
+          {/*  </div>*/}
+          {/*  <div className='login-page__auth '>*/}
+          {/*    <a href='/'> */}
+          {/*      <FontAwesomeIcon icon={faSignInAlt} />*/}
+          {/*      Авторизация*/}
+          {/*    </a>*/}
+          {/*  </div>*/}
+          {/*</div>*/}
           
           <SigninContent />
           {/* <SignupContent /> */}

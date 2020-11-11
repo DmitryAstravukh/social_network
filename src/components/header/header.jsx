@@ -15,7 +15,7 @@ export const Header = ({ login, id, isAuth }) => {
                     <img src={logo} alt='logo'/>
                 </a>
             </div>
-            <SearchBar width='400px' textColor='#ffffff' textSize='16px'/>
+            {/*<SearchBar width='400px' textColor='#ffffff' textSize='16px'/>*/}
             <div className='user-header__auth '>
                 {
                     isAuth ?

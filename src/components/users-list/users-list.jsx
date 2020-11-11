@@ -1,8 +1,11 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import './users-list.scss';
 import SearchBar from '../search-bar';
 import defaultAvatar from '../../assets/image/default-avatar.png';
 import { Link } from 'react-router-dom';
+import { getUsers, toggleFollowing } from '../../reducers/users';
+import { changePageSize, changePageNumber, clearUsersList } from './../../actions/users';
 
 const UserPreview = (props) => {
     const {
@@ -34,59 +37,64 @@ const UserPreview = (props) => {
             </div>
             <div className='user-preview__controls'>
                 <button disabled={props.followInProgress.some(idArr => idArr === id)}
-                        onClick={() => props.toggleFollowing(id, followed)}>{btnText}</button>
+                        onClick={() => props.dispatch(props.toggleFollowing(id, followed))}>{btnText}</button>
             </div>
         </div>
     )
 }
 
-export default class UsersList extends Component {
-    render() {
-        const { users, totalCount, pageSize, pageSizeSteps,
-                changePageSize, changePageNumber, toggleFollowing, followInProgress,
-                isLoading
-        } = this.props;
-        return (
-            <div className='content-container'>
-                <div className='user-list'>
-                    <div className='user-list__header'>
-                        <div className='people-counter'>
-                            <div className='people-counter__all-count'>
-                                Всего пользователей - <span>{totalCount}</span>
-                            </div>
-                            <div className='people-counter__count'>
-                                Показывать по:
-                                <select value={pageSize} onChange={(e) => changePageSize(+e.target.value)}>
-                                    {
-                                        pageSizeSteps.map(step => {
-                                            return <option key={step} value={step}>{step}</option>
-                                        })
-                                    }
-                                </select>
-                            </div>
+export const UsersList = () => {
+    const dispatch = useDispatch();
+
+    const { users, currentPage, pageSize, pageSizeSteps,
+            totalCount, isLoading, followInProgress } = useSelector(({ usersReducer }) => usersReducer);
+
+    useEffect(() => {
+        dispatch(getUsers(currentPage, pageSize));
+        //return () => dispatch(clearUsersList())
+    }, [pageSize, currentPage])
+
+    return (
+        <div className='content-container'>
+            <div className='user-list'>
+                <div className='user-list__header'>
+                    <div className='people-counter'>
+                        <div className='people-counter__all-count'>
+                            Всего пользователей - <span>{totalCount}</span>
                         </div>
-                        <SearchBar width='100%' height='40px' textColor='#626c72' textSize='14px' />
+                        <div className='people-counter__count'>
+                            Показывать по:
+                            <select value={pageSize} onChange={(e) => dispatch(changePageSize(+e.target.value))}>
+                                {
+                                    pageSizeSteps.map(step => {
+                                        return <option key={step} value={step}>{step}</option>
+                                    })
+                                }
+                            </select>
+                        </div>
                     </div>
-                    <div className='user-list__body'>
+                    <SearchBar width='100%' height='40px' textColor='#626c72' textSize='14px' />
+                </div>
+                <div className='user-list__body'>
+                    {
+                        users.map(user => {
+                            return <UserPreview key={user.id}
+                                                toggleFollowing={toggleFollowing}
+                                                followInProgress={followInProgress}
+                                                dispatch={dispatch}
+                                                {...user}/>
+                        })
+                    }
+                </div>
+                <div className='user-list__show-more'>
+                    <button onClick={() => dispatch(changePageNumber())}
+                            disabled={isLoading}>
                         {
-                            users.map(user => {
-                                return <UserPreview key={user.id}
-                                                    toggleFollowing={toggleFollowing}
-                                                    followInProgress={followInProgress}
-                                                    {...user}/>
-                            })
+                            isLoading ? 'Загрузка...' : 'Показать еще'
                         }
-                    </div>
-                    <div className='user-list__show-more'>
-                        <button onClick={changePageNumber}
-                                disabled={isLoading}>
-                            {
-                                isLoading ? 'Загрузка...' : 'Показать еще'
-                            }
-                        </button>
-                    </div>
+                    </button>
                 </div>
             </div>
-        )
-    }
+        </div>
+    )
 }

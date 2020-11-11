@@ -1,98 +1,81 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import './user-profile.scss';
 
 import defaultAvatar from './../../assets/image/default-avatar.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { faFacebookSquare, faGithubSquare, faInstagramSquare, faTwitterSquare, faVk, faYoutubeSquare } from '@fortawesome/free-brands-svg-icons';
-import { Link } from 'react-router-dom';
 import UserProfileStatus from '../user-profile-status';
-import {updateUserStatus} from '../../reducers/profile';
+import { getUserData, getUserStatus, updateUserStatus } from '../../reducers/profile';
+import Spiner from '../spiner';
 
-export default class UserProfile extends Component {
-    //TODO не обновляется при переходе с чужого профиля на свой
-    render() {
-        const { userData } = this.props;
-        const avatar = userData.photos.large ? userData.photos.large : defaultAvatar;
-        return (
-            <div className='content-container'>
-                <div className='user-profile'>
+const UserProfileContact = ({type, icon}) => {
+    return (
+        <div className='contact'>
+            <a href={type ? type : '#'} target='_blank' rel='noopener noreferrer'>
+                <FontAwesomeIcon icon={icon} />
+                {type ? type : 'Не задано'}
+            </a>
+        </div>
+    )
+}
 
-                    <div className='user-avatar'>
-                        <img src={avatar} alt={avatar}/>
+export const UserProfile = (props) => {
+    const dispatch = useDispatch();
+    const userId = props.match.params.userId;
+    const { userData, isLoadedUserData, status } = useSelector(({ profileReducer }) => profileReducer);
+
+    useEffect(() => {
+        dispatch(getUserStatus(userId));
+        dispatch(getUserData(userId));
+    }, [userId])
+
+    const avatar = userData.photos.large ? userData.photos.large : defaultAvatar;
+
+    if(!isLoadedUserData) return <Spiner />
+
+    return (
+        <div className='content-container'>
+            <div className='user-profile'>
+
+                <div className='user-avatar'>
+                    <img src={avatar} alt={avatar}/>
+                </div>
+
+                <div className='user-data'>
+
+                    <div className='user-data__about'>
+                        <div className='full-name'>{userData.fullName}</div>
+                        <div className='about-me'>
+                            <UserProfileStatus status={status}
+                                               updateUserStatus={updateUserStatus}/>
+                        </div>
                     </div>
 
-                    <div className='user-data'>
-
-                        <div className='user-data__about'>
-                            <div className='full-name'>{ userData.fullName }</div>
-                            <div className='about-me'>
-                                <UserProfileStatus status={ this.props.status }
-                                                   updateUserStatus={this.props.updateUserStatus}/>
-                            </div>
+                    <div className='user-data__job'>
+                        <span className='block-title'>Работа</span>
+                        <div className='looking-job'>
+                           В поиске работы: { userData.lookingForAJob ? 'Да' : 'Нет' }
                         </div>
-
-                        <div className='user-data__job'>
-                            <span className='block-title'>Работа</span>
-                            <div className='looking-job'>
-                               В поиске работы: { userData.lookingForAJob ? 'Да' : 'Нет' }
-                            </div>
-                            <div className='looking-job-desc'>
-                                Описание: { userData.lookingForAJobDescription ? userData.lookingForAJobDescription : 'Не задано' }
-                            </div>
+                        <div className='looking-job-desc'>
+                            Описание: { userData.lookingForAJobDescription ? userData.lookingForAJobDescription : 'Не задано' }
                         </div>
-
-                        <div className='user-data__contacts'>
-                            <span className='block-title'>Контакты</span>
-
-                            <div className='contact'>
-                                <a href={userData.contacts.facebook ? userData.contacts.facebook : '#'} target='_blank'>
-                                    <FontAwesomeIcon icon={faFacebookSquare} />
-                                    {userData.contacts.facebook ? userData.contacts.facebook : 'Не задано'}
-                                </a>
-                            </div>
-
-                            <div className='contact'>
-                                <a href={userData.contacts.github ? userData.contacts.github : '#'} target='_blank'>
-                                    <FontAwesomeIcon icon={faGithubSquare} />
-                                    {userData.contacts.github ? userData.contacts.github : 'Не задано'}
-                                </a>
-                            </div>
-                            <div className='contact'>
-                                <a href={userData.contacts.instagram ? userData.contacts.instagram : '#'} target='_blank'>
-                                    <FontAwesomeIcon icon={faInstagramSquare} />
-                                    {userData.contacts.instagram ? userData.contacts.instagram : 'Не задано'}
-                                </a>
-                            </div>
-                            <div className='contact'>
-                                <a href={userData.contacts.twitter ? userData.contacts.twitter : '#'} target='_blank'>
-                                    <FontAwesomeIcon icon={faTwitterSquare} />
-                                    {userData.contacts.twitter ? userData.contacts.twitter : 'Не задано'}
-                                </a>
-                            </div>
-                            <div className='contact'>
-                                <a href={userData.contacts.vk ? userData.contacts.vk : '#'} target='_blank'>
-                                    <FontAwesomeIcon icon={faVk} />
-                                    {userData.contacts.vk ? userData.contacts.vk : 'Не задано'}
-                                </a>
-                            </div>
-                            <div className='contact'>
-                                <a href={userData.contacts.website ? userData.contacts.website : '#'} target='_blank'>
-                                    <FontAwesomeIcon icon={faGlobe} />
-                                    {userData.contacts.website ? userData.contacts.website : 'Не задано'}
-                                </a>
-                            </div>
-                            <div className='contact'>
-                                <a href={userData.contacts.youtube ? userData.contacts.youtube : '#'} target='_blank'>
-                                    <FontAwesomeIcon icon={faYoutubeSquare} />
-                                    {userData.contacts.youtube ? userData.contacts.youtube : 'Не задано'}
-                                </a>
-                            </div>
-                        </div>
-
                     </div>
+
+                    <div className='user-data__contacts'>
+                        <span className='block-title'>Контакты</span>
+                        <UserProfileContact type={userData.contacts.facebook} icon={faFacebookSquare} />
+                        <UserProfileContact type={userData.contacts.github} icon={faGithubSquare} />
+                        <UserProfileContact type={userData.contacts.instagram} icon={faInstagramSquare} />
+                        <UserProfileContact type={userData.contacts.twitter} icon={faTwitterSquare} />
+                        <UserProfileContact type={userData.contacts.vk} icon={faVk} />
+                        <UserProfileContact type={userData.contacts.website} icon={faGlobe} />
+                        <UserProfileContact type={userData.contacts.youtube} icon={faYoutubeSquare} />
+                    </div>
+
                 </div>
             </div>
-        )
-    }
+        </div>
+    )
 }

@@ -9,8 +9,9 @@ import Header from '../header';
 import Navbar from '../navbar';
 import News from '../news';
 import Messages from '../messages';
-import UserProfileContainer from '../../containers/user-profile-container';
-import {UsersList} from '../users-list/users-list';
+//import UserProfileContainer from '../../containers/user-profile-container';
+import { UsersList } from '../users-list/users-list';
+import { UserProfile } from '../user-profile/user-profile';
 
 const App = () => {
     const dispatch = useDispatch();
@@ -29,7 +30,7 @@ const App = () => {
                     <Route path='/news' component={News}></Route>
                     <Route path='/messages' component={Messages}></Route>
                     <Route path='/users' component={UsersList}></Route>
-                    <Route path='/profile/:userId' component={UserProfileContainer}></Route>
+                    <Route path='/profile/:userId' component={UserProfile}></Route>
                     <Route path='/login' render={() => <Login />}></Route>
                 </Switch>
             </div>

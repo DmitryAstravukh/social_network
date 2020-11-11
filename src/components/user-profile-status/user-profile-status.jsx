@@ -1,48 +1,28 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import './user-profile-status.scss';
+import { useDispatch } from 'react-redux';
 
-export default class UserProfileStatus extends Component {
+export const UserProfileStatus = ({ status, updateUserStatus }) => {
+    const dispatch = useDispatch();
+    const [editMode, setEditMode] = useState(false);
+    const [stateStatus, setStateStatus] = useState(status);
 
-    state = {
-        editMode: false,
-        status: this.props.status
+    const hideEditMode = () => {
+        setEditMode(false);
+        dispatch(updateUserStatus(stateStatus));
     }
 
-    showEditMode = () => {
-        this.setState({
-            editMode: true
-        })
-    }
+    useEffect(() => {
+        setStateStatus(status)
+    }, [status])
 
-    hideEditMode = () => {
-        this.setState({
-            editMode: false
-        })
-        // this.props.updateUserStatus(this.state.status);
-    }
-
-    onStatusChange = e => {
-        this.setState({
-            status: e.currentTarget.value
-        })
-    }
-
-    componentDidUpdate(prevProps) {
-        if(prevProps.status !== this.props.status){
-            this.setState({
-                status: this.props.status
-            })
-        }
-    }
+    return editMode
+        ? <input className='status-input'
+                 type='text'
+                 autoFocus
+                 onChange={e => setStateStatus(e.currentTarget.value)}
+                 value={stateStatus} onBlur={hideEditMode}/>
+        : <span className='status-text' onDoubleClick={() => setEditMode(true)}>{stateStatus || 'не задано'}</span>
 
 
-    render() {
-        return this.state.editMode
-            ? <input className='status-input'
-                     type='text'
-                     autoFocus
-                     onChange={this.onStatusChange}
-                     value={this.state.status} onBlur={this.hideEditMode}/>
-            : <span className='status-text' onDoubleClick={this.showEditMode}>{this.state.status || 'не задано'}</span>
-    }
 }

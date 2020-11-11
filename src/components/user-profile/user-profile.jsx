@@ -10,7 +10,7 @@ import UserProfileStatus from '../user-profile-status';
 import {updateUserStatus} from '../../reducers/profile';
 
 export default class UserProfile extends Component {
-
+    //TODO не обновляется при переходе с чужого профиля на свой
     render() {
         const { userData } = this.props;
         const avatar = userData.photos.large ? userData.photos.large : defaultAvatar;

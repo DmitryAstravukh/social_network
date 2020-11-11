@@ -9,7 +9,6 @@ import Header from '../header';
 import Navbar from '../navbar';
 import News from '../news';
 import Messages from '../messages';
-//import UserProfileContainer from '../../containers/user-profile-container';
 import { UsersList } from '../users-list/users-list';
 import { UserProfile } from '../user-profile/user-profile';
 

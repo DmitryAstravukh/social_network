@@ -1,0 +1,10 @@
+@import "./../../index";
+
+.content{
+    display: flex;
+    margin-top: 60px;
+    margin-left: 130px;
+    height: calc(100vh - 60px);
+    overflow: hidden;
+    position: relative;
+}

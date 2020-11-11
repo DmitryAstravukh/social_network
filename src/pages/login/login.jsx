@@ -5,37 +5,54 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus, faKey, faUser, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 
 import logo from '../../assets/image/logo.svg';
+import { Field, reduxForm } from 'redux-form';
 
-const SigninContent = () => {
-  return(
-    <div className='login-page__content-signin'>
-      <h1>Добро пожаловать</h1>
-      <p>Войдите, чтобы общаться и делиться новостями</p>
-      <form action='' className='login-form'>
+
+let SigninForm = props => {
+  const { handleSubmit } = props;
+  return (
+      <form onSubmit={handleSubmit} className='login-form'>
         <div className='input-group'>
           <div className='input-group__email-signin'>
-            <input type='email' placeholder='Email'/>
+            <Field component='input' name='email' type='email' placeholder='Email'/>
             <FontAwesomeIcon icon={faUser} />
           </div>
           <hr/>
           <div className='input-group__pass-signin'>
-            <input type='password' placeholder='Пароль'/>
+            <Field component='input' name='password' type='password' placeholder='Пароль'/>
             <FontAwesomeIcon icon={faKey} />
-          </div> 
+          </div>
         </div>
-        
+
         <div className='additional-functions'>
           <div className='remember-login'>
-            <input type='checkbox' 
-                    className='remember-login__checkbox'
-                    id='remember-login__checkbox' />
+            <Field component='input' type='checkbox' name='rememberMe'
+                   className='remember-login__checkbox'
+                   id='remember-login__checkbox' />
             <label htmlFor='remember-login__checkbox'>Запомнить меня</label>
           </div>
           <a href='/' className='lost-password'>Забыли пароль?</a>
-        </div> 
-        
+        </div>
+
         <button className='login-btn-signin'>Войти</button>
       </form>
+  )
+}
+SigninForm = reduxForm({
+  form: 'signin'
+})(SigninForm)
+
+
+const SigninContent = () => {
+  const onSubmit = (formData) => {
+    //TODO сделать логин юзая api
+    console.log(formData);
+  }
+  return(
+    <div className='login-page__content-signin'>
+      <h1>Добро пожаловать</h1>
+      <p>Войдите, чтобы общаться и делиться новостями</p>
+      <SigninForm onSubmit={onSubmit}/>
     </div>
   )
 }

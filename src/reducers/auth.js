@@ -12,13 +12,9 @@ const inicialState = {
 }
 
 
-export const getAuthUserData = () => dispatch => {
-    api.getAuthUserData()
-        .then(response => {
-            if(response.resultCode === 0){
-                dispatch(setAuthUserData(response.data))
-            }
-        } )
+export const getAuthUserData = () => async dispatch => {
+    const r = await api.getAuthUserData();
+    if(r.resultCode === 0) dispatch(setAuthUserData(r.data))
 }
 
 const authReducer = (state = inicialState, action) => {

@@ -56,7 +56,7 @@ export const toggleFollowing = (userId, followed) => async dispatch => {
 
 export const getUsers = (currentPage, pageSize) => async dispatch => {
     dispatch(toggleLoading(true));
-    const data = api.getUsers(currentPage, pageSize);
+    const data = await api.getUsers(currentPage, pageSize);
 
     dispatch(toggleLoading(false));
     dispatch(setUsers(data));

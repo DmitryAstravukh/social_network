@@ -1,29 +1,34 @@
 import React, { Component } from 'react';
 import './login.scss';
-import { Formik } from 'formik';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faKey, faUser } from '@fortawesome/free-solid-svg-icons';
+import { Formik, Form, Field } from 'formik';
+import * as Yup from 'yup';
+
+const SigninSchema = Yup.object().shape({
+    email: Yup.string()
+        .email('Введите Email в формате example@site.com')
+        .required('Введите Email в формате example@site.com'),
+    password: Yup.string()
+        .min(3, 'Пароль слишком короткий!')
+        .max(20, 'Пароль слишком длинный!')
+        .required('Поле должно содержать от 3 до 20 символов'),
+});
+
+const inicialValueSignInForm = {
+    email: '',
+    password: '',
+    rememberMe: false
+}
 
 const SigninForm = () => {
   return (
       <Formik
-          initialValues={{ email: '', password: '' }}
-          validate={values => {
-            const errors = {};
-            if (!values.email) {
-              errors.email = 'Введите Email';
-            } else if (
-                !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-            ) {
-              errors.email = 'Invalid email address';
-            }
-            return errors;
-          }}
+          initialValues={inicialValueSignInForm}
+          validationSchema={SigninSchema}
           onSubmit={(values, { setSubmitting }) => {
-            setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
-              setSubmitting(false);
-            }, 400);
+            console.log(JSON.stringify(values, null, 2));
+            setSubmitting(false);
           }}
       >
         {({
@@ -39,31 +44,35 @@ const SigninForm = () => {
             <form className='login-form' onSubmit={handleSubmit}>
               <div className='input-group'>
                 <div className='input-group__email-signin'>
-                  <input name='email'
+                  <Field name='email'
                          type='email'
                          placeholder='Email'
                          onChange={handleChange}
                          onBlur={handleBlur}
-                         value={values.email}/>
+                         value={values.email}
+                  />
                   <FontAwesomeIcon icon={faUser} />
-                  {errors.email && touched.email && errors.email}
+                  {errors.email && touched.email ? <div className='failed-vlidation-auth'>{errors.email}</div> : null}
                 </div>
                 <hr/>
                 <div className='input-group__pass-signin'>
-                  <input name='password'
+                  <Field name='password'
                          type='password'
                          placeholder='Пароль'
                          onChange={handleChange}
                          onBlur={handleBlur}
-                         value={values.password}/>
+                         value={values.password}
+                         minLength='3'
+                         maxLength='20'
+                  />
                   <FontAwesomeIcon icon={faKey} />
-                  {errors.password && touched.password && errors.password}
+                  {errors.password && touched.password ? <div className='failed-vlidation-auth'>{errors.password}</div> : null}
                 </div>
               </div>
 
               <div className='additional-functions'>
                 <div className='remember-login'>
-                  <input type='checkbox' name='rememberMe'
+                  <Field type='checkbox' name='rememberMe'
                          className='remember-login__checkbox'
                          id='remember-login__checkbox' />
                   <label htmlFor='remember-login__checkbox'>Запомнить меня</label>

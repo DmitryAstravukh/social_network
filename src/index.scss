@@ -52,3 +52,10 @@ body{
   overflow-y: auto;
   scrollbar-width: thin;
 }
+
+input:invalid:not(:placeholder-shown) {
+  border-color: red;
+}
+input:valid:not(:placeholder-shown) {
+  border-color: green;
+}

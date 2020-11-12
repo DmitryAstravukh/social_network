@@ -9,6 +9,7 @@ import { faFacebookSquare, faGithubSquare, faInstagramSquare, faTwitterSquare, f
 import UserProfileStatus from '../user-profile-status';
 import { getUserData, getUserStatus, updateUserStatus } from '../../reducers/profile';
 import Spiner from '../spiner';
+import { useParams, Redirect } from 'react-router-dom';
 
 const UserProfileContact = ({type, icon}) => {
     return (
@@ -21,18 +22,21 @@ const UserProfileContact = ({type, icon}) => {
     )
 }
 
-export const UserProfile = (props) => {
+export const UserProfile = () => {
+    const { userId } = useParams();
     const dispatch = useDispatch();
-    const userId = props.match.params.userId;
     const { userData, isLoadedUserData, status } = useSelector(({ profileReducer }) => profileReducer);
 
     useEffect(() => {
-        dispatch(getUserStatus(userId));
-        dispatch(getUserData(userId));
+        if(userId && userId !== 'null') {
+            dispatch(getUserStatus(userId));
+            dispatch(getUserData(userId));
+        }
     }, [userId])
 
     const avatar = userData.photos.large ? userData.photos.large : defaultAvatar;
 
+    if(!userId || userId === 'null') return <Redirect to='/login' />
     if(!isLoadedUserData) return <Spiner />
 
     return (
@@ -77,5 +81,6 @@ export const UserProfile = (props) => {
                 </div>
             </div>
         </div>
+
     )
 }

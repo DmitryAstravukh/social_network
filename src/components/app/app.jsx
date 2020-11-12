@@ -26,11 +26,11 @@ const App = () => {
             <div className='content'>
                 <Navbar id={id}/>
                 <Switch>
-                    <Route path='/news' component={News}></Route>
-                    <Route path='/messages' component={Messages}></Route>
-                    <Route path='/users' component={UsersList}></Route>
-                    <Route path='/profile/:userId' component={UserProfile}></Route>
-                    <Route path='/login' render={() => <Login />}></Route>
+                    <Route path='/news' render={() => <News/>}></Route>
+                    <Route path='/messages' render={() => <Messages/>}></Route>
+                    <Route path='/users' render={() => <UsersList/>}></Route>
+                    <Route path='/profile/:userId' render={() => <UserProfile/>}></Route>
+                    <Route path='/login' render={() => <Login/>}></Route>
                 </Switch>
             </div>
         </div>

@@ -5,8 +5,8 @@ import Api from '../api/api';
 const api = new Api();
 
 const inicialState = {
-    email: null,
     id: null,
+    email: null,
     login: null,
     isAuth: false
 }

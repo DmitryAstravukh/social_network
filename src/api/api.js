@@ -61,4 +61,12 @@ export default class Api {
         return this.#ax.put('/profile/status',{status})
     }
 
+    login = (email, password, rememberMe) => {
+        return this.#ax.post('/auth/login', {email, password, rememberMe})
+    }
+
+    unLogin = () => {
+        return this.#ax.delete('/auth/login')
+    }
+
 }

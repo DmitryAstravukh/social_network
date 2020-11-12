@@ -1,9 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './login.scss';
+import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faKey, faUser } from '@fortawesome/free-solid-svg-icons';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
+import { login } from './../../reducers/auth';
+import { Redirect } from 'react-router-dom';
 
 const SigninSchema = Yup.object().shape({
     email: Yup.string()
@@ -22,13 +25,18 @@ const inicialValueSignInForm = {
 }
 
 const SigninForm = () => {
-  return (
+    const dispatch = useDispatch();
+    const { id, isAuth, errorMessage } = useSelector(({ authReducer }) => authReducer);
+
+    if(isAuth) return <Redirect to={`/profile/${id}`} />
+    return (
       <Formik
           initialValues={inicialValueSignInForm}
           validationSchema={SigninSchema}
-          onSubmit={(values, { setSubmitting }) => {
-            console.log(JSON.stringify(values, null, 2));
-            setSubmitting(false);
+          onSubmit={({email, password, rememberMe}, { setSubmitting }) => {
+              console.log(email, password, rememberMe);
+              dispatch(login(email, password, rememberMe));
+              setSubmitting(false);
           }}
       >
         {({
@@ -52,7 +60,7 @@ const SigninForm = () => {
                          value={values.email}
                   />
                   <FontAwesomeIcon icon={faUser} />
-                  {errors.email && touched.email ? <div className='failed-vlidation-auth'>{errors.email}</div> : null}
+                  {errors.email && touched.email ? <div className='failed-validation-auth'>{errors.email}</div> : null}
                 </div>
                 <hr/>
                 <div className='input-group__pass-signin'>
@@ -66,7 +74,7 @@ const SigninForm = () => {
                          maxLength='20'
                   />
                   <FontAwesomeIcon icon={faKey} />
-                  {errors.password && touched.password ? <div className='failed-vlidation-auth'>{errors.password}</div> : null}
+                  {errors.password && touched.password ? <div className='failed-validation-auth'>{errors.password}</div> : null}
                 </div>
               </div>
 
@@ -85,11 +93,12 @@ const SigninForm = () => {
                       disabled={isSubmitting}>
                 Войти
               </button>
+                {errorMessage ? <div className='failed-validation-auth'>{errorMessage}</div> : null}
             </form>
         )}
       </Formik>
 
-  )
+    )
 }
 
 export const Login = () => {

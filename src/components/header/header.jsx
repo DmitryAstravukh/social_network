@@ -1,6 +1,6 @@
 import React from 'react';
 import './header.scss';
-import SearchBar from './../search-bar';
+//import SearchBar from './../search-bar';
 import logo from '../../assets/image/logo.svg';
 import UserNavbar from '../user-navbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

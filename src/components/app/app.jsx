@@ -14,11 +14,10 @@ import { UserProfile } from '../user-profile/user-profile';
 
 const App = () => {
     const dispatch = useDispatch();
+    const { id, login, isAuth } = useSelector(({ authReducer }) => authReducer);
     useEffect(() => {
         dispatch(getAuthUserData())
-    },[])
-
-    const { id, login, isAuth } = useSelector(({ authReducer }) => authReducer);
+    },[id])
 
     return (
         <div className='app'>

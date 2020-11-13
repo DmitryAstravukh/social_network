@@ -16,26 +16,29 @@ const SigninSchema = Yup.object().shape({
         .min(3, 'Пароль слишком короткий!')
         .max(20, 'Пароль слишком длинный!')
         .required('Поле должно содержать от 3 до 20 символов'),
+    // captcha: Yup.string()
+    //     .required('Введите данные с картинки'),
 });
 
 const inicialValueSignInForm = {
     email: '',
     password: '',
-    rememberMe: false
+    rememberMe: false,
+    captcha: ''
 }
 
 const SigninForm = () => {
     const dispatch = useDispatch();
-    const { id, isAuth, errorMessage } = useSelector(({ authReducer }) => authReducer);
+    const { id, isAuth, errorMessage, captchaUrl } = useSelector(({ authReducer }) => authReducer);
 
     if(isAuth) return <Redirect to={`/profile/${id}`} />
     return (
       <Formik
           initialValues={inicialValueSignInForm}
           validationSchema={SigninSchema}
-          onSubmit={({email, password, rememberMe}, { setSubmitting }) => {
-              console.log(email, password, rememberMe);
-              dispatch(login(email, password, rememberMe));
+          onSubmit={({email, password, rememberMe, captcha}, { setSubmitting }) => {
+              console.log(email, password, rememberMe, captcha);
+              dispatch(login(email, password, rememberMe, captcha));
               setSubmitting(false);
           }}
       >
@@ -70,8 +73,6 @@ const SigninForm = () => {
                          onChange={handleChange}
                          onBlur={handleBlur}
                          value={values.password}
-                         minLength='3'
-                         maxLength='20'
                   />
                   <FontAwesomeIcon icon={faKey} />
                   {errors.password && touched.password ? <div className='failed-validation-auth'>{errors.password}</div> : null}
@@ -88,12 +89,29 @@ const SigninForm = () => {
                 <a href='/' className='lost-password'>Забыли пароль?</a>
               </div>
 
+                {
+                    captchaUrl ?
+                        <div style={{textAlign:'center'}}>
+                            <img src={captchaUrl} alt='captcha'/>
+                            <Field type='text'
+                                   name='captcha'
+                                   className='auth-captcha-input'
+                                   placeholder='Введите данные с картинки'
+                                   required
+                                   onChange={handleChange}
+                                   onBlur={handleBlur}
+                                   value={values.captcha}/>
+                        </div>
+                        : null
+                }
+
               <button className='login-btn-signin'
                       type='submit'
                       disabled={isSubmitting}>
                 Войти
               </button>
                 {errorMessage ? <div className='failed-validation-auth'>{errorMessage}</div> : null}
+
             </form>
         )}
       </Formik>

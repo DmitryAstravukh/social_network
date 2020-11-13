@@ -1,4 +1,4 @@
-import { SET_AUTH_USER_DATA } from './../actions_types/auth';
+import { SET_AUTH_USER_DATA, SET_CAPTCHA_URL } from './../actions_types/auth';
 
 
 export const setAuthUserData = (payload, isAuth, errorMessage) => {
@@ -7,5 +7,12 @@ export const setAuthUserData = (payload, isAuth, errorMessage) => {
         payload,
         isAuth,
         errorMessage
+    }
+}
+
+export const setCaptchaUrl = captchaUrl => {
+    return {
+        type: SET_CAPTCHA_URL,
+        captchaUrl
     }
 }

@@ -3,7 +3,6 @@
 .user-navbar{
   display: flex;
   align-items: center;
-
   &__avatar{
     width: 50px;
     height: 50px;
@@ -38,3 +37,32 @@
   }
 
 }
+
+.user-navbar:hover .user-navbar-logout{
+  display: flex;
+  right: 0;
+  color: $baseBtnTextColor;
+}
+
+.user-navbar-logout {
+  position: absolute;
+  top: 40px;
+  right: -120px;
+  z-index: 0;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 50px;
+  background-color: $baseNamesColor;
+  color: $baseNamesColor;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: color, right 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.user-navbar-logout:hover {
+  color: $secondaryTextColor;
+}
+

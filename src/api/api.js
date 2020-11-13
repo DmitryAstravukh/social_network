@@ -1,16 +1,5 @@
 import axios from 'axios';
 
-// export default axios.create({
-//     baseURL: 'https://social-network.samuraijs.com/api/1.0',
-//     responseType: 'json'
-// })
-
-/*
-* headers: {
-* 'API_KEY': 'a30fca58-772f-41b3-a0b2-6ce795581001'
-* }
-* */
-
 export default class Api {
     #ax = axios.create({
         withCredentials: true,
@@ -20,30 +9,31 @@ export default class Api {
         }
     })
 
-    getUsers = (page, count) => {
-        return this.#ax.get('/users', {
+    getUsers = async (page, count) => {
+        const r = await this.#ax.get('/users', {
             params: {page, count}
-        })
-            .then(response => response.data)
+        });
+        return r.data
     }
 
-    getAuthUserData = () => {
-        return this.#ax.get(`/auth/me`).then(response => response.data)
+    getAuthUserData = async () => {
+        const r = await this.#ax.get(`/auth/me`);
+        return r.data
     }
 
-    getUserData = (userId) => {
-        return this.#ax.get(`/profile/${userId}`)
-            .then(response => response.data)
+    getUserData = async userId => {
+        const r = await this.#ax.get(`/profile/${userId}`)
+        return r.data
     }
 
-    #followUser = (userId) => {
-        return this.#ax.post(`/follow/${userId}`)
-            .then(response => response.data, error => error);
+    #followUser = async userId => {
+        const r = await this.#ax.post(`/follow/${userId}`);
+        return r.data
     }
 
-    #unfollowUser = (userId) => {
-        return this.#ax.delete(`/follow/${userId}`)
-            .then(response => response.data, error => error);
+    #unfollowUser = async userId => {
+        const r = await this.#ax.delete(`/follow/${userId}`);
+        return r.data
     }
 
     toggleFollow = (userId, followed) => {
@@ -53,20 +43,20 @@ export default class Api {
         }
     }
 
-    getUserStatus = (userId) => {
-        return this.#ax.get(`/profile/status/${userId}`)
+    getUserStatus = async userId => await this.#ax.get(`/profile/status/${userId}`)
+
+    updateUserStatus = async status => await this.#ax.put('/profile/status',{status})
+
+    login = async (email, password, rememberMe, captcha) => {
+        const r = await this.#ax.post('/auth/login', {email, password, rememberMe, captcha});
+        return r.data
     }
 
-    updateUserStatus = (status) => {
-        return this.#ax.put('/profile/status',{status})
-    }
+    unLogin = async () => await this.#ax.delete('/auth/login')
 
-    login = (email, password, rememberMe) => {
-        return this.#ax.post('/auth/login', {email, password, rememberMe})
-    }
-
-    unLogin = () => {
-        return this.#ax.delete('/auth/login')
+    getCaptchaUrl = async () => {
+        const r = await this.#ax.get('/security/get-captcha-url');
+        return r.data;
     }
 
 }

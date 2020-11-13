@@ -36,7 +36,7 @@ const UserPreview = (props) => {
                 </div>
             </div>
             <div className='user-preview__controls'>
-                <button disabled={props.followInProgress.some(idArr => idArr === id)}
+                <button disabled={props.followInProgress.some(idArr => idArr === id) || !props.isAuth}
                         onClick={() => props.dispatch(props.toggleFollowing(id, followed))}>{btnText}</button>
             </div>
         </div>
@@ -48,11 +48,14 @@ export const UsersList = () => {
 
     const { users, currentPage, pageSize, pageSizeSteps,
             totalCount, isLoading, followInProgress } = useSelector(({ usersReducer }) => usersReducer);
+    const { isAuth } = useSelector(({ authReducer }) => authReducer);
 
     useEffect(() => {
         dispatch(getUsers(currentPage, pageSize));
-        //return () => dispatch(clearUsersList())
-    }, [pageSize, currentPage])
+        return () => {
+            dispatch(clearUsersList())
+        }
+    }, [pageSize, currentPage, dispatch])
 
     return (
         <div className='content-container'>
@@ -82,6 +85,7 @@ export const UsersList = () => {
                                                 toggleFollowing={toggleFollowing}
                                                 followInProgress={followInProgress}
                                                 dispatch={dispatch}
+                                                isAuth={isAuth}
                                                 {...user}/>
                         })
                     }

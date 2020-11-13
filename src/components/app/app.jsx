@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import { getAuthUserData } from './../../reducers/auth';
 
-import Login from '../../pages/login';
+import Login from '../login';
 import Header from '../header';
 import Navbar from '../navbar';
 import News from '../news';

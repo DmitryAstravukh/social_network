@@ -1,9 +1,9 @@
-@import './../../index.scss';
+@import '../../index';
 
 .login-page{
   width: 100%;
   height: 100vh;
-  background-image: url("./../../assets/image/bg.jpg");
+  background-image: url("../../assets/image/bg.jpg");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;

@@ -44,7 +44,6 @@ export const getUserStatus = userId => async dispatch => {
 export const updateUserStatus = status => async dispatch => {
     const r = await api.updateUserStatus(status);
     if(r.resultCode === 0) dispatch(setUserStatus(r.data))
-
 }
 
 

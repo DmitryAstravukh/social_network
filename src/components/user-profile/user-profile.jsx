@@ -30,11 +30,11 @@ export const UserProfile = () => {
 
     useEffect(() => {
         if(userId && userId !== 'null') dispatch(getUserData(userId))
-    }, [userId])
+    }, [dispatch, userId])
 
     useEffect(() => {
         if(userId && userId !== 'null') dispatch(getUserStatus(userId))
-    }, [userId])
+    }, [dispatch, userId])
 
 
     const avatar = userData.photos.large ? userData.photos.large : defaultAvatar;

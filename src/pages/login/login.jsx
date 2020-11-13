@@ -16,8 +16,6 @@ const SigninSchema = Yup.object().shape({
         .min(3, 'Пароль слишком короткий!')
         .max(20, 'Пароль слишком длинный!')
         .required('Поле должно содержать от 3 до 20 символов'),
-    // captcha: Yup.string()
-    //     .required('Введите данные с картинки'),
 });
 
 const inicialValueSignInForm = {

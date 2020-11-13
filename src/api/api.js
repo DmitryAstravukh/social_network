@@ -52,7 +52,10 @@ export default class Api {
         return r.data
     }
 
-    unLogin = async () => await this.#ax.delete('/auth/login')
+    unLogin = async () => {
+        const r = await this.#ax.delete('/auth/login');
+        return r.data
+    }
 
     getCaptchaUrl = async () => {
         const r = await this.#ax.get('/security/get-captcha-url');

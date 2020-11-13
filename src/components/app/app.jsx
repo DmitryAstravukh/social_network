@@ -17,7 +17,7 @@ const App = () => {
     const { id, login, isAuth } = useSelector(({ authReducer }) => authReducer);
     useEffect(() => {
         dispatch(getAuthUserData())
-    },[id])
+    },[])
 
     return (
         <div className='app'>

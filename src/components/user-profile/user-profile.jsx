@@ -26,17 +26,20 @@ export const UserProfile = () => {
     const { userId } = useParams();
     const dispatch = useDispatch();
     const { userData, isLoadedUserData, status } = useSelector(({ profileReducer }) => profileReducer);
+    const { isAuth } = useSelector(({ authReducer }) => authReducer);
 
     useEffect(() => {
-        if(userId && userId !== 'null') {
-            dispatch(getUserStatus(userId));
-            dispatch(getUserData(userId));
-        }
+        if(userId && userId !== 'null') dispatch(getUserData(userId))
     }, [userId])
+
+    useEffect(() => {
+        if(userId && userId !== 'null') dispatch(getUserStatus(userId))
+    }, [userId])
+
 
     const avatar = userData.photos.large ? userData.photos.large : defaultAvatar;
 
-    if(!userId || userId === 'null') return <Redirect to='/login' />
+    if(!isAuth || !userId || userId === 'null') return <Redirect to='/login' />
     if(!isLoadedUserData) return <Spiner />
 
     return (

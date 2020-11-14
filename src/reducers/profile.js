@@ -47,7 +47,7 @@ export const updateUserStatus = status => async dispatch => {
 }
 
 
-const profileReducer = (state = inicialState, action) => {
+export const profileReducer = (state = inicialState, action) => {
     switch (action.type) {
         case SET_USER_PROFILE_DATA:
             return {
@@ -67,5 +67,3 @@ const profileReducer = (state = inicialState, action) => {
             return state;
     }
 }
-
-export default profileReducer;

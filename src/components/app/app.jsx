@@ -11,19 +11,22 @@ import News from '../news';
 import Messages from '../messages';
 import { UsersList } from '../users-list/users-list';
 import { UserProfile } from '../user-profile/user-profile';
+import { inicializeApp } from '../../reducers/inicialize';
+import Spiner from '../spiner';
 
 const App = () => {
     const dispatch = useDispatch();
-    const { id, login, isAuth } = useSelector(({ authReducer }) => authReducer);
+    const { isInicialized } = useSelector(({ inicializeReducer }) => inicializeReducer);
     useEffect(() => {
-        dispatch(getAuthUserData())
-    },[])
+        dispatch(inicializeApp())
+    },[dispatch])
 
+    if(!isInicialized) return <Spiner />
     return (
         <div className='app'>
-            <Header login={login} id={id} isAuth={isAuth}/>
+            <Header />
             <div className='content'>
-                <Navbar id={id}/>
+                <Navbar />
                 <Switch>
                     <Route path='/news' render={() => <News/>}></Route>
                     <Route path='/messages' render={() => <Messages/>}></Route>

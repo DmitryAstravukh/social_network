@@ -64,7 +64,7 @@ export const getUsers = (currentPage, pageSize) => async dispatch => {
 
 
 
-const usersReducer = (state = inicialState, action) => {
+export const usersReducer = (state = inicialState, action) => {
     switch (action.type) {
         case SET_USERS:
             return {
@@ -118,5 +118,3 @@ const usersReducer = (state = inicialState, action) => {
             return state;
     }
 }
-
-export default usersReducer;

@@ -77,7 +77,7 @@ const getAllPosts = (state) => {
     return state.posts;
 }
 
-const newsReducer = (state = initialState, action) => {
+export const newsReducer = (state = initialState, action) => {
     switch (action.type) {
         case EDIT_NEW_POST_TEXT :
             return editNewPostText(state, action.text);
@@ -92,4 +92,3 @@ const newsReducer = (state = initialState, action) => {
 
     }
 }
-export default newsReducer;

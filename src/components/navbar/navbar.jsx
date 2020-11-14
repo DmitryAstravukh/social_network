@@ -1,62 +1,33 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './navbar.scss';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faEnvelope, faNewspaper, faMusic, faVideo, faUserFriends, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faEnvelope, faNewspaper, faUserFriends, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 
-export default class Navbar extends Component {
-    render() {
-        const { id } = this.props;
-        return (
-            <nav className='navbar-container'>
-                <ul className='navbar-list'>
-                    <li className='navbar-list__item'>
-                      <NavLink to={`/profile/${id}`}>
-                          <FontAwesomeIcon icon={faUser} />
-                          Профиль
-                      </NavLink>
-                    </li>
-                    <li className='navbar-list__item'>
-                        <NavLink to='/friends'>
-                            <FontAwesomeIcon icon={faUserFriends} />
-                            Друзья
-                        </NavLink>
-                    </li>
-                    <li className='navbar-list__item'>
-                        <NavLink to='/users'>
-                            <FontAwesomeIcon icon={faUsers} />
-                            Пользователи
-                        </NavLink>
-                    </li>
-                    <li className='navbar-list__item'>
-                      <NavLink to='/messages'>
-                          <FontAwesomeIcon icon={faEnvelope} />
-                          Сообщения
-                      </NavLink>
-                    </li>
-                    <li className='navbar-list__item'>
-                      <NavLink to='/news'>
-                          <FontAwesomeIcon icon={faNewspaper} />
-                          Новости
-                      </NavLink>
-                    </li>
-                    <li className='navbar-list__item'>
-                      <NavLink to='/music'>
-                          <FontAwesomeIcon icon={faMusic} />
-                          Музыка
-                      </NavLink>
-                    </li>
-                    <li className='navbar-list__item'>
-                      <NavLink to='/videos'>
-                          <FontAwesomeIcon icon={faVideo} />
-                          Видео
-                      </NavLink>
-                    </li>
-                </ul>
-            </nav>
+const ListItem = ({ to, icon, text }) => {
+    return (
+        <li className='navbar-list__item'>
+            <NavLink to={to}>
+                <FontAwesomeIcon icon={icon} />
+                {text}
+            </NavLink>
+        </li>
+    )
+}
 
-        )
-    }
+export const Navbar = () => {
+    const { id } = useSelector(({ authReducer }) => authReducer);
+    return (
+        <nav className='navbar-container'>
+            <ul className='navbar-list'>
+                <ListItem to={`/profile/${id}`} icon={faUser} text='Профиль'/>
+                <ListItem to='/friends' icon={faUserFriends} text='Друзья'/>
+                <ListItem to='/users' icon={faUsers} text='Пользователи'/>
+                <ListItem to='/messages' icon={faEnvelope} text='Сообщения'/>
+                <ListItem to='/news' icon={faNewspaper} text='Новости'/>
+            </ul>
+        </nav>
+    )
 }

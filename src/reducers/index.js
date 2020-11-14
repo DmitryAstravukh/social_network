@@ -1,14 +1,14 @@
 import { combineReducers } from 'redux';
-import newsReducer from './news';
-import usersReducer from './users';
-import profileReducer from './profile';
-import authReducer from './auth';
-//import { reducer as formReducer } from 'redux-form'
+import { newsReducer } from './news';
+import { usersReducer } from './users';
+import { profileReducer } from './profile';
+import { authReducer } from './auth';
+import { inicializeReducer } from './inicialize'
 
 export default combineReducers({
-    newsReducer,
-    usersReducer,
+    inicializeReducer,
     profileReducer,
-    authReducer
-    //form: formReducer
+    usersReducer,
+    newsReducer,
+    authReducer,
 });

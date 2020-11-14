@@ -17,8 +17,8 @@ const inicialState = {
 export const getAuthUserData = () => async dispatch => {
     const r = await api.getAuthUserData();
     if(r.resultCode === 0) {
-        dispatch(setAuthUserData(r.data, true, null));
         setCaptchaUrl(null)
+        return dispatch(setAuthUserData(r.data, true, null));
     }
 }
 
@@ -43,7 +43,7 @@ export const unLogin = () => async dispatch => {
     if(data.resultCode === 0) dispatch(setAuthUserData(userData, false, null))
 }
 
-const authReducer = (state = inicialState, action) => {
+export const authReducer = (state = inicialState, action) => {
     switch (action.type){
         case SET_AUTH_USER_DATA:
             return {
@@ -58,5 +58,3 @@ const authReducer = (state = inicialState, action) => {
         default: return state;
     }
 }
-
-export default authReducer;

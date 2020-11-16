@@ -119,9 +119,10 @@ export const Login = () => {
             <Formik
                 initialValues={inicialValueSignInForm}
                 validationSchema={SigninSchema}
-                render={SigninForm}
                 onSubmit={onSubmit}
-            />
+            >
+              { props => <SigninForm {...props} /> }
+            </Formik>
         </div>
       </div>
     )

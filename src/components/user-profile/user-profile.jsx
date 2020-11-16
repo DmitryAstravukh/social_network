@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './user-profile.scss';
 
@@ -10,6 +10,7 @@ import UserProfileStatus from '../user-profile-status';
 import { getUserData, getUserStatus, updateUserStatus } from '../../reducers/profile';
 import Spiner from '../spiner';
 import { useParams, Redirect } from 'react-router-dom';
+import { createSelector } from 'reselect';
 
 const UserProfileContact = ({type, icon}) => {
     return (
@@ -22,20 +23,33 @@ const UserProfileContact = ({type, icon}) => {
     )
 }
 
+
+const userData = state => state.profileReducer.userData;
+const status = state => state.profileReducer.status;
+
+
+const ProfileData = createSelector(
+    [userData, status],
+    (userData, status) =>  [userData, status]
+);
+
+
 export const UserProfile = () => {
+    console.log('render '+new Date().getMilliseconds());
+
     const { userId } = useParams();
     const dispatch = useDispatch();
-    const { userData, isLoadedUserData, status } = useSelector(({ profileReducer }) => profileReducer);
+    const isLoadedUserData = useSelector(({ profileReducer }) => profileReducer.isLoadedUserData);
+    const [ userData, status ] = useSelector(state => ProfileData(state));
     const { isAuth } = useSelector(({ authReducer }) => authReducer);
 
-    useEffect(() => {
-        if(userId && userId !== 'null') dispatch(getUserData(userId))
-    }, [dispatch, userId])
-
-    useEffect(() => {
-        if(userId && userId !== 'null') dispatch(getUserStatus(userId))
-    }, [dispatch, userId])
-
+    useEffect(() => {    
+        console.log('effect '+new Date().getMilliseconds());
+        if(userId && userId !== 'null') {
+            dispatch(getUserData(userId));
+            dispatch(getUserStatus(userId))
+        } 
+    }, [userId])
 
     const avatar = userData.photos.large ? userData.photos.large : defaultAvatar;
 

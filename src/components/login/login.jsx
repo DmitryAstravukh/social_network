@@ -43,7 +43,6 @@ const SigninForm = ({
               <FontAwesomeIcon icon={faUser} />
               {errors.email && touched.email ? <div className='failed-validation-auth'>{errors.email}</div> : null}
             </div>
-            <hr/>
             <div className='input-group__pass-signin'>
               <Field name='password'
                      type='password'

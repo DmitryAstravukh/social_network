@@ -28,11 +28,13 @@ const App = () => {
             <div className='content'>
                 <Navbar />
                 <Switch>
-                    <Route path='/news' render={() => <News/>}></Route>
-                    <Route path='/messages' render={() => <Messages/>}></Route>
-                    <Route path='/users' render={() => <UsersList/>}></Route>
-                    <Route path='/profile/:userId' render={() => <UserProfile/>}></Route>
-                    <Route path='/login' render={() => <Login/>}></Route>
+                    <Route exact path='/'><UsersList/></Route>
+                    <Route path='/news'><News/></Route>
+                    <Route path='/messages'><Messages/></Route>
+                    <Route path='/users'><UsersList/></Route>
+                    <Route path='/profile/:userId'><UserProfile/></Route>
+                    <Route path='/login'><Login/></Route>
+                    <Route path='*'><h1>404 Not Found</h1></Route>
                 </Switch>
             </div>
         </div>

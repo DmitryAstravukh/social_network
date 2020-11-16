@@ -3,12 +3,6 @@
 .login-page{
   width: 100%;
   height: 100vh;
-  background-image: url("../../assets/image/bg.jpg");
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
-  
 }
 
 .container{
@@ -40,11 +34,11 @@
   align-items: center;
   height: 100vh;
   h1{
-    color: $baseBtnTextColor;
+    color: $baseActiveColor;
     margin: 0;
   }
   p{
-    color: $baseBtnTextColor;
+    color: $baseTextColor;
   }
 }
 
@@ -66,7 +60,7 @@
     input{
       width: 100%;
       padding: 20px 50px 20px 30px;
-      border: none;
+      border: 1px solid silver;
       border-radius: 12px 12px 0 0;
       box-sizing: border-box;
       color: $baseTextColor;
@@ -98,23 +92,23 @@
 
   .remember-login{
     label{
-      color: $baseBtnTextColor;
+      color: $baseTextColor;
       transition: color .2s ease;
     }
 
     &__checkbox:checked + label{
-      color: $baseElementGradient_light;
+      color: $baseActiveColor;
     }
   }
 
   .lost-password{
-    color: $baseBtnTextColor;
+    color: $baseTextColor;
     transition: color .2s ease;
   }
 
   .remember-login label:hover, .lost-password:hover{
     cursor: pointer;
-    color: $baseTextColor;
+    color: $baseActiveColor;
   }
 
   .lost-password{

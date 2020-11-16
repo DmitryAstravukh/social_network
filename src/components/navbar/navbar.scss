@@ -5,10 +5,10 @@
     height: calc(100vh - 60px);
     overflow-y: auto;
     scrollbar-width: thin;
-    position: fixed;
-    top: 60px;
-    left: 0;
-    z-index: 0;
+    background: $baseNavbarBackground;
+    background: linear-gradient(180deg, $baseNavbarBackground 0,
+                                      $baseNavbarBackground 80%,
+                                      $baseBackground 100%);
 }
 
 .navbar-list{
@@ -16,10 +16,7 @@
     flex-wrap: wrap;
     margin: 0;
     padding: 0;
-    background: $baseNavbarBackground;
-    background: linear-gradient(180deg, $baseNavbarBackground 0,
-                                      $baseNavbarBackground 80%,
-                                      $baseBackground 100%);
+    
 
     &__item{
         display: flex;

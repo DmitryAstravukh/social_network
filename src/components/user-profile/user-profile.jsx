@@ -11,6 +11,7 @@ import { getUserData, getUserStatus, updateUserStatus } from '../../reducers/pro
 import Spiner from '../spiner';
 import { useParams, Redirect } from 'react-router-dom';
 import { createSelector } from 'reselect';
+import {ProfileData} from '../../selectors/profile';
 
 const UserProfileContact = ({type, icon}) => {
     return (
@@ -23,17 +24,6 @@ const UserProfileContact = ({type, icon}) => {
     )
 }
 
-
-const userData = state => state.profileReducer.userData;
-const status = state => state.profileReducer.status;
-
-
-const ProfileData = createSelector(
-    [userData, status],
-    (userData, status) =>  [userData, status]
-);
-
-
 export const UserProfile = () => {
     console.log('render '+new Date().getMilliseconds());
 
@@ -41,10 +31,9 @@ export const UserProfile = () => {
     const dispatch = useDispatch();
     const isLoadedUserData = useSelector(({ profileReducer }) => profileReducer.isLoadedUserData);
     const [ userData, status ] = useSelector(state => ProfileData(state));
-    const { isAuth } = useSelector(({ authReducer }) => authReducer);
+    const { id, isAuth } = useSelector(({ authReducer }) => authReducer);
 
-    useEffect(() => {    
-        console.log('effect '+new Date().getMilliseconds());
+    useEffect(() => {
         if(userId && userId !== 'null') {
             dispatch(getUserData(userId));
             dispatch(getUserStatus(userId))
@@ -70,7 +59,11 @@ export const UserProfile = () => {
                         <div className='full-name'>{userData.fullName}</div>
                         <div className='about-me'>
                             <UserProfileStatus status={status}
-                                               updateUserStatus={updateUserStatus}/>
+                                               updateUserStatus={updateUserStatus}
+                                               authId={id}
+                                               userId={userId}
+
+                            />
                         </div>
                     </div>
 

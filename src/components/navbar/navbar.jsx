@@ -22,10 +22,10 @@ export const Navbar = () => {
     return (
         <nav className='navbar-container'>
             <ul className='navbar-list'>
-                <ListItem to={`/profile/${id}`} icon={faUser} text='Профиль'/>
-                <ListItem to='/friends' icon={faUserFriends} text='Друзья'/>
+                <ListItem to={`/profile/${id}`} icon={faUser} text='Мой профиль'/>
+                <ListItem to='/friends' icon={faUserFriends} text='Мои друзья'/>
                 <ListItem to='/users' icon={faUsers} text='Пользователи'/>
-                <ListItem to='/messages' icon={faEnvelope} text='Сообщения'/>
+                <ListItem to='/messages' icon={faEnvelope} text='Мои сообщения'/>
                 <ListItem to='/news' icon={faNewspaper} text='Новости'/>
             </ul>
         </nav>

@@ -1,4 +1,4 @@
-import { SET_USER_PROFILE_DATA, SET_USER_STATUS } from './../actions_types/profile';
+import { SET_USER_PROFILE_DATA, SET_USER_STATUS, SET_IS_LOADED_USER_DATA } from './../actions_types/profile';
 
 import Api from '../api/api';
 import { setUserProfileData, setUserStatus } from './../actions/profile';
@@ -59,10 +59,11 @@ export const profileReducer = (state = inicialState, action) => {
             }
 
         case SET_USER_STATUS:
-            return {
-                ...state,
-                status: action.status
-            }
+            return { ...state, status: action.status }
+
+        case SET_IS_LOADED_USER_DATA:
+            return { ...state, isLoadedUserData: action.isLoadedUserData }
+
         default:
             return state;
     }

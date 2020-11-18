@@ -1,17 +1,20 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './user-profile.scss';
+import { useParams, Redirect } from 'react-router-dom';
+import { getUserData, getUserStatus, updateUserStatus } from '../../reducers/profile';
+import { ProfileData } from '../../selectors/profile';
+import { setIsLoadedUserData } from '../../actions/profile';
+import Spiner from '../spiner';
+import UserProfileStatus from '../user-profile-status';
 
 import defaultAvatar from './../../assets/image/default-avatar.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGlobe } from '@fortawesome/free-solid-svg-icons';
-import { faFacebookSquare, faGithubSquare, faInstagramSquare, faTwitterSquare, faVk, faYoutubeSquare } from '@fortawesome/free-brands-svg-icons';
-import UserProfileStatus from '../user-profile-status';
-import { getUserData, getUserStatus, updateUserStatus } from '../../reducers/profile';
-import Spiner from '../spiner';
-import { useParams, Redirect } from 'react-router-dom';
-import { createSelector } from 'reselect';
-import {ProfileData} from '../../selectors/profile';
+import { faFacebookSquare, faGithubSquare, faInstagramSquare,
+        faTwitterSquare, faVk, faYoutubeSquare
+} from '@fortawesome/free-brands-svg-icons';
+
 
 const UserProfileContact = ({type, icon}) => {
     return (
@@ -25,8 +28,6 @@ const UserProfileContact = ({type, icon}) => {
 }
 
 export const UserProfile = () => {
-    console.log('render '+new Date().getMilliseconds());
-
     const { userId } = useParams();
     const dispatch = useDispatch();
     const isLoadedUserData = useSelector(({ profileReducer }) => profileReducer.isLoadedUserData);
@@ -37,7 +38,8 @@ export const UserProfile = () => {
         if(userId && userId !== 'null') {
             dispatch(getUserData(userId));
             dispatch(getUserStatus(userId))
-        } 
+        }
+        return () => dispatch(setIsLoadedUserData(false))
     }, [userId])
 
     const avatar = userData.photos.large ? userData.photos.large : defaultAvatar;

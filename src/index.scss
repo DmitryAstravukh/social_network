@@ -71,3 +71,8 @@ input:valid:not(:placeholder-shown) {
 input[type='checkbox']{
   box-shadow: none !important;
 }
+
+input:valid[type='file']{
+  box-shadow: none;
+  border: none;
+}

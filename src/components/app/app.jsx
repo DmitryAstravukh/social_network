@@ -23,7 +23,7 @@ const App = () => {
     if(!isInicialized) return <Spiner />
     return (
         <div className='app'>
-            <Suspense fallback={Spiner}>
+            <Suspense fallback={<Spiner />}>
                 <Header />
                 <div className='content'>
                     <Navbar />

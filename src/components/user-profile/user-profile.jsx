@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './user-profile.scss';
 import { useParams, Redirect } from 'react-router-dom';
-import { getUserData, getUserStatus, updateUserStatus } from '../../reducers/profile';
+import { getUserData, updateUserStatus } from '../../reducers/profile';
 import { ProfileData } from '../../selectors/profile';
 import { setIsLoadedUserData } from '../../actions/profile';
 import Spiner from '../spiner';
@@ -14,7 +14,8 @@ import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { faFacebookSquare, faGithubSquare, faInstagramSquare,
         faTwitterSquare, faVk, faYoutubeSquare
 } from '@fortawesome/free-brands-svg-icons';
-
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 
 const UserProfileContact = ({type, icon}) => {
     return (
@@ -37,48 +38,70 @@ export const UserProfile = () => {
 
     useEffect(() => {
         if(userId && userId !== 'null') {
-            dispatch(getUserData(userId));
-            // dispatch(getUserStatus(userId))
+            dispatch(getUserData(userId))
         }
         return () => dispatch(setIsLoadedUserData(false))
     }, [userId])
 
+
     const avatar = userData.photos.large ? userData.photos.large : defaultAvatar;
+    const useStyles = makeStyles(theme => ({
+        input: { display: 'none' },
+        button: {
+            backgroundColor: '#8224e3',
+            width: '100%',
+            marginTop: '10px'
+        }
+    }));
+    const classes = useStyles();
 
     if(!userId || userId === 'null') return <Redirect to='/login' />
     if(!isLoadedUserData) return <Spiner />
-
     return (
         <div className='content-container'>
             <div className='user-profile'>
 
                 <div className='user-avatar'>
                     <img src={avatar} alt={avatar}/>
+                    <input
+                        accept="image/*"
+                        className={classes.input}
+                        id="contained-button-file"
+                        type="file"
+                    />
+                    <label htmlFor="contained-button-file">
+                        <Button variant="contained" color="primary" component="span" className={classes.button}>
+                            Изменить
+                        </Button>
+                    </label>
                 </div>
 
                 <div className='user-data'>
 
-                    <div className='user-data__about'>
-                        <div className='full-name'>{userData.fullName}</div>
-                        <div className='about-me'>
-                            <UserProfileStatus status={status}
-                                               updateUserStatus={updateUserStatus}
-                                               authId={id}
-                                               userId={userId}
+                    <div className='left'>
+                        <div className='user-data__about'>
+                            <div className='full-name'>{userData.fullName}</div>
+                            <div className='about-me'>
+                                <UserProfileStatus status={status}
+                                                   updateUserStatus={updateUserStatus}
+                                                   authId={id}
+                                                   userId={userId}
 
-                            />
+                                />
+                            </div>
+                        </div>
+
+                        <div className='user-data__job'>
+                            <span className='block-title'>Работа</span>
+                            <div className='looking-job'>
+                                В поиске работы: { userData.lookingForAJob ? 'Да' : 'Нет' }
+                            </div>
+                            <div className='looking-job-desc'>
+                                Описание: { userData.lookingForAJobDescription ? userData.lookingForAJobDescription : 'Не задано' }
+                            </div>
                         </div>
                     </div>
 
-                    <div className='user-data__job'>
-                        <span className='block-title'>Работа</span>
-                        <div className='looking-job'>
-                           В поиске работы: { userData.lookingForAJob ? 'Да' : 'Нет' }
-                        </div>
-                        <div className='looking-job-desc'>
-                            Описание: { userData.lookingForAJobDescription ? userData.lookingForAJobDescription : 'Не задано' }
-                        </div>
-                    </div>
 
                     <div className='user-data__contacts'>
                         <span className='block-title'>Контакты</span>

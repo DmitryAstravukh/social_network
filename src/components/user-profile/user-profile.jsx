@@ -28,6 +28,7 @@ const UserProfileContact = ({type, icon}) => {
 }
 
 export const UserProfile = () => {
+    console.log('render'+new Date().getMilliseconds());
     const { userId } = useParams();
     const dispatch = useDispatch();
     const isLoadedUserData = useSelector(({ profileReducer }) => profileReducer.isLoadedUserData);
@@ -37,7 +38,7 @@ export const UserProfile = () => {
     useEffect(() => {
         if(userId && userId !== 'null') {
             dispatch(getUserData(userId));
-            dispatch(getUserStatus(userId))
+            // dispatch(getUserStatus(userId))
         }
         return () => dispatch(setIsLoadedUserData(false))
     }, [userId])

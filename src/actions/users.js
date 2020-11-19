@@ -2,7 +2,7 @@ import {
     GET_USERS,
     SET_USERS,
     CHANGE_PAGE_SIZE,
-    CHANGE_PAGE_NUMBER,
+    CHANGE_CURRENT_PAGE,
     TOGGLE_LOADING,
     TOGGLE_FOLLOW,
     TOGGLE_FOLLOW_IN_PROGRESS,
@@ -29,9 +29,10 @@ export const changePageSize = (pageSize) => {
     }
 }
 
-export const changePageNumber = () => {
+export const changeCurrentPage = pageNumber => {
     return {
-        type: CHANGE_PAGE_NUMBER
+        type: CHANGE_CURRENT_PAGE,
+        pageNumber
     }
 }
 

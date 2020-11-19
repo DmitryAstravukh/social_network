@@ -2,7 +2,7 @@ import {
     GET_USERS,
     SET_USERS,
     CHANGE_PAGE_SIZE,
-    CHANGE_PAGE_NUMBER,
+    CHANGE_CURRENT_PAGE,
     TOGGLE_LOADING,
     TOGGLE_FOLLOW,
     TOGGLE_FOLLOW_IN_PROGRESS,
@@ -31,12 +31,6 @@ const changePageSize = (state, pageSize) => {
     }
 }
 
-const changePageNumber = (state) => {
-    return {
-        ...state,
-        currentPage: state.currentPage + 1
-    }
-}
 
 const clearUsersList = (state) => {
     return {
@@ -79,14 +73,11 @@ export const usersReducer = (state = inicialState, action) => {
         case CHANGE_PAGE_SIZE:
             return changePageSize(state, action.pageSize);
 
-        case CHANGE_PAGE_NUMBER:
-            return changePageNumber(state);
+        case CHANGE_CURRENT_PAGE:
+            return { ...state, currentPage: action.pageNumber }
 
         case TOGGLE_LOADING:
-            return {
-                ...state,
-                isLoading: action.isLoading
-            }
+            return { ...state, isLoading: action.isLoading }
 
         case TOGGLE_FOLLOW:
             return {

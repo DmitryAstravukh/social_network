@@ -32,14 +32,19 @@ const inicialState = {
 };
 
 export const getUserData = userId => async dispatch => {
-    const data = await api.getUserData(userId);
-    dispatch(setUserProfileData(data))
+    // const userData = await api.getUserData(userId);
+    // const userStatus = await api.getUserStatus(userId);
+    const [userData, userStatus] = await Promise.all([
+        api.getUserData(userId),
+        api.getUserStatus(userId)
+    ]);
+    dispatch(setUserProfileData(userData, userStatus.data))
 }
 
-export const getUserStatus = userId => async dispatch => {
-    const r = await api.getUserStatus(userId);
-    dispatch(setUserStatus(r.data))
-}
+// export const getUserStatus = userId => async dispatch => {
+//     const r = await api.getUserStatus(userId);
+//     dispatch(setUserStatus(r.data))
+// }
 
 export const updateUserStatus = status => async dispatch => {
     const r = await api.updateUserStatus(status);
@@ -55,6 +60,7 @@ export const profileReducer = (state = inicialState, action) => {
                 userData: {
                     ...action.userData
                 },
+                status: action.userStatus,
                 isLoadedUserData: true
             }
 

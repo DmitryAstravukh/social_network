@@ -1,13 +1,15 @@
 import React from 'react';
 import './user-navbar.scss';
 
-import avatar from './../../assets/image/avatar.jpg';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { unLogin } from './../../reducers/auth';
+import defaultAvatar from '../../assets/image/default-avatar.png';
+import { ProfileData } from '../../selectors/profile';
 
 export const UserNavbar = ({ login, id }) => {
-    //TODO сделать переход на страницу авторизации после выхода
+    const [ userData ] = useSelector(state => ProfileData(state));
+    const avatar = userData.photos.large ? userData.photos.large : defaultAvatar;
     const dispatch = useDispatch();
     return (
         <div className='user-navbar'>

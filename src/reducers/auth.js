@@ -29,7 +29,7 @@ const getCaptchaUrl = () => async dispatch => {
 
 export const login = (email, password, rememberMe, captcha) => async dispatch => {
     const data = await api.login(email, password, rememberMe, captcha);
-    const userData = { id: null, email: null,  login: null };
+    const userData = { id: null, email: null, login: null };
 
     if(data.resultCode === 0)  dispatch(getAuthUserData());
     if(data.resultCode === 1)  dispatch(setAuthUserData(userData, false, data.messages[0]));
@@ -38,7 +38,7 @@ export const login = (email, password, rememberMe, captcha) => async dispatch =>
 
 export const unLogin = () => async dispatch => {
     const data = await api.unLogin();
-    const userData = { id: null, email: null,  login: null };
+    const userData = { id: null, email: null, login: null };
 
     if(data.resultCode === 0) dispatch(setAuthUserData(userData, false, null))
 }

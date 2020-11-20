@@ -1,4 +1,9 @@
-import { SET_USER_PROFILE_DATA, SET_USER_STATUS, SET_IS_LOADED_USER_DATA } from './../actions_types/profile';
+import {
+    SET_USER_PROFILE_DATA,
+    SET_USER_STATUS,
+    SET_IS_LOADED_USER_DATA,
+    SET_USER_PHOTO
+} from './../actions_types/profile';
 
 export const setUserProfileData = (userData, userStatus) => {
     return {
@@ -19,5 +24,12 @@ export const setIsLoadedUserData = isLoadedUserData => {
     return {
         type: SET_IS_LOADED_USER_DATA,
         isLoadedUserData
+    }
+}
+
+export const setUserPhoto = photos => {
+    return {
+        type: SET_USER_PHOTO,
+        photos
     }
 }

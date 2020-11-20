@@ -62,4 +62,14 @@ export default class Api {
         return r.data;
     }
 
+    changeProfilePhoto = async photo => {
+        const formData = new FormData();
+        formData.append("image", photo);
+        const r = await this.#ax.put('/profile/photo', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+        return r.data;
+    }
 }

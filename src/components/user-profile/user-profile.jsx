@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './user-profile.scss';
 import { useParams, Redirect } from 'react-router-dom';
-import { getUserData, updateUserStatus } from '../../reducers/profile';
+import { changeUserPhoto, getUserData, updateUserStatus } from '../../reducers/profile';
 import { ProfileData } from '../../selectors/profile';
 import { setIsLoadedUserData } from '../../actions/profile';
 import Spiner from '../spiner';
@@ -29,12 +29,14 @@ const UserProfileContact = ({type, icon}) => {
 }
 
 export const UserProfile = () => {
-    console.log('render'+new Date().getMilliseconds());
+    //console.log('render'+new Date().getMilliseconds());
     const { userId } = useParams();
     const dispatch = useDispatch();
     const isLoadedUserData = useSelector(({ profileReducer }) => profileReducer.isLoadedUserData);
     const [ userData, status ] = useSelector(state => ProfileData(state));
+    //const { userData, status } = useSelector(({ profileReducer }) => profileReducer);
     const { id } = useSelector(({ authReducer }) => authReducer);
+    const avatar = userData.photos.large ? userData.photos.large : defaultAvatar;
 
     useEffect(() => {
         if(userId && userId !== 'null') {
@@ -43,8 +45,6 @@ export const UserProfile = () => {
         return () => dispatch(setIsLoadedUserData(false))
     }, [userId])
 
-
-    const avatar = userData.photos.large ? userData.photos.large : defaultAvatar;
     const useStyles = makeStyles(theme => ({
         input: { display: 'none' },
         button: {
@@ -55,25 +55,40 @@ export const UserProfile = () => {
     }));
     const classes = useStyles();
 
+
     if(!userId || userId === 'null') return <Redirect to='/login' />
     if(!isLoadedUserData) return <Spiner />
+
+    const onUserPhotoChange = e => {
+        const files = e.target.files;
+        if(files.length > 0) dispatch(changeUserPhoto(files[0]))
+    }
+
+    console.log(userData);
     return (
         <div className='content-container'>
             <div className='user-profile'>
 
                 <div className='user-avatar'>
                     <img src={avatar} alt={avatar}/>
-                    <input
-                        accept="image/*"
-                        className={classes.input}
-                        id="contained-button-file"
-                        type="file"
-                    />
-                    <label htmlFor="contained-button-file">
-                        <Button variant="contained" color="primary" component="span" className={classes.button}>
+                    {
+                        +id === +userId &&
+                        <>
+                            <input
+                                accept="image/*"
+                                className={classes.input}
+                                id="contained-button-file"
+                                type="file"
+                                onChange={onUserPhotoChange}
+                            />
+                            <label htmlFor="contained-button-file">
+                            <Button variant="contained" color="primary" component="span" className={classes.button}>
                             Изменить
-                        </Button>
-                    </label>
+                            </Button>
+                            </label>
+                        </>
+                    }
+
                 </div>
 
                 <div className='user-data'>

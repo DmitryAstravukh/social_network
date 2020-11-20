@@ -1,7 +1,13 @@
-import { SET_USER_PROFILE_DATA, SET_USER_STATUS, SET_IS_LOADED_USER_DATA } from './../actions_types/profile';
+import {
+    SET_USER_PROFILE_DATA,
+    SET_USER_STATUS,
+    SET_IS_LOADED_USER_DATA,
+    SET_USER_PHOTO
+} from './../actions_types/profile';
 
 import Api from '../api/api';
 import { setUserProfileData, setUserStatus } from './../actions/profile';
+import {setIsLoadedUserData, setUserPhoto} from '../actions/profile';
 
 const api = new Api();
 
@@ -32,8 +38,6 @@ const inicialState = {
 };
 
 export const getUserData = userId => async dispatch => {
-    // const userData = await api.getUserData(userId);
-    // const userStatus = await api.getUserStatus(userId);
     const [userData, userStatus] = await Promise.all([
         api.getUserData(userId),
         api.getUserStatus(userId)
@@ -41,16 +45,20 @@ export const getUserData = userId => async dispatch => {
     dispatch(setUserProfileData(userData, userStatus.data))
 }
 
-// export const getUserStatus = userId => async dispatch => {
-//     const r = await api.getUserStatus(userId);
-//     dispatch(setUserStatus(r.data))
-// }
 
 export const updateUserStatus = status => async dispatch => {
     const r = await api.updateUserStatus(status);
     if(r.resultCode === 0) dispatch(setUserStatus(r.data))
 }
 
+export const changeUserPhoto = photo => async dispatch => {
+    dispatch(setIsLoadedUserData(false));
+    const r = await api.changeProfilePhoto(photo);
+    if(r.resultCode === 0) {
+        dispatch(setUserPhoto(r.data.photos));
+        dispatch(setIsLoadedUserData(true))
+    }
+}
 
 export const profileReducer = (state = inicialState, action) => {
     switch (action.type) {
@@ -69,6 +77,19 @@ export const profileReducer = (state = inicialState, action) => {
 
         case SET_IS_LOADED_USER_DATA:
             return { ...state, isLoadedUserData: action.isLoadedUserData }
+
+        case SET_USER_PHOTO:
+            return {
+                ...state,
+                userData: {
+                    ...state.userData,
+                    photos: {
+                        small: action.photos.small,
+                        large: action.photos.large
+                    }
+                }
+
+            }
 
         default:
             return state;

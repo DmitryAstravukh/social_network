@@ -104,7 +104,7 @@ export const Login = () => {
     const dispatch = useDispatch();
     const { id, isAuth } = useSelector(({ authReducer }) => authReducer);
 
-    const onSubmit = ({email, password, rememberMe, captcha}, { setSubmitting }) => {
+    const onSubmit = ({ email, password, rememberMe, captcha }, { setSubmitting }) => {
         dispatch(login(email, password, rememberMe, captcha));
         setSubmitting(false);
     }

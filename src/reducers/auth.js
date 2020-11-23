@@ -1,4 +1,8 @@
-import { SET_AUTH_USER_DATA, SET_CAPTCHA_URL } from './../actions_types/auth';
+import {
+    SET_AUTH_USER_DATA,
+    SET_CAPTCHA_URL,
+    SET_AUTH_USER_PHOTOS
+} from './../actions_types/auth';
 
 import { setAuthUserData, setCaptchaUrl } from './../actions/auth';
 import Api from '../api/api';
@@ -8,6 +12,10 @@ const inicialState = {
     id: null,
     email: null,
     login: null,
+    photos: {
+        large: null,
+        small: null
+    },
     isAuth: false,
     errorMessage: null,
     captchaUrl: null
@@ -54,6 +62,9 @@ export const authReducer = (state = inicialState, action) => {
             }
         case SET_CAPTCHA_URL:
             return { ...state, captchaUrl: action.captchaUrl}
+
+        case SET_AUTH_USER_PHOTOS:
+            return { ...state, photos: action.photos }
 
         default: return state;
     }

@@ -2,15 +2,14 @@ import React from 'react';
 import './user-navbar.scss';
 
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { unLogin } from './../../reducers/auth';
 import defaultAvatar from '../../assets/image/default-avatar.png';
-import { ProfileData } from '../../selectors/profile';
 
-export const UserNavbar = ({ login, id }) => {
-    const [ userData ] = useSelector(state => ProfileData(state));
-    const avatar = userData.photos.large ? userData.photos.large : defaultAvatar;
+export const UserNavbar = ({ login, id, photos }) => {
     const dispatch = useDispatch();
+    const avatar = photos.large ? photos.large : defaultAvatar;
+
     return (
         <div className='user-navbar'>
             <div className='user-navbar__avatar'>

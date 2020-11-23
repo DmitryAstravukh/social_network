@@ -8,6 +8,8 @@ import {
 import Api from '../api/api';
 import { setUserProfileData, setUserStatus } from './../actions/profile';
 import {setIsLoadedUserData, setUserPhoto} from '../actions/profile';
+import {useSelector} from 'react-redux';
+import {setAuthUserPhotos} from '../actions/auth';
 
 const api = new Api();
 
@@ -37,11 +39,13 @@ const inicialState = {
     status: ''
 };
 
-export const getUserData = userId => async dispatch => {
+export const getUserData = userId => async (dispatch, getState) => {
+    const { authReducer: { id } } = getState();
     const [userData, userStatus] = await Promise.all([
         api.getUserData(userId),
         api.getUserStatus(userId)
     ]);
+    if(+userData.userId === +id) dispatch(setAuthUserPhotos(userData.photos));
     dispatch(setUserProfileData(userData, userStatus.data))
 }
 

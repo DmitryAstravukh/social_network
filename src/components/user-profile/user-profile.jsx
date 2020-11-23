@@ -20,7 +20,7 @@ import Button from '@material-ui/core/Button';
 const UserProfileContact = ({type, icon}) => {
     return (
         <div className='contact'>
-            <a href={type ? type : '#'} target='_blank' rel='noopener noreferrer'>
+            <a href={type ? `https://${type}` : '#'} target='_blank' rel='noopener noreferrer'>
                 <FontAwesomeIcon icon={icon} />
                 {type ? type : 'Не задано'}
             </a>
@@ -29,7 +29,7 @@ const UserProfileContact = ({type, icon}) => {
 }
 
 export const UserProfile = () => {
-    //console.log('render'+new Date().getMilliseconds());
+    console.log('ProfileRender -------- '+new Date().getMilliseconds());
     const { userId } = useParams();
     const dispatch = useDispatch();
     const isLoadedUserData = useSelector(({ profileReducer }) => profileReducer.isLoadedUserData);

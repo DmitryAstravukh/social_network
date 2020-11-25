@@ -3,8 +3,8 @@ import {
     SET_CAPTCHA_URL,
     SET_AUTH_USER_PHOTOS
 } from './../actions_types/auth';
-import { UserProfilePhotos } from '../types/profile-types';
-import { AuthUserDataType } from "../types/auth-types";
+import { UserProfilePhotos } from '../types/profile';
+import { AuthUserDataType } from "../types/auth";
 
 
 export const setAuthUserData = (authUserData: AuthUserDataType, isAuth: boolean, errorMessage: string | null) => {

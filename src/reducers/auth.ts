@@ -2,12 +2,12 @@ import {
     SET_AUTH_USER_DATA,
     SET_CAPTCHA_URL,
     SET_AUTH_USER_PHOTOS
-} from './../actions_types/auth';
+} from '../actions_types/auth';
 
 import { setAuthUserData, setCaptchaUrl } from '../actions/auth';
 import Api from '../api/api';
-import {UserProfilePhotos} from "../types/profile-types";
-import { AuthUserDataType } from '../types/auth-types';
+import {UserProfilePhotos} from "../types/profile";
+import { AuthUserDataType } from '../types/auth';
 const api = new Api();
 
 type AuthInicialState = {

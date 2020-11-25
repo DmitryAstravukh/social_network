@@ -1,12 +1,13 @@
-import React from 'react';
+import React, {FC} from 'react';
 import './login.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faKey, faUser } from '@fortawesome/free-solid-svg-icons';
-import { Formik, Field } from 'formik';
+import {Formik, Field, FormikHelpers, FormikProps, FormikValues} from 'formik';
 import * as Yup from 'yup';
 import { login } from '../../reducers/auth';
 import { Redirect } from 'react-router-dom';
+import { StateType } from "../../store";
 
 const SigninSchema = Yup.object().shape({
     email: Yup.string()
@@ -18,17 +19,17 @@ const SigninSchema = Yup.object().shape({
         .required('Поле должно содержать от 3 до 20 символов'),
 });
 
-const SigninForm = ({
-    values,
-    errors,
-    touched,
-    handleChange,
-    handleBlur,
-    handleSubmit,
-    isSubmitting
-}) => {
-    const { errorMessage, captchaUrl } = useSelector(({ authReducer }) => authReducer);
-
+const SigninForm: FC<FormikProps<FormikValues>> = (props) => {
+    const { errorMessage, captchaUrl } = useSelector((state: StateType) => state.authReducer);
+    const {
+        values,
+        errors,
+        touched,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        isSubmitting
+    } = props;
     return (
         <form className='login-form' onSubmit={handleSubmit}>
           <div className='input-group'>
@@ -47,6 +48,8 @@ const SigninForm = ({
               <Field name='password'
                      type='password'
                      placeholder='Пароль'
+                     minLength='3'
+                     maxLength='20'
                      onChange={handleChange}
                      onBlur={handleBlur}
                      value={values.password}
@@ -93,18 +96,27 @@ const SigninForm = ({
     )
 }
 
+type InicialValueSignInFormType = {
+    email: string,
+    password: string,
+    rememberMe: boolean,
+    captcha: string
+}
 
-export const Login = () => {
-    const inicialValueSignInForm = {
+export const Login: FC = () => {
+    const inicialValueSignInForm: InicialValueSignInFormType = {
         email: '',
         password: '',
         rememberMe: false,
         captcha: ''
     }
     const dispatch = useDispatch();
-    const { id, isAuth } = useSelector(({ authReducer }) => authReducer);
+    const { id, isAuth } = useSelector((state: StateType) => state.authReducer);
 
-    const onSubmit = ({ email, password, rememberMe, captcha }, { setSubmitting }) => {
+    const onSubmit = (
+        { email, password, rememberMe, captcha }: InicialValueSignInFormType,
+        { setSubmitting }: FormikHelpers<InicialValueSignInFormType>
+    ) => {
         dispatch(login(email, password, rememberMe, captcha));
         setSubmitting(false);
     }
@@ -121,7 +133,7 @@ export const Login = () => {
                 validationSchema={SigninSchema}
                 onSubmit={onSubmit}
             >
-              { props => <SigninForm {...props} /> }
+              { (props: FormikProps<FormikValues>) => <SigninForm {...props} /> }
             </Formik>
         </div>
       </div>

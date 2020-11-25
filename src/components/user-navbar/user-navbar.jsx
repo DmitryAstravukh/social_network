@@ -3,7 +3,7 @@ import './user-navbar.scss';
 
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { unLogin } from './../../reducers/auth';
+import { unLogin } from '../../reducers/auth';
 import defaultAvatar from '../../assets/image/default-avatar.png';
 
 export const UserNavbar = ({ login, id, photos }) => {

@@ -5,10 +5,13 @@ import { profileReducer } from './profile';
 import { authReducer } from './auth';
 import { inicializeReducer } from './inicialize'
 
-export default combineReducers({
+export const rootReducer = combineReducers({
     inicializeReducer,
     profileReducer,
     usersReducer,
     newsReducer,
     authReducer,
 });
+
+
+

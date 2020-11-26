@@ -2,7 +2,7 @@ import React, { useEffect, Suspense } from 'react';
 import './app.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
-import { inicializeApp } from '../../reducers/inicialize';
+import { initApp } from '../../reducers/init';
 import Spiner from '../spiner';
 
 const Login = React.lazy(() => import('../login'));
@@ -15,12 +15,12 @@ const Messages = React.lazy(() => import('../messages'));
 
 const App = () => {
     const dispatch = useDispatch();
-    const { isInicialized } = useSelector(({ inicializeReducer }) => inicializeReducer);
+    const { isInit } = useSelector(({ initReducer }) => initReducer);
     useEffect(() => {
-        dispatch(inicializeApp())
+        dispatch(initApp())
     },[dispatch])
 
-    if(!isInicialized) return <Spiner />
+    if(!isInit) return <Spiner />
     return (
         <div className='app'>
             <Suspense fallback={<Spiner />}>

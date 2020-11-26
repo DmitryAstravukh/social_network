@@ -3,7 +3,8 @@ import { UserProfilePhotos } from "./profile";
 
 export enum ResultCodesEnum {
     Success = 0,
-    Error = 1
+    Error = 1,
+    Captcha = 10
 }
 
 export type ApiGetAuthUserDataType = {

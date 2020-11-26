@@ -3,10 +3,10 @@ import { newsReducer } from './news';
 import { usersReducer } from './users';
 import { profileReducer } from './profile';
 import { authReducer } from './auth';
-import { inicializeReducer } from './inicialize'
+import { initReducer } from './init'
 
 export const rootReducer = combineReducers({
-    inicializeReducer,
+    initReducer,
     profileReducer,
     usersReducer,
     newsReducer,

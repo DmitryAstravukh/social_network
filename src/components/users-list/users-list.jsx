@@ -5,7 +5,7 @@ import SearchBar from '../search-bar';
 import defaultAvatar from '../../assets/image/default-avatar.png';
 import { Link } from 'react-router-dom';
 import { getUsers, toggleFollowing } from '../../reducers/users';
-import { changePageSize, changeCurrentPage, clearUsersList } from './../../actions/users';
+import { changePageSize, changeCurrentPage, clearUsersList } from '../../actions/users';
 import Pagination from '@material-ui/lab/Pagination';
 import Spiner from '../spiner';
 import { makeStyles, createStyles } from '@material-ui/core/styles';

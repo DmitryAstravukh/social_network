@@ -22,7 +22,7 @@ export type ApiFollowedType = {
 export type ApiUpdateUserStatusType = {
     resultCode: ResultCodesEnum,
     messages: Array<string>,
-    data: Object
+    data: any
 }
 
 export type ApiLoginType = {
@@ -44,7 +44,7 @@ export type ApiGetCaptchaUrlType = {
 export type ApiChangeProfilePhotoType = {
     resultCode: ResultCodesEnum,
     messages: Array<string>,
-    data: UserProfilePhotos
+    data: { photos: UserProfilePhotos }
 }
 
 export type ApiGetUserStatusType = {

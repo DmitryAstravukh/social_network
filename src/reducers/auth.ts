@@ -8,7 +8,7 @@ import { ThunkAction } from "redux-thunk";
 import Api from '../api/api';
 const api = new Api();
 
-type AuthInitialState = {
+export type AuthInitialState = {
     id: number | null,
     email: string | null,
     login: string | null,

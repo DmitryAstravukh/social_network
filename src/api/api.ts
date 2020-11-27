@@ -51,9 +51,15 @@ export default class Api {
         }
     }
 
-    getUserStatus = async (userId: number) => await this.ax.get<ApiGetUserStatusType>(`/profile/status/${userId}`)
+    getUserStatus = async (userId: number) => {
+        const r = await this.ax.get<string>(`/profile/status/${userId}`);
+        return r.data
+    }
 
-    updateUserStatus = async (status: string) => await this.ax.put<ApiUpdateUserStatusType>('/profile/status',{status})
+    updateUserStatus = async (status: string) => {
+        const r = await this.ax.put<ApiUpdateUserStatusType>('/profile/status',{status});
+        return r.data
+    }
 
     login = async (email: string, password: string, rememberMe: boolean, captcha: string | null) => {
         const r = await this.ax.post<ApiLoginType>('/auth/login', {email, password, rememberMe, captcha});

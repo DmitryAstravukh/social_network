@@ -1,13 +1,16 @@
-import React, {FC} from 'react';
-import './login.scss';
+import React, { FC } from 'react';
+import { Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { StateType } from "../../store";
+import { login } from '../../reducers/auth';
+
+import { Formik, Field, FormikHelpers, FormikProps, FormikValues } from 'formik';
+import * as Yup from 'yup';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faKey, faUser } from '@fortawesome/free-solid-svg-icons';
-import {Formik, Field, FormikHelpers, FormikProps, FormikValues} from 'formik';
-import * as Yup from 'yup';
-import { login } from '../../reducers/auth';
-import { Redirect } from 'react-router-dom';
-import { StateType } from "../../store";
+
+import './login.scss';
 
 const SigninSchema = Yup.object().shape({
     email: Yup.string()

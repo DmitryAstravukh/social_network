@@ -1,13 +1,17 @@
-import { ProfileActionTypes } from '../actions_types/profile';
+import { Dispatch } from "redux";
+import { ThunkAction } from "redux-thunk";
+import { StateType } from "../store";
+
+import { AuthActions, ProfileActions } from "../actions";
 import { setUserProfileData, setUserStatus } from '../actions/profile';
 import { setIsLoadedUserData, setUserPhoto } from '../actions/profile';
 import { setAuthUserPhotos } from '../actions/auth';
+
+import { ProfileActionTypes } from '../actions_types/profile';
+
 import { UserDataType } from '../types/profile';
-import { ThunkAction } from "redux-thunk";
-import { AuthActions, ProfileActions } from "../actions";
-import { StateType } from "../store";
-import { Dispatch } from "redux";
 import { ResultCodesEnum } from '../types/api';
+
 import Api from '../api/api';
 
 const api = new Api();
@@ -58,9 +62,9 @@ export const getUserData = (userId: number) => async (dispatch: Dispatch<Profile
 }
 
 
-export const updateUserStatus = (status: string): ThunkType => async dispatch => {
+export const updateUserStatus = (status: string | null): ThunkType => async dispatch => {
     const r = await api.updateUserStatus(status);
-    if(r.resultCode === ResultCodesEnum.Success) dispatch(setUserStatus(r.data))
+    if(r.resultCode === ResultCodesEnum.Success) dispatch(setUserStatus(status))
 }
 
 export const changeUserPhoto = (photo: File): ThunkType => async dispatch => {

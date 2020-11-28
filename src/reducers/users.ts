@@ -1,10 +1,13 @@
-import { UsersActionTypes } from '../actions_types/users';
-import { setUsers, toggleLoading, toggleFollow, toggleFollowInProgress } from '../actions/users';
-import { UsersActions } from '../actions';
-import { UserItemType } from '../types/user';
-import Api from '../api/api';
 import { ThunkAction } from "redux-thunk";
 
+import { UsersActions } from '../actions';
+import { setUsers, toggleLoading, toggleFollow, toggleFollowInProgress } from '../actions/users';
+
+import { UsersActionTypes } from '../actions_types/users';
+
+import { UserItemType } from '../types/user';
+
+import Api from '../api/api';
 const api = new Api();
 
 type UsersInitialState = {

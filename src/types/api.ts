@@ -22,7 +22,7 @@ export type ApiFollowedType = {
 export type ApiUpdateUserStatusType = {
     resultCode: ResultCodesEnum,
     messages: Array<string>,
-    data: any
+    data: string
 }
 
 export type ApiLoginType = {

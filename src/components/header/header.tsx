@@ -1,14 +1,19 @@
-import React from 'react';
-import './header.scss';
-import logo from '../../assets/image/logo.svg';
-import UserNavbar from '../user-navbar';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
+import React, { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { StateType } from '../../store';
 
-export const Header = () => {
-    const { id, login, isAuth, photos } = useSelector(({ authReducer }) => authReducer);
+import UserNavbar from '../user-navbar';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
+
+import logo from '../../assets/image/logo.svg';
+
+import './header.scss';
+
+export const Header: FC = () => {
+    const { id, login, isAuth, photos } = useSelector((state: StateType) => state.authReducer);
     return (
         <header className='user-header'>
             <div className='user-header-content'>
@@ -20,7 +25,7 @@ export const Header = () => {
                 <div className='user-header__auth '>
                     {
                         isAuth ?
-                            <UserNavbar login={login} id={id} photos={photos}/>
+                            <UserNavbar id={id} login={login} photos={photos}/>
                             :
                             <NavLink className='' to='/login'>
                                 <FontAwesomeIcon icon={faSignInAlt} />

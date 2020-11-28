@@ -1,12 +1,19 @@
-import React from 'react';
-import './navbar.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faEnvelope, faNewspaper, faUserFriends, faUsers } from '@fortawesome/free-solid-svg-icons';
+import React, { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { StateType } from '../../store';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faEnvelope, faNewspaper, faUserFriends, faUsers } from '@fortawesome/free-solid-svg-icons';
 
-const ListItem = ({ to, icon, text }) => {
+import './navbar.scss';
+
+type ListItemProps = {
+    to: string,
+    icon: any,
+    text: string
+}
+const ListItem: FC<ListItemProps> = ({ to, icon, text }) => {
     return (
         <li className='navbar-list__item'>
             <NavLink to={to}>
@@ -17,8 +24,8 @@ const ListItem = ({ to, icon, text }) => {
     )
 }
 
-export const Navbar = () => {
-    const { id } = useSelector(({ authReducer }) => authReducer);
+export const Navbar: FC = () => {
+    const { id } = useSelector((state: StateType) => state.authReducer);
     return (
         <nav className='navbar-container'>
             <ul className='navbar-list'>

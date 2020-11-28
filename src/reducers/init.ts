@@ -1,10 +1,11 @@
-import { InitActionTypes } from '../actions_types/init';
+import { ThunkAction } from "redux-thunk";
 
+import { InitActions } from "../actions";
 import { SetInit } from '../actions/init';
 
+import { InitActionTypes } from '../actions_types/init';
+
 import { getAuthUserData } from './auth';
-import { ThunkAction } from "redux-thunk";
-import { InitActions } from "../actions";
 
 type InitInitialState = {
     isInit: boolean

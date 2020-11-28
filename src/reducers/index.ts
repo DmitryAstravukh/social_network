@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
-import { newsReducer } from './news';
-import { usersReducer } from './users';
+import { initReducer } from './init';
 import { profileReducer } from './profile';
+import { usersReducer } from './users';
+import { newsReducer } from './news';
 import { authReducer } from './auth';
-import { initReducer } from './init'
 
 export const rootReducer = combineReducers({
     initReducer,

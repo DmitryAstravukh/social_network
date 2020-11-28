@@ -1,11 +1,11 @@
-import React from 'react';
-import './spiner.scss';
+import React, { FC } from 'react';
+import './spinner.scss';
 
-const Spiner = () => {
+export const Spinner: FC = () => {
     return (
-        <div className='spiner-container'>
+        <div className='spinner-container'>
             <div className='loading-spinner'>
-                <div className='spiner'>
+                <div className='spinner'>
                     <div>
                         <div></div>
                         <div></div>
@@ -19,5 +19,3 @@ const Spiner = () => {
         </div>
     )
 }
-
-export default Spiner;

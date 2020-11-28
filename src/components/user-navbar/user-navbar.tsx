@@ -1,15 +1,22 @@
-import React from 'react';
-import './user-navbar.scss';
-
+import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { unLogin } from '../../reducers/auth';
-import defaultAvatar from '../../assets/image/default-avatar.png';
+import { UserProfilePhotos } from '../../types/profile';
 
-export const UserNavbar = ({ login, id, photos }) => {
+import defaultAvatar from '../../assets/image/default-avatar.png';
+import './user-navbar.scss';
+
+type UserNavbarProps = {
+    id: number | null
+    login: string | null,
+    photos: UserProfilePhotos
+}
+export const UserNavbar: FC<UserNavbarProps> = ({ id, login, photos }) => {
     const dispatch = useDispatch();
     const avatar = photos.large ? photos.large : defaultAvatar;
 
+    const unLoginUser = () => dispatch(unLogin());
     return (
         <div className='user-navbar'>
             <div className='user-navbar__avatar'>
@@ -20,7 +27,7 @@ export const UserNavbar = ({ login, id, photos }) => {
             <div className='user-navbar__name'>
                 <Link to={`/profile/${id}`}>{login}</Link>
             </div>
-            <div className='user-navbar-logout' onClick={() => dispatch(unLogin())}>
+            <div className='user-navbar-logout' onClick={unLoginUser}>
                 Выход
             </div>
         </div>

@@ -1,9 +1,12 @@
-import React, { useEffect, Suspense } from 'react';
-import './app.scss';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, Suspense, FC } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { StateType } from "../../store";
 import { initApp } from '../../reducers/init';
-import Spiner from '../spiner';
+
+import Spinner from '../spinner';
+
+import './app.scss';
 
 const Login = React.lazy(() => import('../login'));
 const Header = React.lazy(() => import('../header'));
@@ -13,17 +16,17 @@ const UserProfile = React.lazy(() => import('../user-profile'));
 const News = React.lazy(() => import('../news'));
 const Messages = React.lazy(() => import('../messages'));
 
-const App = () => {
+const App: FC = () => {
     const dispatch = useDispatch();
-    const { isInit } = useSelector(({ initReducer }) => initReducer);
+    const { isInit } = useSelector((state: StateType) => state.initReducer);
     useEffect(() => {
         dispatch(initApp())
     },[dispatch])
 
-    if(!isInit) return <Spiner />
+    if(!isInit) return <Spinner />
     return (
         <div className='app'>
-            <Suspense fallback={<Spiner />}>
+            <Suspense fallback={<Spinner />}>
                 <Header />
                 <div className='content'>
                     <Navbar />

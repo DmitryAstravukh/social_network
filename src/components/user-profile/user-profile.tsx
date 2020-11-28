@@ -1,14 +1,12 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import './user-profile.scss';
+import React, { FC, useEffect } from 'react';
 import { useParams, Redirect } from 'react-router-dom';
-import { changeUserPhoto, getUserData, updateUserStatus } from '../../reducers/profile';
+import { useDispatch, useSelector } from 'react-redux';
+import { StateType } from "../../store";
+
+import { changeUserPhoto, getUserData } from '../../reducers/profile';
 import { ProfileData } from '../../selectors/profile';
 import { setIsLoadedUserData } from '../../actions/profile';
-import Spiner from '../spiner';
-import UserProfileStatus from '../user-profile-status';
 
-import defaultAvatar from './../../assets/image/default-avatar.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { faFacebookSquare, faGithubSquare, faInstagramSquare,
@@ -17,7 +15,17 @@ import { faFacebookSquare, faGithubSquare, faInstagramSquare,
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
-const UserProfileContact = ({type, icon}) => {
+import Spinner from '../spinner';
+import UserProfileStatus from '../user-profile-status';
+
+import defaultAvatar from './../../assets/image/default-avatar.png';
+import './user-profile.scss';
+
+type UserProfileContactProps = {
+    type: string | null,
+    icon: any
+}
+const UserProfileContact: FC<UserProfileContactProps> = ({type, icon}) => {
     return (
         <div className='contact'>
             <a href={type ? `https://${type}` : '#'} target='_blank' rel='noopener noreferrer'>
@@ -28,19 +36,18 @@ const UserProfileContact = ({type, icon}) => {
     )
 }
 
-export const UserProfile = () => {
-    console.log('ProfileRender -------- '+new Date().getMilliseconds());
-    const { userId } = useParams();
+
+export const UserProfile: FC = () => {
+    const { userId } = useParams<{userId: string}>();
     const dispatch = useDispatch();
-    const isLoadedUserData = useSelector(({ profileReducer }) => profileReducer.isLoadedUserData);
-    const [ userData, status ] = useSelector(state => ProfileData(state));
-    //const { userData, status } = useSelector(({ profileReducer }) => profileReducer);
-    const { id } = useSelector(({ authReducer }) => authReducer);
+    const isLoadedUserData = useSelector((state: StateType) => state.profileReducer.isLoadedUserData);
+    const { userData, status } = useSelector((state: StateType) => ProfileData(state));
+    const { id } = useSelector((state: StateType) => state.authReducer);
     const avatar = userData.photos.large ? userData.photos.large : defaultAvatar;
 
-    useEffect(() => {
+    useEffect((): () => void => {
         if(userId && userId !== 'null') {
-            dispatch(getUserData(userId))
+            dispatch(getUserData(Number(userId)))
         }
         return () => dispatch(setIsLoadedUserData(false))
     }, [userId])
@@ -55,16 +62,14 @@ export const UserProfile = () => {
     }));
     const classes = useStyles();
 
-
     if(!userId || userId === 'null') return <Redirect to='/login' />
-    if(!isLoadedUserData) return <Spiner />
+    if(!isLoadedUserData) return <Spinner />
 
-    const onUserPhotoChange = e => {
+    const onUserPhotoChange = (e: any) => {
         const files = e.target.files;
         if(files.length > 0) dispatch(changeUserPhoto(files[0]))
     }
 
-    console.log(userData);
     return (
         <div className='content-container'>
             <div className='user-profile'>
@@ -72,7 +77,7 @@ export const UserProfile = () => {
                 <div className='user-avatar'>
                     <img src={avatar} alt={avatar}/>
                     {
-                        +id === +userId &&
+                        Number(id) === Number(userId) &&
                         <>
                             <input
                                 accept="image/*"
@@ -98,10 +103,8 @@ export const UserProfile = () => {
                             <div className='full-name'>{userData.fullName}</div>
                             <div className='about-me'>
                                 <UserProfileStatus status={status}
-                                                   updateUserStatus={updateUserStatus}
                                                    authId={id}
                                                    userId={userId}
-
                                 />
                             </div>
                         </div>

@@ -1,16 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import './users-list.scss';
-import SearchBar from '../search-bar';
-import defaultAvatar from '../../assets/image/default-avatar.png';
 import { Link } from 'react-router-dom';
 import { getUsers, toggleFollowing } from '../../reducers/users';
 import { changePageSize, changeCurrentPage, clearUsersList } from '../../actions/users';
-import Pagination from '@material-ui/lab/Pagination';
-import Spiner from '../spiner';
-import { makeStyles, createStyles } from '@material-ui/core/styles';
+import { StateType } from "../../store";
+import { UserItemType } from '../../types/user';
 
-const UserPreview = (props) => {
+import SearchBar from '../search-bar';
+import Spinner from '../spinner';
+
+import Pagination from '@material-ui/lab/Pagination';
+import { makeStyles } from '@material-ui/core/styles';
+
+import defaultAvatar from '../../assets/image/default-avatar.png';
+import './users-list.scss';
+
+
+type UserPreviewProps = {
+    followInProgress: Array<number>,
+    isAuth: boolean
+}
+
+const UserPreview: FC<UserPreviewProps & UserItemType> = (props) => {
+    const dispatch = useDispatch();
     const {
         id,
         name,
@@ -21,10 +33,12 @@ const UserPreview = (props) => {
         },
         status
     } = props;
-
     const avatar = small !== null ? small : defaultAvatar;
     const btnText = followed ? 'Удалить из друзей' : 'Добавить в друзья';
 
+    const onToggleFollowing = () => {
+        dispatch(toggleFollowing(id, followed))
+    }
     return (
         <div className='user-preview'>
             <div className='user-preview__data'>
@@ -40,20 +54,19 @@ const UserPreview = (props) => {
             </div>
             <div className='user-preview__controls'>
                 <button disabled={props.followInProgress.some(idArr => idArr === id) || !props.isAuth}
-                        onClick={() => props.dispatch(props.toggleFollowing(id, followed))}>{btnText}</button>
+                        onClick={onToggleFollowing}>{btnText}</button>
             </div>
         </div>
     )
 }
 
-export const UsersList = () => {
-    console.log('render userList '+new Date().getMilliseconds());
+export const UsersList: FC = () => {
     const dispatch = useDispatch();
     const { users, currentPage, pageSize, pageSizeSteps,
-            totalCount, isLoading, followInProgress } = useSelector(({ usersReducer }) => usersReducer);
-    const { isAuth } = useSelector(({ authReducer }) => authReducer);
+            totalCount, isLoading, followInProgress } = useSelector((state: StateType) => state.usersReducer);
+    const { isAuth } = useSelector((state: StateType) => state.authReducer);
 
-    useEffect(() => {
+    useEffect((): () => void => {
         dispatch(getUsers(currentPage, pageSize));
         return () => dispatch(clearUsersList())
     }, [pageSize, currentPage])
@@ -68,7 +81,10 @@ export const UsersList = () => {
     }));
     const classes = useStyles();
 
-    const onPaginationPageChange = (e, pageNumber) => dispatch(changeCurrentPage(pageNumber));
+    const onPaginationPageChange = (e: React.ChangeEvent<unknown>, pageNumber: number) => {
+        dispatch(changeCurrentPage(pageNumber));
+    }
+
     return (
         <div className='content-container'>
             <div className='user-list'>
@@ -91,13 +107,11 @@ export const UsersList = () => {
                     <SearchBar width='100%' height='40px' textColor='#626c72' textSize='14px' />
                 </div>
                 <div className='user-list__body'>
-                    { isLoading && <Spiner /> }
+                    { isLoading && <Spinner /> }
                     {
                         users.map(user => {
                             return <UserPreview key={user.id}
-                                                toggleFollowing={toggleFollowing}
                                                 followInProgress={followInProgress}
-                                                dispatch={dispatch}
                                                 isAuth={isAuth}
                                                 {...user}/>
                         })

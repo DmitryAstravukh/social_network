@@ -1,10 +1,14 @@
-import { AuthActionTypes } from '../actions_types/auth';
+import { ThunkAction } from "redux-thunk";
+
+import { AuthActions } from '../actions';
 import { setAuthUserData, setCaptchaUrl } from '../actions/auth';
+
+import { AuthActionTypes } from '../actions_types/auth';
+
 import { UserProfilePhotos } from "../types/profile";
 import { AuthUserDataType } from '../types/auth';
 import { ResultCodesEnum } from "../types/api";
-import { AuthActions } from '../actions';
-import { ThunkAction } from "redux-thunk";
+
 import Api from '../api/api';
 const api = new Api();
 

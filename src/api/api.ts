@@ -56,8 +56,9 @@ export default class Api {
         return r.data
     }
 
-    updateUserStatus = async (status: string) => {
+    updateUserStatus = async (status: string | null) => {
         const r = await this.ax.put<ApiUpdateUserStatusType>('/profile/status',{status});
+        debugger;
         return r.data
     }
 

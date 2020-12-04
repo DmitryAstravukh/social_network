@@ -1,11 +1,8 @@
 import axios from 'axios';
-import {
-    ApiChangeProfilePhotoType, ApiFollowedType, ApiGetAuthUserDataType,
-    ApiGetCaptchaUrlType, ApiGetUserStatusType,
-    ApiLoginType, ApiUnloginType, ApiUpdateUserStatusType
-} from '../types/api';
-import { UserDataType } from '../types/profile';
+import { ApiGetCaptchaUrlType, apiResponse } from '../types/api';
+import {UserDataType, UserProfilePhotos} from '../types/profile';
 import { UserType } from "../types/user";
+import {AuthUserDataType} from "../types/auth";
 
 
 export default class Api {
@@ -25,7 +22,7 @@ export default class Api {
     }
 
     getAuthUserData = async () => {
-        const r = await this.ax.get<ApiGetAuthUserDataType>(`/auth/me`);
+        const r = await this.ax.get<apiResponse<AuthUserDataType>>(`/auth/me`);
         return r.data
     }
 
@@ -35,12 +32,12 @@ export default class Api {
     }
 
     private followUser = async (userId: number) => {
-        const r = await this.ax.post<ApiFollowedType>(`/follow/${userId}`);
+        const r = await this.ax.post<apiResponse<Object>>(`/follow/${userId}`);
         return r.data
     }
 
     private unfollowUser = async (userId: number) => {
-        const r = await this.ax.delete<ApiFollowedType>(`/follow/${userId}`);
+        const r = await this.ax.delete<apiResponse<Object>>(`/follow/${userId}`);
         return r.data
     }
 
@@ -57,18 +54,18 @@ export default class Api {
     }
 
     updateUserStatus = async (status: string | null) => {
-        const r = await this.ax.put<ApiUpdateUserStatusType>('/profile/status',{status});
+        const r = await this.ax.put<apiResponse<string>>('/profile/status',{status});
         debugger;
         return r.data
     }
 
     login = async (email: string, password: string, rememberMe: boolean, captcha: string | null) => {
-        const r = await this.ax.post<ApiLoginType>('/auth/login', {email, password, rememberMe, captcha});
+        const r = await this.ax.post<apiResponse<{userId: number}>>('/auth/login', {email, password, rememberMe, captcha});
         return r.data
     }
 
     unLogin = async () => {
-        const r = await this.ax.delete<ApiUnloginType>('/auth/login');
+        const r = await this.ax.delete<apiResponse<Object>>('/auth/login');
         return r.data
     }
 
@@ -80,7 +77,7 @@ export default class Api {
     changeProfilePhoto = async (photo: File) => {
         const formData = new FormData();
         formData.append("image", photo);
-        const r = await this.ax.put<ApiChangeProfilePhotoType>('/profile/photo', formData, {
+        const r = await this.ax.put<apiResponse<{photos: UserProfilePhotos}>>('/profile/photo', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }

@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, {FC, useCallback, useEffect} from 'react';
 import { useParams, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { StateType } from "../../store";
@@ -39,7 +39,7 @@ const UserProfileContact: FC<UserProfileContactProps> = ({type, icon}) => {
 
 export const UserProfile: FC = () => {
     const { userId } = useParams<{userId: string}>();
-    const dispatch = useDispatch();
+    const dispatch = useCallback(useDispatch(), []);
     const isLoadedUserData = useSelector((state: StateType) => state.profileReducer.isLoadedUserData);
     const { userData, status } = useSelector((state: StateType) => ProfileData(state));
     const { id } = useSelector((state: StateType) => state.authReducer);
@@ -50,7 +50,7 @@ export const UserProfile: FC = () => {
             dispatch(getUserData(Number(userId)))
         }
         return () => dispatch(setIsLoadedUserData(false))
-    }, [userId])
+    }, [userId, dispatch])
 
     const useStyles = makeStyles(theme => ({
         input: { display: 'none' },

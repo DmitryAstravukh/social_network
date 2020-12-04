@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, {FC, useCallback, useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getUsers, toggleFollowing } from '../../reducers/users';
@@ -61,7 +61,8 @@ const UserPreview: FC<UserPreviewProps & UserItemType> = (props) => {
 }
 
 export const UsersList: FC = () => {
-    const dispatch = useDispatch();
+    console.log('render' + new Date().getMilliseconds())
+    const dispatch = useCallback(useDispatch(), []);
     const { users, currentPage, pageSize, pageSizeSteps,
             totalCount, isLoading, followInProgress } = useSelector((state: StateType) => state.usersReducer);
     const { isAuth } = useSelector((state: StateType) => state.authReducer);
@@ -69,7 +70,7 @@ export const UsersList: FC = () => {
     useEffect((): () => void => {
         dispatch(getUsers(currentPage, pageSize));
         return () => dispatch(clearUsersList())
-    }, [pageSize, currentPage])
+    }, [pageSize, currentPage, dispatch])
 
     const useStyles = makeStyles(theme => ({
         root: {

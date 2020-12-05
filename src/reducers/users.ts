@@ -9,7 +9,7 @@ import { ThunkType } from "../types/base";
 import Api from '../api/api';
 const api = new Api();
 
-type UsersInitialState = {
+export type UsersInitialState = {
     users: Array<UserItemType>,
     currentPage: number,
     pageSize: number,
@@ -31,7 +31,6 @@ const initialState: UsersInitialState = {
     error: null
 }
 
-//type ThunkType = ThunkAction<Promise<void>, UsersInitialState, unknown, UsersActions>;
 
 export const toggleFollowing = (userId: number, followed: boolean): ThunkType<UsersActions, UsersInitialState> => async dispatch => {
     dispatch(toggleFollowInProgress(userId, true));

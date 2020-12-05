@@ -1,11 +1,10 @@
-import { ThunkAction } from "redux-thunk";
-
 import { UsersActions } from '../actions';
 import { setUsers, toggleLoading, toggleFollow, toggleFollowInProgress } from '../actions/users';
 
 import { UsersActionTypes } from '../actions_types/users';
 
 import { UserItemType } from '../types/user';
+import { ThunkType } from "../types/base";
 
 import Api from '../api/api';
 const api = new Api();
@@ -32,9 +31,9 @@ const initialState: UsersInitialState = {
     error: null
 }
 
-type ThunkType = ThunkAction<Promise<void>, UsersInitialState, unknown, UsersActions>;
+//type ThunkType = ThunkAction<Promise<void>, UsersInitialState, unknown, UsersActions>;
 
-export const toggleFollowing = (userId: number, followed: boolean): ThunkType => async dispatch => {
+export const toggleFollowing = (userId: number, followed: boolean): ThunkType<UsersActions, UsersInitialState> => async dispatch => {
     dispatch(toggleFollowInProgress(userId, true));
 
     const data = await api.toggleFollow(userId, followed);
@@ -43,14 +42,13 @@ export const toggleFollowing = (userId: number, followed: boolean): ThunkType =>
     if(data.resultCode === 0) dispatch(toggleFollow(userId))
 }
 
-export const getUsers = (currentPage: number, pageSize: number): ThunkType => async dispatch => {
+export const getUsers = (currentPage: number, pageSize: number): ThunkType<UsersActions, UsersInitialState>  => async dispatch => {
     dispatch(toggleLoading(true));
     const data = await api.getUsers(currentPage, pageSize);
 
     dispatch(toggleLoading(false));
     dispatch(setUsers(data));
 }
-
 
 
 export const usersReducer = (state = initialState, action: UsersActions) => {

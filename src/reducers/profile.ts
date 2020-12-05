@@ -1,5 +1,3 @@
-import { Dispatch } from "redux";
-import { ThunkAction } from "redux-thunk";
 import { StateType } from "../store";
 
 import { AuthActions, ProfileActions } from "../actions";
@@ -10,6 +8,7 @@ import { setAuthUserPhotos } from '../actions/auth';
 import { ProfileActionTypes } from '../actions_types/profile';
 
 import { UserDataType } from '../types/profile';
+import { ThunkType } from "../types/base";
 import { ResultCodesEnum } from '../types/api';
 
 import Api from '../api/api';
@@ -48,9 +47,8 @@ const initialState: ProfileInitialState = {
     status: null
 };
 
-type ThunkType = ThunkAction<Promise<void>, ProfileInitialState, unknown, ProfileActions>;
 
-export const getUserData = (userId: number) => async (dispatch: Dispatch<ProfileActions | AuthActions>, getState: () => StateType) => {
+export const getUserData = (userId: number): ThunkType<ProfileActions | AuthActions, StateType> => async (dispatch, getState) => {
     const { authReducer: { id } } = getState();
     const [userData, userStatus] = await Promise.all([
         api.getUserData(userId),
@@ -62,12 +60,12 @@ export const getUserData = (userId: number) => async (dispatch: Dispatch<Profile
 }
 
 
-export const updateUserStatus = (status: string | null): ThunkType => async dispatch => {
+export const updateUserStatus = (status: string | null): ThunkType<ProfileActions, ProfileInitialState> => async dispatch => {
     const r = await api.updateUserStatus(status);
     if(r.resultCode === ResultCodesEnum.Success) dispatch(setUserStatus(status))
 }
 
-export const changeUserPhoto = (photo: File): ThunkType => async dispatch => {
+export const changeUserPhoto = (photo: File): ThunkType<ProfileActions, ProfileInitialState> => async dispatch => {
     dispatch(setIsLoadedUserData(false));
     const r = await api.changeProfilePhoto(photo);
     if(r.resultCode === ResultCodesEnum.Success) {

@@ -1,11 +1,10 @@
-import { ThunkAction } from "redux-thunk";
-
-import { InitActions } from "../actions";
+import { AuthActions, InitActions } from "../actions";
 import { SetInit } from '../actions/init';
 
 import { InitActionTypes } from '../actions_types/init';
+import { ThunkType } from "../types/base";
 
-import { getAuthUserData } from './auth';
+import { AuthInitialState, getAuthUserData } from './auth';
 
 type InitInitialState = {
     isInit: boolean
@@ -15,13 +14,10 @@ const initialState: InitInitialState = {
     isInit: false
 }
 
-type ThunkType = ThunkAction<Promise<void>, InitInitialState, unknown, InitActions>;
-
-export const initApp = (): ThunkType => async dispatch => {
+export const initApp = ():  ThunkType<AuthActions | InitActions, AuthInitialState & InitInitialState, void> => (dispatch) => {
     const promise = dispatch(getAuthUserData());
 
-    Promise.all([promise])
-        .then(() => dispatch(SetInit(true)))
+    Promise.all([promise]).then(() => dispatch(SetInit(true)))
 }
 
 

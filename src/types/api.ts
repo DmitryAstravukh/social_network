@@ -4,7 +4,7 @@ export enum ResultCodesEnum {
     Captcha = 10
 }
 
-export type apiResponse<D, RC = ResultCodesEnum, M = Array<string>> = {
+export type ApiResponse<D, RC = ResultCodesEnum, M = Array<string>> = {
     data: D,
     resultCode: RC,
     messages: M

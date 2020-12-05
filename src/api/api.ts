@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ApiGetCaptchaUrlType, apiResponse } from '../types/api';
+import { ApiGetCaptchaUrlType, ApiResponse } from '../types/api';
 import {UserDataType, UserProfilePhotos} from '../types/profile';
 import { UserType } from "../types/user";
 import {AuthUserDataType} from "../types/auth";
@@ -22,7 +22,7 @@ export default class Api {
     }
 
     getAuthUserData = async () => {
-        const r = await this.ax.get<apiResponse<AuthUserDataType>>(`/auth/me`);
+        const r = await this.ax.get<ApiResponse<AuthUserDataType>>(`/auth/me`);
         return r.data
     }
 
@@ -32,12 +32,12 @@ export default class Api {
     }
 
     private followUser = async (userId: number) => {
-        const r = await this.ax.post<apiResponse<Object>>(`/follow/${userId}`);
+        const r = await this.ax.post<ApiResponse<Object>>(`/follow/${userId}`);
         return r.data
     }
 
     private unfollowUser = async (userId: number) => {
-        const r = await this.ax.delete<apiResponse<Object>>(`/follow/${userId}`);
+        const r = await this.ax.delete<ApiResponse<Object>>(`/follow/${userId}`);
         return r.data
     }
 
@@ -54,18 +54,18 @@ export default class Api {
     }
 
     updateUserStatus = async (status: string | null) => {
-        const r = await this.ax.put<apiResponse<string>>('/profile/status',{status});
+        const r = await this.ax.put<ApiResponse<string>>('/profile/status',{status});
         debugger;
         return r.data
     }
 
     login = async (email: string, password: string, rememberMe: boolean, captcha: string | null) => {
-        const r = await this.ax.post<apiResponse<{userId: number}>>('/auth/login', {email, password, rememberMe, captcha});
+        const r = await this.ax.post<ApiResponse<{userId: number}>>('/auth/login', {email, password, rememberMe, captcha});
         return r.data
     }
 
     unLogin = async () => {
-        const r = await this.ax.delete<apiResponse<Object>>('/auth/login');
+        const r = await this.ax.delete<ApiResponse<Object>>('/auth/login');
         return r.data
     }
 
@@ -77,7 +77,7 @@ export default class Api {
     changeProfilePhoto = async (photo: File) => {
         const formData = new FormData();
         formData.append("image", photo);
-        const r = await this.ax.put<apiResponse<{photos: UserProfilePhotos}>>('/profile/photo', formData, {
+        const r = await this.ax.put<ApiResponse<{photos: UserProfilePhotos}>>('/profile/photo', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }

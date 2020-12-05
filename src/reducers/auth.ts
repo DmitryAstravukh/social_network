@@ -1,5 +1,3 @@
-import { ThunkAction } from "redux-thunk";
-
 import { AuthActions } from '../actions';
 import { setAuthUserData, setCaptchaUrl } from '../actions/auth';
 
@@ -8,6 +6,7 @@ import { AuthActionTypes } from '../actions_types/auth';
 import { UserProfilePhotos } from "../types/profile";
 import { AuthUserDataType } from '../types/auth';
 import { ResultCodesEnum } from "../types/api";
+import { ThunkType } from "../types/base";
 
 import Api from '../api/api';
 const api = new Api();
@@ -35,24 +34,21 @@ const initialState: AuthInitialState = {
     captchaUrl: null
 }
 
-type ThunkType = ThunkAction<Promise<void>, AuthInitialState, unknown, AuthActions>;
 
-//SetAuthUserDataType
-//TODO узнать что должен тут ретурнуть промис вместо void
-export const getAuthUserData = () => async (dispatch: any) => {
+export const getAuthUserData = (): ThunkType<AuthActions, AuthInitialState> => async dispatch => {
     const r = await api.getAuthUserData();
     if(r.resultCode === ResultCodesEnum.Success) {
         setCaptchaUrl(null)
-        return dispatch(setAuthUserData(r.data, true, null));
+        dispatch(setAuthUserData(r.data, true, null));
     }
 }
 
-const getCaptchaUrl = (): ThunkType => async dispatch => {
+const getCaptchaUrl = (): ThunkType<AuthActions, AuthInitialState> => async dispatch => {
     const data = await api.getCaptchaUrl();
     dispatch(setCaptchaUrl(data.url))
 }
 
-export const login = (email: string, password: string, rememberMe: boolean, captcha: string | null): ThunkType => async dispatch => {
+export const login = (email: string, password: string, rememberMe: boolean, captcha: string | null): ThunkType<AuthActions, AuthInitialState> => async dispatch => {
     const data = await api.login(email, password, rememberMe, captcha);
     const authUserData: AuthUserDataType = { id: null, email: null, login: null };
 
@@ -61,7 +57,7 @@ export const login = (email: string, password: string, rememberMe: boolean, capt
     if(data.resultCode === ResultCodesEnum.Captcha) dispatch(getCaptchaUrl())
 }
 
-export const unLogin = (): ThunkType => async dispatch => {
+export const unLogin = (): ThunkType<AuthActions, AuthInitialState> => async dispatch => {
     const data = await api.unLogin();
     const authUserData: AuthUserDataType = { id: null, email: null, login: null };
 

@@ -1,0 +1,16 @@
+.user-avatar{
+    width: 200px;
+    text-align: center;
+    background-color: #f8f9fb;
+    padding: 10px;
+    margin-left: 10px;
+    border: none;
+    border-radius: 5px;
+    height: max-content;
+
+    img{
+        width: 100%;
+        object-fit: contain;
+        border-radius: 5px;
+    }
+}

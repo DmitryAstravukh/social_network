@@ -5,22 +5,6 @@
     width: 100%;
 }
 
-.user-avatar{
-    width: 200px;
-    text-align: center;
-    background-color: #f8f9fb;
-    padding: 10px;
-    margin-left: 10px;
-    border: none;
-    border-radius: 5px;
-    height: max-content;
-
-    img{
-        width: 100%;
-        object-fit: contain;
-        border-radius: 5px;
-    }
-}
 
 .user-data{
     display: flex;
@@ -71,6 +55,7 @@
     }
 
     &__job{
+        position: relative;
         width: 100%;
         background-color: #f8f9fb;
         padding: 10px;
@@ -98,39 +83,4 @@
         }
     }
 
-    &__contacts{
-        width: 300px;
-        background-color: #f8f9fb;
-        padding: 10px;
-        margin-left: 10px;
-        border: none;
-        border-radius: 5px;
-        height: max-content;
-
-        .contact{
-            display: flex;
-            margin-top: 10px;
-
-            a{
-                display: flex;
-                align-items: center;
-                text-decoration: none;
-                color: $baseTextColor;
-                transition: color .2s ease;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-
-                svg{
-                    width: 25px;
-                    height: 25px;
-                    margin-right: 10px;
-                }
-            }
-
-            a:hover{
-                color: $baseActiveColor;
-            }
-        }
-    }
 }

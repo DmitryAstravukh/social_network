@@ -1,19 +1,14 @@
-import React, {FC, useCallback, useEffect} from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import { useParams, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { StateType } from "../../store";
 
-import { changeUserPhoto, getUserData } from '../../reducers/profile';
+import { getUserData } from '../../reducers/profile';
 import { ProfileData } from '../../selectors/profile';
 import { setIsLoadedUserData } from '../../actions/profile';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGlobe } from '@fortawesome/free-solid-svg-icons';
-import { faFacebookSquare, faGithubSquare, faInstagramSquare,
-        faTwitterSquare, faVk, faYoutubeSquare
-} from '@fortawesome/free-brands-svg-icons';
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+import { makeStyles, Theme } from '@material-ui/core/styles';
+import CreateIcon from '@material-ui/icons/Create';
 
 import Spinner from '../spinner';
 import UserProfileStatus from '../user-profile-status';
@@ -21,20 +16,9 @@ import UserProfileStatus from '../user-profile-status';
 import defaultAvatar from './../../assets/image/default-avatar.png';
 import './user-profile.scss';
 
-type UserProfileContactProps = {
-    type: string | null,
-    icon: any
-}
-const UserProfileContact: FC<UserProfileContactProps> = ({type, icon}) => {
-    return (
-        <div className='contact'>
-            <a href={type ? `https://${type}` : '#'} target='_blank' rel='noopener noreferrer'>
-                <FontAwesomeIcon icon={icon} />
-                {type ? type : 'Не задано'}
-            </a>
-        </div>
-    )
-}
+import UserProfileAvatar from './user-profile-avatar';
+import UserProfileContacts from './user-profile-contacts';
+import UserProfileDataEdit from './user-profile-data-edit';
 
 
 export const UserProfile: FC = () => {
@@ -45,6 +29,11 @@ export const UserProfile: FC = () => {
     const { id } = useSelector((state: StateType) => state.authReducer);
     const avatar = userData.photos.large ? userData.photos.large : defaultAvatar;
 
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => (setOpen(true));
+    const handleClose = () => (setOpen(false));
+
+
     useEffect((): () => void => {
         if(userId && userId !== 'null') {
             dispatch(getUserData(Number(userId)))
@@ -52,12 +41,17 @@ export const UserProfile: FC = () => {
         return () => dispatch(setIsLoadedUserData(false))
     }, [userId, dispatch])
 
-    const useStyles = makeStyles(theme => ({
-        input: { display: 'none' },
-        button: {
-            backgroundColor: '#8224e3',
-            width: '100%',
-            marginTop: '10px'
+    const useStyles = makeStyles((theme: Theme) => ({
+        editMyData: {
+            position: 'absolute',
+            top: '12px',
+            right: '10px',
+            color: 'silver',
+            fontSize: '18px',
+            '&:hover': {
+                color: '#8224e3',
+                cursor: 'pointer'
+            }
         }
     }));
     const classes = useStyles();
@@ -65,36 +59,16 @@ export const UserProfile: FC = () => {
     if(!userId || userId === 'null') return <Redirect to='/login' />
     if(!isLoadedUserData) return <Spinner />
 
-    const onUserPhotoChange = (e: any) => {
-        const files = e.target.files;
-        if(files.length > 0) dispatch(changeUserPhoto(files[0]))
-    }
-
     return (
         <div className='content-container'>
             <div className='user-profile'>
 
-                <div className='user-avatar'>
-                    <img src={avatar} alt={avatar}/>
-                    {
-                        Number(id) === Number(userId) &&
-                        <>
-                            <input
-                                accept="image/*"
-                                className={classes.input}
-                                id="contained-button-file"
-                                type="file"
-                                onChange={onUserPhotoChange}
-                            />
-                            <label htmlFor="contained-button-file">
-                            <Button variant="contained" color="primary" component="span" className={classes.button}>
-                            Изменить
-                            </Button>
-                            </label>
-                        </>
-                    }
+                <UserProfileDataEdit open={open} handleClose={handleClose} />
 
-                </div>
+                <UserProfileAvatar userId={Number(userId)}
+                                   id={Number(id)}
+                                   avatar={avatar}
+                />
 
                 <div className='user-data'>
 
@@ -111,6 +85,7 @@ export const UserProfile: FC = () => {
 
                         <div className='user-data__job'>
                             <span className='block-title'>Работа</span>
+                            <CreateIcon className={classes.editMyData} onClick={handleOpen}/>
                             <div className='looking-job'>
                                 В поиске работы: { userData.lookingForAJob ? 'Да' : 'Нет' }
                             </div>
@@ -121,16 +96,10 @@ export const UserProfile: FC = () => {
                     </div>
 
 
-                    <div className='user-data__contacts'>
-                        <span className='block-title'>Контакты</span>
-                        <UserProfileContact type={userData.contacts.facebook} icon={faFacebookSquare} />
-                        <UserProfileContact type={userData.contacts.github} icon={faGithubSquare} />
-                        <UserProfileContact type={userData.contacts.instagram} icon={faInstagramSquare} />
-                        <UserProfileContact type={userData.contacts.twitter} icon={faTwitterSquare} />
-                        <UserProfileContact type={userData.contacts.vk} icon={faVk} />
-                        <UserProfileContact type={userData.contacts.website} icon={faGlobe} />
-                        <UserProfileContact type={userData.contacts.youtube} icon={faYoutubeSquare} />
-                    </div>
+                    <UserProfileContacts userData={userData}
+                                         onEditDataModalClick={handleOpen}
+                                         editIconStyle={classes.editMyData}
+                    />
 
                 </div>
             </div>

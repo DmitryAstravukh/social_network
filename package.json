@@ -21,7 +21,7 @@
     "@types/react-redux": "^7.1.11",
     "@types/react-router-dom": "^5.1.6",
     "@types/yup": "^0.29.9",
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "formik": "^2.2.4",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",

@@ -22,7 +22,9 @@ type UserProfileContactProps = {
 type UserProfileContactsProps = {
     userData: UserDataType,
     onEditDataModalClick: any,
-    editIconStyle: any
+    editIconStyle: any,
+    userId: string,
+    authId: number | null
 }
 
 
@@ -37,12 +39,22 @@ const UserProfileContact: FC<UserProfileContactProps> = ({type, icon}) => {
     )
 }
 
-export const UserProfileContacts: FC<UserProfileContactsProps> = ({ userData, onEditDataModalClick, editIconStyle }) => {
-
+export const UserProfileContacts: FC<UserProfileContactsProps> = (
+    {
+        userData,
+        onEditDataModalClick,
+        editIconStyle,
+        userId,
+        authId
+    }) => {
     return (
         <div className='user-data__contacts'>
             <span className='block-title'>Контакты</span>
-            <CreateIcon className={editIconStyle} onClick={onEditDataModalClick}/>
+            {
+                userId && userId !== 'null' && Number(userId) === Number(authId) &&
+                <CreateIcon className={editIconStyle} onClick={onEditDataModalClick}/>
+            }
+
             <UserProfileContact type={userData.contacts.facebook} icon={faFacebookSquare} />
             <UserProfileContact type={userData.contacts.github} icon={faGithubSquare} />
             <UserProfileContact type={userData.contacts.instagram} icon={faInstagramSquare} />

@@ -30,3 +30,10 @@ export const setUserPhoto = (photos: UserProfilePhotos) => {
         photos
     } as const
 }
+
+export const changeUserData = (userData: UserDataType) => {
+    return {
+        type: ProfileActionTypes.CHANGE_USER_DATA,
+        userData
+    } as const
+}

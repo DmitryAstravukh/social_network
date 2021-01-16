@@ -74,6 +74,11 @@ export const changeUserPhoto = (photo: File): ThunkType<ProfileActions, ProfileI
     }
 }
 
+export const changeUserData = (userData: UserDataType) : ThunkType<ProfileActions | AuthActions, StateType> => async dispatch => {
+    const r = await api.updateUserData(userData);
+    if(r.resultCode === ResultCodesEnum.Success) dispatch(getUserData(Number(userData.userId)))
+}
+
 export const profileReducer = (state = initialState, action: ProfileActions) => {
     switch (action.type) {
         case ProfileActionTypes.SET_USER_PROFILE_DATA:

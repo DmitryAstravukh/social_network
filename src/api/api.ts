@@ -84,4 +84,16 @@ export default class Api {
         });
         return r.data;
     }
+
+    updateUserData = async (newUserData: UserDataType) => {
+        const r = await this.ax.put<ApiResponse<Object>>('/profile', {
+            userId: newUserData.userId,
+            lookingForAJob: newUserData.lookingForAJob,
+            lookingForAJobDescription: newUserData.lookingForAJobDescription,
+            fullName: newUserData.fullName,
+            aboutMe: newUserData.aboutMe,
+            contacts: {...newUserData.contacts }
+        });
+        return r.data;
+    }
 }

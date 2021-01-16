@@ -3,7 +3,8 @@ export type UserProfilePhotos = {
     small: string | null
 }
 
-export type UserDataContactsType = {
+//TODO rename interface
+export interface UserDataContactsType {
     facebook: string | null,
     website: string | null,
     vk: string | null,
@@ -14,7 +15,7 @@ export type UserDataContactsType = {
     mainLink: string | null
 }
 
-export type UserDataType = {
+export interface UserDataType {
     userId: number | null,
     aboutMe: string | null,
     contacts: UserDataContactsType,

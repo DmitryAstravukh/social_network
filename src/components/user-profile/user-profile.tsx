@@ -63,7 +63,9 @@ export const UserProfile: FC = () => {
         <div className='content-container'>
             <div className='user-profile'>
 
-                <UserProfileDataEdit open={open} handleClose={handleClose} />
+                {/*<UserProfileDataEdit open={open}*/}
+                {/*                     handleClose={handleClose}*/}
+                {/*                     userData={userData}/>*/}
 
                 <UserProfileAvatar userId={Number(userId)}
                                    id={Number(id)}
@@ -85,7 +87,10 @@ export const UserProfile: FC = () => {
 
                         <div className='user-data__job'>
                             <span className='block-title'>Работа</span>
-                            <CreateIcon className={classes.editMyData} onClick={handleOpen}/>
+                            {
+                                userId && userId !== 'null' && Number(userId) === Number(id) &&
+                                <CreateIcon className={classes.editMyData} onClick={handleOpen}/>
+                            }
                             <div className='looking-job'>
                                 В поиске работы: { userData.lookingForAJob ? 'Да' : 'Нет' }
                             </div>
@@ -99,6 +104,8 @@ export const UserProfile: FC = () => {
                     <UserProfileContacts userData={userData}
                                          onEditDataModalClick={handleOpen}
                                          editIconStyle={classes.editMyData}
+                                         userId={userId}
+                                         authId={id}
                     />
 
                 </div>
